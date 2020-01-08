@@ -35,9 +35,11 @@ app.use("/upload", express.static("upload"));
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
+const postRoute = require("./routes/post");
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/profile", profileRoute);
+app.use("/api/posts", postRoute);
 app.get("/", (req, res, next) => {
   res.sendFile("index.html");
 });

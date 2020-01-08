@@ -57,7 +57,7 @@ router.post("/deactive", auth, profileController.deactiveUser);
 //@route          PUT api/profile/experience
 //@desc           Update the user experience
 //@access         Private
-router.post(
+router.put(
   "/experience",
   auth,
   [
@@ -76,46 +76,15 @@ router.post(
   ],
   profileController.addUserExperience
 );
-
-router.put(
-  "/experience/:expId",
-  auth,
-  [
-    body("title", "Title is required!")
-      .not()
-      .isEmpty(),
-    body("company", "Company is required!")
-      .not()
-      .isEmpty(),
-    body("from", "From date is required!")
-      .not()
-      .isEmpty(),
-    body("current", "Current is required!")
-      .not()
-      .isEmpty()
-  ],
-  profileController.updateUserExperience
-);
-
+//@route          DELETE api/profile/experience
+//@desc           Delete user experiences
+//@access         Private
 router.delete(
   "/experience/:expId",
   auth,
-  [
-    body("title", "Title is required!")
-      .not()
-      .isEmpty(),
-    body("company", "Company is required!")
-      .not()
-      .isEmpty(),
-    body("from", "From date is required!")
-      .not()
-      .isEmpty(),
-    body("current", "Current is required!")
-      .not()
-      .isEmpty()
-  ],
   profileController.deleteUserExperience
 );
+
 //@route          PUT api/profile/education
 //@desc           Update the education
 //@access         Private
@@ -123,23 +92,33 @@ router.put(
   "/education",
   auth,
   [
-    body("school", "Cchool is required!")
+    body("school", "school is required!")
       .not()
       .isEmpty(),
-    body("degree", "Degree is required!")
+    body("degree", "degree is required!")
       .not()
       .isEmpty(),
-    body("fieldofstudy", "Fieldofstudy is required!")
+    body("fieldofstudy", "fieldofstudy is required!")
       .not()
       .isEmpty(),
-    body("from", "From date is required!")
+    body("from", "from is required!")
       .not()
       .isEmpty(),
-    body("current", "From date is required!")
+    body("current", "current is required!")
       .not()
       .isEmpty()
   ],
-  profileController.userEducation
+  profileController.addUserEducation
 );
+
+//@route          PUT api/profile/education
+//@desc           Delete the user education
+//@access         Private
+router.delete("/education/:eduId", auth, profileController.deleteUserEducation);
+
+//@route          GET api/profile/github/:username
+//@desc           GET user repos from github
+//@access         Public
+router.get("/github/:username", profileController.getGithubProfile);
 
 module.exports = router;

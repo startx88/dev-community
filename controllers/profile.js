@@ -1,7 +1,8 @@
 const User = require("../models/users");
 const Profile = require("../models/profile");
 const { validationResult } = require("express-validator");
-const mongoose = require("mongoose");
+const request = require("request");
+
 exports.getAllProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
@@ -231,8 +232,7 @@ exports.addUserExperience = async (req, res, next) => {
   }
 
   let { title, company, location, from, to, current, description } = req.body;
-  from = Date(from);
-  to = Date(to);
+
   const newExp = {
     title,
     company,
@@ -256,70 +256,6 @@ exports.addUserExperience = async (req, res, next) => {
     }
 
     profile.experience.unshift(newExp);
-    await profile.save();
-    res.status(200).json({
-      success: true,
-      message: "User experience update successfully!",
-      profile
-    });
-  } catch (err) {
-    console.log("error", err);
-    next(err);
-  }
-};
-
-exports.updateUserExperience = async (req, res, next) => {
-  const userId = req.user.userId;
-  const expId = req.params.expId;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error(errors.array()[0].msg);
-    error.statusCode = 422;
-    throw next(error);
-  }
-
-  let { title, company, location, from, to, current, description } = req.body;
-  from = Date(from);
-  to = Date(to);
-  const newExp = {
-    title,
-    company,
-    location,
-    from,
-    to,
-    current,
-    description
-  };
-
-  try {
-    const profile = await Profile.findOne({ user: userId }).populate("user", [
-      "name",
-      "avatar"
-    ]);
-
-    if (!profile) {
-      const error = new Error("User profile not found");
-      error.statusCode = 404;
-      throw next(error);
-    }
-    // existing exp
-    const existingExp = profile.experience;
-    // find Index for updateing exp
-    const findExpIndex = existingExp.map(item => item._id).indexOf(expId);
-    let updatedExp = existingExp[findExpIndex];
-
-    if (!updatedExp) {
-      const error = new Error("not found");
-      error.statusCode = 404;
-      throw next(error);
-    }
-
-    updatedExp = newExp;
-
-    existingExp[findExpIndex] = updatedExp;
-
-    profile.experience.splice(findExpIndex, existingExp);
-
     await profile.save();
     res.status(200).json({
       success: true,
@@ -334,6 +270,39 @@ exports.updateUserExperience = async (req, res, next) => {
 
 exports.deleteUserExperience = async (req, res, next) => {
   const userId = req.user.userId;
+  const expId = req.params.expId;
+
+  try {
+    const profile = await Profile.findOne({ user: userId }).populate("user", [
+      "name",
+      "avatar"
+    ]);
+
+    if (!profile) {
+      const error = new Error("User profile not found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+    const removeIndex = profile.experience.map(item => item.id).indexOf(expId);
+    profile.experience.splice(removeIndex, 1);
+
+    await profile.save();
+    res.status(200).json({
+      success: true,
+      message: "User experience deleted successfully!",
+      profile
+    });
+  } catch (err) {
+    console.log("error", err);
+    next(err);
+  }
+};
+
+////////////////////////////////////////////////////////////////
+// ********************* User Education ***********************
+////////////////////////////////////////////////////////////////
+exports.addUserEducation = async (req, res, next) => {
+  const userId = req.user.userId;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -342,11 +311,20 @@ exports.deleteUserExperience = async (req, res, next) => {
     throw next(error);
   }
 
-  let { title, company, location, from, to, current, description } = req.body;
-  const newExp = {
-    title,
-    company,
-    location,
+  let {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description
+  } = req.body;
+
+  const newEdu = {
+    school,
+    degree,
+    fieldofstudy,
     from,
     to,
     current,
@@ -365,11 +343,11 @@ exports.deleteUserExperience = async (req, res, next) => {
       throw next(error);
     }
 
-    profile.experience.unshift(newExp);
+    profile.education.unshift(newEdu);
     await profile.save();
     res.status(200).json({
       success: true,
-      message: "User experience update successfully!",
+      message: "User education added successfully!",
       profile
     });
   } catch (err) {
@@ -378,32 +356,62 @@ exports.deleteUserExperience = async (req, res, next) => {
   }
 };
 
-/**
- * Update user education
- */
-exports.userEducation = async (req, res, next) => {
+// delete user education
+exports.deleteUserEducation = async (req, res, next) => {
   const userId = req.user.userId;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error(errors.array()[0].msg);
-    error.statusCode = 422;
-    throw next(error);
-  }
+  const eduId = req.params.eduId;
+
   try {
-    const user = await User.findById(userId);
-    user.active = 0;
-    const result = await user.save();
+    const profile = await Profile.findOne({ user: userId }).populate("user", [
+      "name",
+      "avatar"
+    ]);
+
+    if (!profile) {
+      const error = new Error("User profile not found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+    const removeIndex = profile.education.map(item => item.id).indexOf(eduId);
+    profile.education.splice(removeIndex, 1);
+    await profile.save();
     res.status(200).json({
       success: true,
-      message: "User deactivated successfully!",
-      userId: result._id
+      message: "User education deleted successfully!",
+      profile
     });
   } catch (err) {
     console.log("error", err);
-    if (err.kind === "ObjectId") {
-      const error = new Error("Profile not found, invalid user id");
-      next(error);
-    }
+    next(err);
+  }
+};
+
+////////////////////////////////////////////////////////////////
+//******************* User github profile ********************
+////////////////////////////////////////////////////////////////
+exports.getGithubProfile = async (req, res, next) => {
+  try {
+    const options = {
+      uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_SECRET}`,
+      method: "GET",
+      headers: { "user-agent": "node.js" }
+    };
+
+    request(options, (err, response, body) => {
+      if (err) console.log(err);
+      if (response.statusCode !== 200) {
+        const error = new Error("No github profile found");
+        error.statusCode = 404;
+        throw next(error);
+      }
+      res.status(200).json({
+        success: true,
+        message: "github repositories",
+        repo: JSON.parse(body)
+      });
+    });
+  } catch (err) {
+    console.log("error", err);
     next(err);
   }
 };

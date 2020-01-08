@@ -8,7 +8,7 @@ const { validationResult } = require("express-validator");
 /////////////////////////////////////////////////
 exports.getAllPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find().populate("user", ["name", "avatar"]);
+    const posts = await Post.find().sort({ insertAt: -1 });
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;
@@ -31,10 +31,7 @@ exports.getPost = async (req, res, next) => {
   const postId = req.params.postId;
   try {
     try {
-      const post = await Post.findById(postId).populate("user", [
-        "name",
-        "avatar"
-      ]);
+      const post = await Post.findById(postId);
       if (!post) {
         const error = new Error("No post found");
         error.statusCode = 404;
@@ -111,9 +108,32 @@ exports.updatePost = async (req, res, next) => {
 /////////// Delete Post
 /////////////////////////////////////////////////
 exports.deletePost = async (req, res, next) => {
+  const postId = req.params.postId;
   try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("Post not found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+    if (post.user.toString() !== req.user.userId) {
+      const error = new Error("User not authorized");
+      error.statusCode = 401;
+      throw next(error);
+    }
+    const result = await post.remove();
+    res.status(200).json({
+      success: true,
+      message: "Post deleted successfully",
+      postId: result._id
+    });
   } catch (err) {
     console.log("error", err);
+    if (err.kind === "ObjectId") {
+      const e = new Error("Post not fuond");
+      e.statusCode = 401;
+      next(e);
+    }
     next(err);
   }
 };

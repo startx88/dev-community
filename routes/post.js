@@ -31,7 +31,7 @@ router.put(
   ],
   postController.updatePost
 );
-router.delete("/", auth, postController.deletePost);
+router.delete("/:postId", auth, postController.deletePost);
 router.put("/comment", postController.addComment);
 router.delete("/comment/:commentId", auth, postController.deleteComment);
 router.put("/likes", postController.addLike);

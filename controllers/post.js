@@ -164,7 +164,26 @@ exports.deleteComment = async (req, res, next) => {
 /////////// Add Like
 /////////////////////////////////////////////////
 exports.addLike = async (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.user.userId;
+
   try {
+    const post = await Post.findById(postId);
+
+    if (post.likes.filter(like => like.user.toString() === userId).length > 0) {
+      return res.status(200).json({
+        message: "Post is already liked"
+      });
+    }
+
+    post.likes.unshift({ user: userId });
+    const result = await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Post liked",
+      postId: result._id
+    });
   } catch (err) {
     console.log("error", err);
     next(err);
@@ -175,7 +194,31 @@ exports.addLike = async (req, res, next) => {
 /////////// Remove like
 /////////////////////////////////////////////////
 exports.removeLike = async (req, res, next) => {
+  const postId = req.params.postId;
+  const userId = req.user.userId;
   try {
+    const post = await Post.findById(postId);
+
+    if (
+      post.likes.filter(like => like.user.toString() === userId).length === 0
+    ) {
+      return res.status(200).json({
+        message: "Post has not been liked "
+      });
+    }
+
+    const likeIndex = post.likes
+      .map(like => like.user.toString())
+      .indexOf(userId);
+
+    post.likes.splice(likeIndex, 1);
+    const result = await post.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Post has not been liked",
+      postId: result._id
+    });
   } catch (err) {
     console.log("error", err);
     next(err);

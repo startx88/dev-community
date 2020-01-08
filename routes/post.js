@@ -32,9 +32,9 @@ router.put(
   postController.updatePost
 );
 router.delete("/:postId", auth, postController.deletePost);
-router.put("/comment", postController.addComment);
 router.delete("/comment/:commentId", auth, postController.deleteComment);
-router.put("/likes", postController.addLike);
-router.delete("/likes/:likeId", auth, postController.removeLike);
+router.put("/like/:postId", auth, postController.addLike);
+router.put("/unlink/:likeId", auth, postController.removeLike);
+router.put("/comment/:postId", postController.addComment);
 // Export Routes
 module.exports = router;

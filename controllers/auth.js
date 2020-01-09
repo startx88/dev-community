@@ -12,16 +12,18 @@ exports.getLogin = async (req, res, next) => {
   }
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("-password");
     if (!user) {
-      const error = new Error("Credentials are not matched");
+      const error = new Error("Email is not found");
       error.statusCode = 401;
       throw next(error);
     }
 
     const pass = await User.decryptPassword(password, user.password);
     if (!pass) {
-      const error = new Error("Credentials are not matched");
+      const error = new Error(
+        "Credentials are not matched, Please use valid password"
+      );
       error.statusCode = 401;
       throw next(error);
     }

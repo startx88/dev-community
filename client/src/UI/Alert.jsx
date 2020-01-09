@@ -1,23 +1,23 @@
 import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { hideAlert } from "../Stores/actions";
+import { hideAlert } from "../Stores/Actions";
 import Button from "./Button";
 import Icons from "./Icons";
 
 /** Alert Message Component */
-const AlertMessage = ({ show, alertType, classname, children, ...rest }) => {
+const AlertMessage = ({ show, type, classname, children, ...rest }) => {
   const dispatch = useDispatch();
   const { message, alerttype } = useSelector(state => state.alert);
 
   // Auto hide the alert
-  useEffect(() => {
-    const interval = setTimeout(() => {
-      dispatch(hideAlert());
-    }, 5000);
-    return () => {
-      clearTimeout(interval);
-    };
-  }, [show, dispatch]);
+  // useEffect(() => {
+  //   const interval = setTimeout(() => {
+  //     dispatch(alertHide());
+  //   }, 5000);
+  //   return () => {
+  //     clearTimeout(interval);
+  //   };
+  // }, [show, dispatch]);
 
   // Alert Hide Handler
   const alertHideHandler = useCallback(() => {
@@ -28,7 +28,7 @@ const AlertMessage = ({ show, alertType, classname, children, ...rest }) => {
     <div
       className={[
         "alert",
-        `alert-${alertType ? alertType : alerttype}`,
+        `alert-${type ? type : type}`,
         "alert-dismissible",
         classname
       ].join(" ")}

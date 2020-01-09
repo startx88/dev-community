@@ -4,6 +4,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import Reducers from "./Reducer";
 
+// initial state
+const initialState = {};
+
+// middleware
 const middleware = [];
 if (process.env.NODE_ENV === "development") {
   middleware.push(thunk);
@@ -11,6 +15,7 @@ if (process.env.NODE_ENV === "development") {
 
 const Store = createStore(
   Reducers,
+  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
 

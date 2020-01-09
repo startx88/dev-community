@@ -7,6 +7,7 @@ import Store from "./Stores/Stores";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.scss";
+import "./_lib";
 /// Router ////
 const Router = () => {
   return (

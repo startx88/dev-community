@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../UI/Button";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import LandingFooter from "../Pages/Home/Controls/LandingFooter";
 import LandingHeader from "../Pages/Home/Controls/LandingHeader";
 import { useFormik } from "formik";
@@ -12,8 +12,10 @@ import AlertMessage from "../UI/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../Stores/Actions";
 
+// lOGIN COMPONENT
 const Login = props => {
-  const { user, alert } = useSelector(state => state);
+  const { auth, alert } = useSelector(state => state);
+
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -22,9 +24,7 @@ const Login = props => {
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      console.log("values", values);
       dispatch(userLogin(values));
-      //alert(JSON.stringify(values, null, 2));
     }
   });
 
@@ -37,8 +37,13 @@ const Login = props => {
     handleSubmit
   } = formik;
 
+  let element = null;
+  if (auth.isAuthenticated) {
+    element = <Redirect to="/users" />;
+  }
   return (
     <div className="landing">
+      {element}
       <LandingHeader />
       <div className="landing-content">
         <div className="landing-body">

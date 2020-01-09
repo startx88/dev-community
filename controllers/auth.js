@@ -11,8 +11,9 @@ exports.getLogin = async (req, res, next) => {
     throw next(error);
   }
   const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ email: email });
     if (!user) {
       const error = new Error("Email is not found");
       error.statusCode = 401;

@@ -1,6 +1,12 @@
 import React from "react";
-
+import Logo from "../../Widgets/Logo/Logo";
+import Navigation from "./Navigation";
 const Header = props => {
-  return <h1>Header</h1>;
+  return (
+    <header className="navbar navbar-expand-lg navbar-admin">
+      <Logo brandname="DC" />
+      <Navigation />
+    </header>
+  );
 };
 export default Header;

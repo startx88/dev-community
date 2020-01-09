@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../UI/Button";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import LandingFooter from "../Pages/Home/Controls/LandingFooter";
 import LandingHeader from "../Pages/Home/Controls/LandingHeader";
 import { useFormik } from "formik";
@@ -12,7 +12,7 @@ import { userRegistration } from "../Stores/Actions";
 
 const Register = props => {
   const dispatch = useDispatch();
-  const { token } = useSelector(state => state.auth);
+  const { auth, alert } = useSelector(state => state);
   //  console.log("user", token);
 
   // button sleep for 2 seconds
@@ -51,8 +51,14 @@ const Register = props => {
     handleSubmit
   } = formik;
 
+  let element = null;
+  if (auth.isAuthenticated) {
+    element = <Redirect to="/users" />;
+  }
+
   return (
     <div className="landing">
+      {element}
       <LandingHeader />
       <div className="landing-content">
         <div className="landing-body">

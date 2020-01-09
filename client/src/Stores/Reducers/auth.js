@@ -1,4 +1,4 @@
-import { auth } from "../Constants";
+import { USER } from "../Constants";
 import StateUpdater from "../../_helper/StateUpdater";
 
 const initState = {
@@ -11,21 +11,11 @@ const initState = {
 //// LOADING ////
 const loading = (state, payloads) => StateUpdater(state, { loading: true });
 
-//// REGISTER SUCCESS ////
-const register_success = (state, payloads) =>
+//// SUCCESS ////
+const success = (state, payloads) =>
   StateUpdater(state, {
     loading: false,
-    token: payloads,
-    isAuthenticated: true
-  });
-
-//// REGISTER FAILED ////
-const register_failed = (state, payloads) =>
-  StateUpdater(state, {
-    loading: false,
-    user: null,
-    token: null,
-    isAuthenticated: false
+    token: payloads
   });
 
 //// LOGIN SUCCESS ////
@@ -36,22 +26,28 @@ const login_success = (state, payloads) =>
     isAuthenticated: true
   });
 
-// logout
+//// LOGIN SUCCESS ////
+const fetch = (state, payloads) =>
+  StateUpdater(state, {
+    loading: false,
+    user: payloads,
+    isAuthenticated: true
+  });
+
+//// LOGOUT ////
 const logout = (state, payloads) =>
   StateUpdater(state, { user: null, token: null, isAuthenticated: false });
 
 const reducer = (state = initState, action) => {
   const { type, payloads } = action;
   switch (type) {
-    case auth.AUTH_LOADING:
+    case USER.USER_LOADING:
       return loading(state, payloads);
-    case auth.AUTH_LOGIN_SUCCESS:
-      return login_success(state, payloads);
-    case auth.AUTH_REGISTER_SUCCESS:
-      return register_success(state, payloads);
-    case auth.AUTH__REGISTER_FAILED:
-      return register_failed(state, payloads);
-    case auth.AUTH_LOGOUT:
+    case USER.USER_SUCCESS:
+      return success(state, payloads);
+    case USER.USER_FETCH:
+      return fetch(state, payloads);
+    case USER.USER_LOGOUT:
       return logout(state, payloads);
     default:
       return state;

@@ -1,2 +1,7 @@
 export { hideAlert, showAlert } from "./alert";
-export { userLogin, userRegistration } from "./auth";
+export {
+  userLogin,
+  userRegistration,
+  checkUserIsAuthenticate,
+  logout
+} from "./auth";

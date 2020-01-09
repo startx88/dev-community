@@ -1,0 +1,32 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $primary-family;
+  margin-bottom: 0;
+  color: $base-dark;
+  small {
+    display: block;
+  }
+}
+
+h1 {
+  font-size: $base-size * 1.75;
+}
+h2 {
+  font-size: $base-size * 1.5;
+}
+h3 {
+  font-size: $base-size * 1.375;
+}
+h4 {
+  font-size: $base-size * 1.25;
+}
+h5 {
+  font-size: $base-size * 1.255;
+}
+h6 {
+  font-size: $base-size;
+}

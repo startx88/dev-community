@@ -1,0 +1,63 @@
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+}
+
+.Spinner {
+  span {
+    font-size: 14px;
+    letter-spacing: 1pt;
+    display: block;
+
+    color: #03a9f4;
+  }
+  svg {
+    animation-name: svgSpin;
+  }
+  circle {
+    fill: transparent;
+    stroke: #03a9f4;
+    animation-name: spin;
+  }
+
+  @include keyframes(spin) {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    100% {
+      stroke-dashoffset: 100;
+    }
+  }
+
+  @include keyframes(svgSpin) {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &.fixed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}

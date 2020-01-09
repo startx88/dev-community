@@ -1,0 +1,42 @@
+// Colors
+$base-color: #546e7a;
+$base-dark: #374250;
+$primary: #0da9ef;
+$white: #fff;
+$black: #000;
+$parimary-light: rgba($primary, 5%);
+$primary-dark: rgba($primary, 5%);
+
+$info: #00bcd4;
+
+$wraning: #f1c40f;
+$warning-light: #fed700;
+$warning-dark: "";
+
+$danger: #bf2718;
+$danger-light: #e74c3c;
+$danger-dark: #ff0000;
+
+$success: #28a745;
+
+$grey: #9da9b9;
+$grey-border: #e1e7ec;
+$grey-light: #f5f5f5;
+
+$grey-dark: "";
+$grey-darker: "";
+
+// Global Settings
+$base-size: 16px;
+$base-family: "Maven Pro", sans-serif;
+$primary-family: "Muli", sans-serif;
+$primary-secondary: "Ubuntu", sans-serif;
+$line-height: 1.4;
+$border-color: lighten($grey, 5%);
+
+// fonts
+$regular: 400;
+$semi: 500;
+$bold: 700;
+
+// typography

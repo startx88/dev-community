@@ -1,11 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
 
 // config
 dotenv.config();
 
-// database
+//////////////////////////
+//// Database connection
+//////////////////////////
 const DATABASE = `mongodb://${process.env.USER}:${process.env.PASSWORD}@ds229068.mlab.com:29068/${process.env.DATABASE}`;
 mongoose
   .connect(DATABASE, {
@@ -21,8 +24,15 @@ mongoose
     console.log("database error", error);
   });
 
-// App
+/////////////////
+////// App
+/////////////////////
 const app = express();
+
+// development
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // constants
 const PORT = process.env.PORT || 4200;
@@ -44,9 +54,9 @@ app.get("/", (req, res, next) => {
   res.sendFile("index.html");
 });
 
-/**
- * Error handling
- */
+////////////////////////
+/// Error Handling
+////////////////////////////////////////////////
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.statusCode = 404;
@@ -61,6 +71,9 @@ app.use((error, req, res, next) => {
   });
 });
 
+////////////////////////
+/// Server listening
+////////////////////////////////////////////////
 app.listen(PORT, () => {
   console.log("Server is running...", PORT);
 });

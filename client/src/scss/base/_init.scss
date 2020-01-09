@@ -1,0 +1,74 @@
+/*
+ * Base structure
+ */
+
+%flex {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body {
+  font-family: $base-family;
+  color: $base-color;
+  line-height: $line-height;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  @extend %flex;
+}
+
+#root {
+  flex: 1;
+  min-height: inherit;
+  @extend %flex;
+}
+
+/** Links */
+a {
+  text-decoration: none;
+}
+
+/** Listing **/
+ul {
+  list-style: none;
+}
+
+hr {
+  border-top-color: $border-color;
+}
+
+.preview {
+  display: flex;
+  padding-top: 10px;
+  div {
+    max-width: 100px;
+    border: 1px solid #eee;
+    padding: 5px;
+    img {
+      max-width: 100%;
+    }
+    &:only-child {
+      opacity: 1;
+    }
+    &:first-child {
+      opacity: 0.5;
+      margin-right: 10px;
+    }
+  }
+}
+
+// Grid Modify
+.row-modify {
+  margin-left: -10px;
+  margin-right: -10px;
+  > div[class*="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

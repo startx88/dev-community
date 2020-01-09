@@ -8,7 +8,6 @@ import { loginSchema } from "./Schema";
 import Input from "../UI/Input";
 import Icons from "../UI/Icons";
 import AlertMessage from "../UI/Alert";
-
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../Stores/Actions";
 
@@ -37,13 +36,11 @@ const Login = props => {
     handleSubmit
   } = formik;
 
-  let element = null;
   if (auth.isAuthenticated) {
-    element = <Redirect to="/users" />;
+    return <Redirect to="/users" />;
   }
   return (
     <div className="landing">
-      {element}
       <LandingHeader />
       <div className="landing-content">
         <div className="landing-body">

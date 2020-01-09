@@ -7,7 +7,11 @@ import { useFormik } from "formik";
 import { loginSchema } from "./Schema";
 import Input from "../UI/Input";
 import Icons from "../UI/Icons";
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ForgotPassword = props => {
+  const { auth, alert } = useSelector(state => state);
+
   const formik = useFormik({
     initialValues: {
       email: ""
@@ -27,7 +31,11 @@ const ForgotPassword = props => {
     handleBlur,
     handleSubmit
   } = formik;
-  console.log("erros", errors);
+
+  if (auth.isAuthenticated) {
+    return <Redirect to="/users" />;
+  }
+
   return (
     <div className="landing">
       <LandingHeader />

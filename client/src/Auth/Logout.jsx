@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../Stores/Actions";
 
+// Logout
 const Logout = props => {
-  return <h1>Logout</h1>;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(logout());
+  }, []);
+  return <Redirect to="/login" />;
 };
 
 export default Logout;

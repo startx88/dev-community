@@ -4,7 +4,7 @@ const LandingHeader = props => {
   return (
     <div className="landing-header">
       <div className="container">
-        <Logo href="/login" brandname="DC" />
+        <Logo href="/" brandname="DC" />
       </div>
     </div>
   );

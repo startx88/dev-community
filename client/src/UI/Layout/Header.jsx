@@ -7,7 +7,7 @@ const Header = props => {
   const { user } = props;
   return (
     <header className="navbar navbar-expand-lg navbar-admin">
-      <Logo brandname="DC" />
+      <Logo href="/users" brandname="DC" />
       <ul className="navbar-nav ml-auto">
         <Notification />
         <div className="topbar-divider d-none d-sm-block"></div>

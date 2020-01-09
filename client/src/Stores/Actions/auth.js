@@ -80,8 +80,8 @@ export const checkUserIsAuthenticate = () => async dispatch => {
   const token = localStorage.getItem("token");
   if (token) {
     setAuthToken(token);
+    dispatch(success(token));
   }
-
   try {
     const user = await axios.get("/auth");
     const userData = await user.data;

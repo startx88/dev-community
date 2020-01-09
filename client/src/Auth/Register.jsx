@@ -51,14 +51,12 @@ const Register = props => {
     handleSubmit
   } = formik;
 
-  let element = null;
   if (auth.isAuthenticated) {
-    element = <Redirect to="/users" />;
+    return <Redirect to="/users" />;
   }
 
   return (
     <div className="landing">
-      {element}
       <LandingHeader />
       <div className="landing-content">
         <div className="landing-body">

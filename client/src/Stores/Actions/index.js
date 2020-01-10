@@ -5,3 +5,5 @@ export {
   checkUserIsAuthenticate,
   logout
 } from "./auth";
+
+export { getProfile } from "./profile";

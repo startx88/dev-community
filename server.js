@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-
+const cors = require("cors");
 // config
 dotenv.config();
 
@@ -28,7 +28,7 @@ mongoose
 ////// App
 /////////////////////
 const app = express();
-
+app.use(cors());
 // development
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

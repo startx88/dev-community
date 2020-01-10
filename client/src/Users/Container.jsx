@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect } from "react";
 import PrivateRoute from "../Web/PrivateRoute";
 import { Switch } from "react-router-dom";
 const Dashboard = lazy(() => import("./Dashboard"));
@@ -8,7 +8,11 @@ const Profiles = lazy(() => import("./Profiles"));
 const Settings = lazy(() => import("./Settings"));
 
 const Container = props => {
-  const { match } = props;
+  const { getProfile, match } = props;
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
+
   return (
     <Switch>
       <PrivateRoute path={match.url} exact component={Dashboard} />

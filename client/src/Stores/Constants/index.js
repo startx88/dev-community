@@ -12,3 +12,10 @@ export const alert = {
   ALERT_HIDE: "ALERT_HIDE",
   ALERT_SHOW: "ALERT_SHOW"
 };
+
+// profiles
+export const profile = {
+  PROFILE_LOADING: "PROFILE_LOADING",
+  PROFILE_FAILED: "PROFILE_FAILED",
+  PROFILE_FETCH: "PROFILE_FETCH"
+};

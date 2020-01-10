@@ -112,6 +112,7 @@ exports.userProfile = async (req, res, next) => {
       success: true,
       user
     });
+    
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

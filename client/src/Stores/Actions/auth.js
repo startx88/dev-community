@@ -23,10 +23,22 @@ const fetch_user = (user, token) => ({
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("expireDate");
   return {
     type: auth.AUTH_LOGOUT
   };
 };
+
+
+// Check time out
+const checkTimeout = (timeout) => {
+
+  return dispatch => {
+    setTimeout(() => {
+      logout()
+    }, timeout * 1000)
+  }
+}
 
 ///////////////////////////////
 /////// USER REGISTRATION
@@ -34,7 +46,7 @@ export const logout = () => {
 export const userRegistration = inputdata => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.post("/user", inputdata);
+    const response = await axios.post("/user/signup", inputdata);
     const responseData = await response.data;
     localStorage.setItem("token", responseData.token);
     dispatch(signup_success(responseData.token));
@@ -53,11 +65,15 @@ export const userRegistration = inputdata => async dispatch => {
 export const userLogin = inputdata => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.post("/auth", inputdata);
+    const response = await axios.post("/user", inputdata);
     const responseData = await response.data;
+    const timeout = new Date(new Date().getTime() + responseData.expiresIn * 1000);
+
     localStorage.setItem("token", responseData.token);
+    localStorage.setItem('expireDate', timeout)
     dispatch(login_success(responseData.token));
     dispatch(checkUserIsAuthenticate());
+    dispatch(checkTimeout(responseData.expiresIn));
   } catch (err) {
     const error = err.response.data.errors;
     if (error) dispatch(showAlert(error.message, "warning"));
@@ -70,14 +86,22 @@ export const userLogin = inputdata => async dispatch => {
 ///////////////////////////////////
 export const checkUserIsAuthenticate = () => async dispatch => {
   const token = localStorage.getItem("token");
-  if (token) {
+  if (!token) {
+    dispatch(logout())
+  } else {
     setAuthToken(token);
-    try {
-      const user = await axios.get("/auth", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const userData = await user.data;
-      dispatch(fetch_user(userData.user, token));
-    } catch (err) {}
+    const timeout = new Date(localStorage.expireDate);
+    if (timeout <= new Date()) {
+      dispatch(logout())
+    } else {
+      try {
+        const user = await axios.get("/user", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const userData = await user.data;
+        dispatch(fetch_user(userData.user, token));
+        dispatch(checkTimeout(new Date(timeout.getTime() - new Date().getTime()) / 1000));
+      } catch (err) { }
+    }
   }
 };

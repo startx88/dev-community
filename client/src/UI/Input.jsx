@@ -69,7 +69,7 @@ const Input = ({
       throw new Error("no input type");
   }
   return (
-    <div className={["form-group", icon && "icon", parentclass].join(" ")}>
+    <div className={["form-group input", icon && "icon", parentclass].join(" ")}>
       {icon && <Icons classname="_icon" icon={icon} />}
       {label && <label>{label}</label>}
       {element}

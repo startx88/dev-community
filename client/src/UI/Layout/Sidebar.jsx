@@ -25,18 +25,19 @@ const Sidebar = props => {
 
             <Links ismenu classname="nav-link" href={match.path + "/courses"}>
               <Icons icon="long-arrow-alt-right" />
-              Courses
+              My Courses
             </Links>
 
             <Links ismenu classname="nav-link" href={match.path + "/posts"}>
               <Icons icon="long-arrow-alt-right" />
-              Posts
+              My Posts
             </Links>
 
+            
             <Links ismenu classname="nav-link" href={match.path + "/profiles"}>
               <Icons icon="long-arrow-alt-right" />
-              Profiles
-            </Links>
+              My Profiles
+            </Links> 
 
             <hr />
 

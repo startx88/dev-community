@@ -12,7 +12,7 @@ import { userRegistration } from "../Stores/Actions";
 
 const Register = props => {
   const dispatch = useDispatch();
-  const { auth, alert } = useSelector(state => state);
+  const { auth } = useSelector(state => state);
   //  console.log("user", token);
 
   // button sleep for 2 seconds
@@ -51,7 +51,7 @@ const Register = props => {
     handleSubmit
   } = formik;
 
-  if (auth.isAuthenticated) {
+  if (auth.isAuth) {
     return <Redirect to="/users" />;
   }
 

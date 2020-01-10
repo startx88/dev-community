@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 /// Main Layout
 const Container = props => {
   const { auth } = useSelector(state => state);
+
   return (
     <div className="wrapper">
       <Header user={auth} />

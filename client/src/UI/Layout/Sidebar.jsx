@@ -15,7 +15,7 @@ const Sidebar = props => {
     >
       <Scrollbars autoHide style={{ width: "100%", height: "100%" }}>
         <div className="menu">
-          {user.user && <UserControl sidebar userInfo={user.user} />}
+          {user.users && <UserControl sidebar userInfo={user.users} />}
           <hr />
           <ul>
             <Links ismenu classname="nav-link" href={match.path}>

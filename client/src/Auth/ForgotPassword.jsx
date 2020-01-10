@@ -9,8 +9,9 @@ import Input from "../UI/Input";
 import Icons from "../UI/Icons";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const ForgotPassword = props => {
-  const { auth, alert } = useSelector(state => state);
+  const { auth } = useSelector(state => state);
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +20,6 @@ const ForgotPassword = props => {
     validationSchema: loginSchema,
     onSubmit: values => {
       console.log("values", values);
-      //alert(JSON.stringify(values, null, 2));
     }
   });
 
@@ -32,7 +32,7 @@ const ForgotPassword = props => {
     handleSubmit
   } = formik;
 
-  if (auth.isAuthenticated) {
+  if (auth.isAuth) {
     return <Redirect to="/users" />;
   }
 

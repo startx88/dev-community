@@ -36,7 +36,7 @@ const Login = props => {
     handleSubmit
   } = formik;
 
-  if (auth.isAuthenticated) {
+  if (auth.isAuth) {
     return <Redirect to="/users" />;
   }
   return (

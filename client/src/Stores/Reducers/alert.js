@@ -1,5 +1,5 @@
 import { alert } from "../Constants";
-import StateUpdater from "../../_helper/StateUpdater";
+import updateObject from "../../_helper/updateObject";
 
 // initial state
 const initState = {
@@ -10,11 +10,11 @@ const initState = {
 
 // hide alert
 const hideAlert = (state, payloads) =>
-  StateUpdater(state, { show: false, message: null, type: "warning" });
+  updateObject(state, { show: false, message: null, type: "warning" });
 
 //show alert
 const showAlert = (state, payloads) =>
-  StateUpdater(state, {
+  updateObject(state, {
     show: true,
     message: payloads.message,
     type: payloads.type

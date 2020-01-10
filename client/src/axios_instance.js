@@ -9,11 +9,10 @@ const instance = axios.create({
 
 export const setAuthToken = token => {
   if (token) {
-    axios.defaults.headers.Authorization = `Bearer ${token}`;
-    // axios.interceptors.request.use(function(config) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    //   return config;
-    // });
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.interceptors.request.use(function(config) {
+      console.log(config);
+    });
   } else {
     delete axios.defaults.headers.common["Authorization"];
   }

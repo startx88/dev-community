@@ -1,53 +1,54 @@
-import { USER } from "../Constants";
-import StateUpdater from "../../_helper/StateUpdater";
+import { auth } from "../Constants";
+import updateObject from "../../_helper/updateObject";
 
 const initState = {
-  user: null,
+  users: null,
   token: null,
-  isAuthenticated: null,
+  error: null,
+  isAuth: false,
   loading: false
 };
 
-//// LOADING ////
-const loading = (state, payloads) => StateUpdater(state, { loading: true });
+const loading = (state, payloads) => updateObject(state, { loading: true });
 
-//// SUCCESS ////
+const failed = (state, payloads) =>
+  updateObject(state, { loading: false, errors: payloads });
+
 const success = (state, payloads) =>
-  StateUpdater(state, {
+  updateObject(state, {
     loading: false,
     token: payloads
   });
 
-//// LOGIN SUCCESS ////
-const login_success = (state, payloads) =>
-  StateUpdater(state, {
+const fetchUser = (state, payloads) =>
+  updateObject(state, {
     loading: false,
-    token: payloads,
-    isAuthenticated: true
+    users: payloads.user,
+    token: payloads.token,
+    isAuth: true
   });
 
-//// LOGIN SUCCESS ////
-const fetch = (state, payloads) =>
-  StateUpdater(state, {
-    loading: false,
-    user: payloads,
-    isAuthenticated: true
-  });
-
-//// LOGOUT ////
 const logout = (state, payloads) =>
-  StateUpdater(state, { user: null, token: null, isAuthenticated: false });
+  updateObject(state, {
+    loading: false,
+    users: null,
+    token: null,
+    isAuth: false
+  });
 
 const reducer = (state = initState, action) => {
   const { type, payloads } = action;
   switch (type) {
-    case USER.USER_LOADING:
+    case auth.AUTH_START:
       return loading(state, payloads);
-    case USER.USER_SUCCESS:
+    case auth.AUTH_FAILED:
+      return failed(state, payloads);
+    case auth.AUTH_LOGIN_SUCCESS:
+    case auth.AUTH_REGISTER_SUCCESS:
       return success(state, payloads);
-    case USER.USER_FETCH:
-      return fetch(state, payloads);
-    case USER.USER_LOGOUT:
+    case auth.AUTH_FETCH_USER:
+      return fetchUser(state, payloads);
+    case auth.AUTH_LOGOUT:
       return logout(state, payloads);
     default:
       return state;

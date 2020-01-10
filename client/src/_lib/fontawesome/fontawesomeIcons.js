@@ -22,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faTrash,
+  faEnvelopeOpen,
   faBell,
   faUser,
   faLock,
@@ -35,6 +36,8 @@ library.add(
   faPowerOff,
   faComments,
   faTimes,
+  faCalendar,
   faCalendarAlt,
+  faMobile,
   faMobileAlt
 );

@@ -11,7 +11,7 @@ const Header = props => {
       <ul className="navbar-nav ml-auto">
         <Notification />
         <div className="topbar-divider d-none d-sm-block"></div>
-        {user.user && <UserControl userInfo={user.user} />}
+        {user.users && <UserControl userInfo={user.users} />}
       </ul>
     </header>
   );

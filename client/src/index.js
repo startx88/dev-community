@@ -12,7 +12,7 @@ import "./_lib";
 const Router = () => {
   return (
     <Provider store={Store}>
-      <BrowserRouter>
+      <BrowserRouter basename="dev-community">
         <App />
       </BrowserRouter>
     </Provider>

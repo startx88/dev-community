@@ -1,39 +1,30 @@
-import { USER } from "../Constants";
+import { auth } from "../Constants";
 import axios, { setAuthToken } from "../../axios_instance";
 import { showAlert } from "./alert";
 
-// headers
-const config = {
-  headers: {
-    "Content-Type": "application/json"
-  }
-};
+const loading = () => ({ type: auth.AUTH_START });
 
-// loading
-const loading = () => ({ type: USER.USER_LOADING });
+const failed = error => ({ type: auth.AUTH_FAILED, payloads: error });
 
-// success
-const success = token => {
-  return {
-    type: USER.USER_SUCCESS,
-    payloads: token
-  };
-};
+const login_success = token => ({
+  type: auth.AUTH_LOGIN_SUCCESS,
+  payloads: token
+});
 
-// fetch user
-const fetch = user => {
-  return {
-    type: USER.USER_FETCH,
-    payloads: user
-  };
-};
-///////////////////////////////
-/////// LOGOUT
-///////////////////////////////////
+const signup_success = token => ({
+  type: auth.AUTH_REGISTER_SUCCESS,
+  payloads: token
+});
+
+const fetch_user = (user, token) => ({
+  type: auth.AUTH_FETCH_USER,
+  payloads: { user, token }
+});
+
 export const logout = () => {
-  localStorage.clear();
+  localStorage.removeItem("token");
   return {
-    type: USER.USER_LOGOUT
+    type: auth.AUTH_LOGOUT
   };
 };
 
@@ -46,12 +37,13 @@ export const userRegistration = inputdata => async dispatch => {
     const response = await axios.post("/user", inputdata);
     const responseData = await response.data;
     localStorage.setItem("token", responseData.token);
-    dispatch(success(responseData.token));
+    dispatch(signup_success(responseData.token));
     dispatch(showAlert(responseData.message, "success"));
+    dispatch(checkUserIsAuthenticate());
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
-    console.log("error", err);
+    dispatch(failed(message));
   }
 };
 
@@ -63,13 +55,13 @@ export const userLogin = inputdata => async dispatch => {
   try {
     const response = await axios.post("/auth", inputdata);
     const responseData = await response.data;
-    console.log("response", responseData);
     localStorage.setItem("token", responseData.token);
-    dispatch(success(responseData.token));
+    dispatch(login_success(responseData.token));
+    dispatch(checkUserIsAuthenticate());
   } catch (err) {
     const error = err.response.data.errors;
     if (error) dispatch(showAlert(error.message, "warning"));
-    console.log("error", err);
+    dispatch(failed(error.message));
   }
 };
 
@@ -80,11 +72,12 @@ export const checkUserIsAuthenticate = () => async dispatch => {
   const token = localStorage.getItem("token");
   if (token) {
     setAuthToken(token);
-    dispatch(success(token));
+    try {
+      const user = await axios.get("/auth", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const userData = await user.data;
+      dispatch(fetch_user(userData.user, token));
+    } catch (err) {}
   }
-  try {
-    const user = await axios.get("/auth");
-    const userData = await user.data;
-    dispatch(fetch(userData.user));
-  } catch (err) {}
 };

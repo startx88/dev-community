@@ -42,12 +42,10 @@ app.use(express.static("public"));
 app.use("/upload", express.static("upload"));
 
 // routes
-const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
 const postRoute = require("./routes/post");
-app.use("/api/user", userRoute);
-app.use("/api/auth", authRoute);
+app.use("/api/user", authRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/posts", postRoute);
 app.get("/", (req, res, next) => {

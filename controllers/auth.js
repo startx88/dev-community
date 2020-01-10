@@ -2,14 +2,59 @@ const User = require("../models/users");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
-// user signin
-exports.getLogin = async (req, res, next) => {
+///////////////////////////////
+//// Register User
+///////////////////////////////
+exports.userSignup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = new Error(errors.array()[0].msg);
     error.statusCode = 422;
     throw next(error);
   }
+
+  const { name, email, password, mobile } = req.body;
+  try {
+    const user = new User({
+      name: name,
+      email: email,
+      password: await User.encryptPassword(password),
+      avatar: await User.genAvatar(email),
+      mobile: mobile
+    });
+
+    const result = await user.save();
+
+    const token = jwt.sign(
+      { email: email, userId: result._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "User registered successfull.",
+      token: token,
+      userId: result._id,
+      expiresIn: 3600
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
+
+// user signin
+exports.userLogin = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error(errors.array()[0].msg);
+    error.statusCode = 422;
+    throw next(error);
+  }
+
   const { email, password } = req.body;
 
   try {
@@ -38,7 +83,9 @@ exports.getLogin = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "User loggedin successfull.",
-      token: token
+      token: token,
+      userId: user._id,
+      expiresIn: 3600
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -48,9 +95,10 @@ exports.getLogin = async (req, res, next) => {
   }
 };
 
-//
-
-exports.getProfile = async (req, res, next) => {
+///////////////////////////
+////// Get logged in user
+/////////////////////////
+exports.userProfile = async (req, res, next) => {
   const userId = req.user.userId;
   try {
     const user = await User.findById(userId).select("-password");

@@ -1,8 +1,7 @@
 import React from "react";
 import Button from "../UI/Button";
 import { Link, Redirect } from "react-router-dom";
-import LandingFooter from "../Pages/Home/Controls/LandingFooter";
-import LandingHeader from "../Pages/Home/Controls/LandingHeader";
+
 import { useFormik } from "formik";
 import { registerSchema } from "./Schema";
 import Input from "../UI/Input";
@@ -56,101 +55,97 @@ const Register = props => {
   }
 
   return (
-    <div className="landing">
-      <LandingHeader />
-      <div className="landing-content">
-        <div className="landing-body">
-          <div className="auth">
-            <form onSubmit={handleSubmit}>
-              <div className="auth-title">
-                {/* <Image src={LogoImage} classname="mb-3" /> */}
-                <h2>Register</h2>
-                <small>
-                  If you have an account, please click on{" "}
-                  <Link to="/login">Login</Link>
-                </small>
-              </div>
+    <div className="landing-content">
+      <div className="landing-body">
+        <div className="auth">
+          <form onSubmit={handleSubmit}>
+            <div className="auth-title">
+              {/* <Image src={LogoImage} classname="mb-3" /> */}
+              <h2>Register</h2>
+              <small>
+                If you have an account, please click on{" "}
+                <Link to="/login">Login</Link>
+              </small>
+            </div>
+            <Input
+              inputtype="input"
+              type="text"
+              name="name"
+              value={values.name}
+              setFieldValue={setFieldValue}
+              touched={touched}
+              errors={errors}
+              blur={handleBlur}
+              placeholder="Full Name"
+            />
+            <Input
+              inputtype="input"
+              type="email"
+              name="email"
+              value={values.email}
+              setFieldValue={setFieldValue}
+              touched={touched}
+              errors={errors}
+              blur={handleBlur}
+              placeholder="Email"
+            />
+            <div className="row">
               <Input
+                parentclass="col-sm-6"
                 inputtype="input"
-                type="text"
-                name="name"
-                value={values.name}
+                type="password"
+                name="password"
+                value={values.password}
                 setFieldValue={setFieldValue}
                 touched={touched}
                 errors={errors}
                 blur={handleBlur}
-                placeholder="Full Name"
+                placeholder="Password"
               />
               <Input
+                parentclass="col-sm-6"
                 inputtype="input"
-                type="email"
-                name="email"
-                value={values.email}
+                type="password"
+                name="password2"
+                value={values.password2}
                 setFieldValue={setFieldValue}
                 touched={touched}
                 errors={errors}
                 blur={handleBlur}
-                placeholder="Email"
+                placeholder="Confirm password"
               />
-              <div className="row">
-                <Input
-                  parentclass="col-sm-6"
-                  inputtype="input"
-                  type="password"
-                  name="password"
-                  value={values.password}
-                  setFieldValue={setFieldValue}
-                  touched={touched}
-                  errors={errors}
-                  blur={handleBlur}
-                  placeholder="Password"
-                />
-                <Input
-                  parentclass="col-sm-6"
-                  inputtype="input"
-                  type="password"
-                  name="password2"
-                  value={values.password2}
-                  setFieldValue={setFieldValue}
-                  touched={touched}
-                  errors={errors}
-                  blur={handleBlur}
-                  placeholder="Confirm password"
-                />
-              </div>
+            </div>
 
-              <Input
-                inputtype="input"
-                type="text"
-                name="mobile"
-                value={values.mobile}
-                setFieldValue={setFieldValue}
-                touched={touched}
-                errors={errors}
-                blur={handleBlur}
-                placeholder="Mobile No."
-              />
-              <div className="form-group text-center">
-                <Button type="submit" classname="btn-info" btnType="auth">
-                  Register
+            <Input
+              inputtype="input"
+              type="text"
+              name="mobile"
+              value={values.mobile}
+              setFieldValue={setFieldValue}
+              touched={touched}
+              errors={errors}
+              blur={handleBlur}
+              placeholder="Mobile No."
+            />
+            <div className="form-group text-center">
+              <Button type="submit" classname="btn-info" btnType="auth">
+                Register
+              </Button>
+
+              <span className="sep">Or</span>
+              <div className="social-btn">
+                <small>Sign in with Google or Facebook </small>
+                <Button btnType="auth" classname="btn-danger">
+                  Google
                 </Button>
-
-                <span className="sep">Or</span>
-                <div className="social-btn">
-                  <small>Sign in with Google or Facebook </small>
-                  <Button btnType="auth" classname="btn-danger">
-                    Google
-                  </Button>
-                  <Button btnType="auth" classname="btn-primary">
-                    Facebook
-                  </Button>
-                </div>
+                <Button btnType="auth" classname="btn-primary">
+                  Facebook
+                </Button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-      <LandingFooter />
     </div>
   );
 };

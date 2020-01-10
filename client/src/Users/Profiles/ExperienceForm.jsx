@@ -125,6 +125,7 @@ const ExperienceForm = props => {
                         blur={handleBlur}
                     />
                     <div className="col-sm-12">
+                        <button type="submit">Save</button>
                         <Button type="submit" btnType="outline-info">Add Experience</Button>
                     </div>
                 </div>

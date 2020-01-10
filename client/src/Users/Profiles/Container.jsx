@@ -23,7 +23,6 @@ const Container = props => {
       <PrivateRoute path={match.url + "/profile"} component={ProfileForm} />
       <PrivateRoute path={match.url + "/education"} component={EducationForm} />
       <PrivateRoute path={match.url + "/experience"} component={ExperienceForm} />
-
     </>
   );
 };

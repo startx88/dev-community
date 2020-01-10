@@ -1,7 +1,17 @@
 import * as yup from 'yup'
 
 export const ProfileSchema = yup.object().shape({
-
+    status: yup.string().required(),
+    skills: yup.array()
+        .min(1, 'Create at least 1 tags')
+        .of(
+            yup.object().shape({
+                label: yup.string().required(),
+                value: yup.string().required(),
+            })
+        ),
+    company: yup.string().required(),
+    location: yup.string().required(),
 })
 
 export const ExperienceSchema = yup.object().shape({

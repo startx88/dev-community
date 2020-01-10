@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import { ExperienceSchema } from './Schema'
+import { ProfileSchema } from './Schema'
 import AlertMessage from '../../UI/Alert'
 import Input from '../../UI/Input'
 import Button from '../../UI/Button'
 import Title from '../../Widgets/Title/Title'
-import Checkbox from '../../UI/Checkbox'
 
+import DynamicSelect from '../../UI/DynamicSelect'
+import Options from '../widgets/Options'
+import { statusData } from './data'
 const ProfileForm = props => {
     const [social, setSocial] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             company: "",
@@ -24,9 +27,9 @@ const ProfileForm = props => {
             linkedin: "",
             instagram: ""
         },
-        validationSchema: ExperienceSchema,
+        validationSchema: ProfileSchema,
         onSubmit: values => {
-            console.log(values)
+            console.log('values', values)
         }
     });
 
@@ -36,7 +39,8 @@ const ProfileForm = props => {
         errors,
         setFieldValue,
         handleBlur,
-        handleSubmit
+        handleSubmit,
+        setFieldTouched
     } = formik;
 
     const socialHandler = () => {
@@ -47,11 +51,35 @@ const ProfileForm = props => {
             {alert.message}
         </AlertMessage>
 
-        <form className='panel  panel-white' onSubmit={handleSubmit}>
+        <form className='panel panel-white' onSubmit={handleSubmit}>
             <Title classname="mb-3">
                 <h6>Add Profile</h6>
             </Title>
             <div className="row">
+                <DynamicSelect
+                    classname="col-sm-6"
+                    label="Status"
+                    name="status"
+                    value={values.status}
+                    options={statusData}
+                    renderProps={option => <Options options={option} />}
+                    setFieldValue={setFieldValue}
+                    errors={errors.status}
+                    touched={touched.status}
+                    onBlur={setFieldTouched}
+                />
+                <DynamicSelect
+                    isMulti
+                    isClearable
+                    classname="col-sm-6"
+                    label="Skills"
+                    name="skills"
+                    value={values.skills}
+                    setFieldValue={setFieldTouched}
+                    errors={errors.skills}
+                    onBlur={setFieldTouched}
+                    touched={touched.skills}
+                />
                 <Input
                     parentclass="col-sm-6"
                     label="Enter company"
@@ -88,31 +116,8 @@ const ProfileForm = props => {
                     touched={touched}
                     blur={handleBlur}
                 />
-                <Input
-                    parentclass="col-sm-6"
-                    inputtype="input"
-                    label="Status"
-                    type="text"
-                    name="status"
-                    value={values.status}
-                    setFieldValue={setFieldValue}
-                    errors={errors}
-                    touched={touched}
-                    blur={handleBlur}
 
-                />
-                <Input
-                    parentclass="col-sm-6"
-                    inputtype="input"
-                    label="Skills"
-                    type="text"
-                    name="skills"
-                    value={values.skills}
-                    setFieldValue={setFieldValue}
-                    errors={errors}
-                    touched={touched}
-                    blur={handleBlur}
-                />
+
                 <Input
                     parentclass="col-sm-12"
                     inputtype="input"

@@ -1,13 +1,15 @@
 import React from "react";
 import Header from "../Header";
 import Footer from "../Footer";
-import Header from "../../Main";
+import Main from "../../Main";
+import { useSelector } from "react-redux";
 
 const Container = props => {
+  const { auth } = useSelector(state => state);
   return (
     <>
-      <Header admin />
-      <Main>{props.children}</Main>
+      <Header admin user={auth} />
+      <Main classname="container">{props.children}</Main>
       <Footer />
     </>
   );

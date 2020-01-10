@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import UserLayout from "../UI/Layout";
+import UserLayout from "../UI/Layout/User";
 import PublicLayout from "../UI/Layout/Public";
 
 const Login = lazy(() => import("../Auth/Login"));

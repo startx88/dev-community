@@ -29,7 +29,8 @@ const ForgotPassword = props => {
     errors,
     setFieldValue,
     handleBlur,
-    handleSubmit
+    handleSubmit,
+    isSubmitting
   } = formik;
 
   if (auth.isAuth) {
@@ -66,7 +67,12 @@ const ForgotPassword = props => {
                 <Link to="/login" className="btn btn-link btn-forgot btn-block">
                   <Icons classname="mr-1" icon="lock" /> Back to login
                 </Link>
-                <Button type="submit" classname="btn-info" btnType="auth">
+                <Button
+                  isSubmitting={isSubmitting}
+                  type="submit"
+                  classname="btn-info"
+                  btnType="auth"
+                >
                   Reset Password
                 </Button>
               </div>

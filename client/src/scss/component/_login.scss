@@ -1,0 +1,104 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  @at-root #root {
+    min-height: 100vh;
+  }
+
+  &-wrap {
+    flex: 1;
+    display: inherit;
+  }
+
+  .column {
+    flex: 0 0 50%;
+    position: relative;
+    &:first-child {
+      background-color: #f1f9ff;
+      &:before {
+        position: absolute;
+        content: "";
+        border-right: 100px solid #fff;
+        border-top: 100vh solid transparent;
+        top: 0;
+        right: 0;
+      }
+    }
+    &:last-child {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  // Form
+  form {
+    max-width: 450px;
+    min-width: 350px;
+    label {
+      margin-left: 13px;
+    }
+  }
+  &-title {
+    text-align: center;
+    margin-bottom: 30px;
+    h1 {
+      margin-bottom: 10px;
+      font-size: $base-size * 1.5;
+    }
+  }
+  &-body {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .form-control {
+    min-height: 45px;
+    border-radius: 25px;
+    border-color: $border-color;
+    padding: 10px 15px;
+    background-color: transparent;
+  }
+}
+
+/** Seprator **/
+.sep {
+  display: block;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  position: relative;
+  &:before,
+  &:after {
+    content: "";
+    margin: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+  &:before {
+    width: 30px;
+    height: 20px;
+    z-index: -1;
+    background-color: #fff;
+  }
+  &:after {
+    z-index: -2;
+    height: 1px;
+    width: 50%;
+    top: 25px;
+    background-color: darken($grey, 10);
+  }
+}
+
+/** social button **/
+.social-btn {
+  .btn {
+    margin: 0 10px;
+  }
+  small {
+    color: $base-dark;
+    margin-bottom: 15px;
+    display: block;
+  }
+}

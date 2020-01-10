@@ -16,9 +16,13 @@ const Button = ({
   style,
   ...rest
 }) => {
+  const styles = {
+    ...style,
+    cursor: isSubmitting ? "none" : "pointer"
+  };
   return (
     <button
-      style={style}
+      style={styles}
       disabled={isSubmitting}
       {...rest}
       type={type}

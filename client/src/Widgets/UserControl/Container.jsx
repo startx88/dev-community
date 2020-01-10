@@ -9,7 +9,7 @@ const Container = ({ userInfo, sidebar, ...rest }) => {
   return sidebar ? (
     <div className="user-info">
       <div className="image">
-        <Links href="/users/profile" classname="waves-effect waves-block">
+        <Links href="/users/profiles" classname="waves-effect waves-block">
           <Image alt={name} src={avatar} />
         </Links>
       </div>

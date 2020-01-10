@@ -1,0 +1,44 @@
+.admin-page-title,
+.page-title {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: capitalize;
+  h4 {
+    small {
+      margin-top: 5px;
+      font-size: $base-size - 3;
+    }
+  }
+}
+
+.page-title {
+  margin-bottom: 60px;
+  padding: 36px 0;
+  background-color: rgba($grey-light, 0.6);
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+}
+
+.section-title {
+  margin-bottom: 20px;
+  flex: 100%;
+  text-align: center;
+
+  small {
+    margin-top: 5px;
+    font-size: $base-size;
+    display: block;
+    color: $primary;
+  }
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import BreadCrumbs from "../../ui/BreadCrumbs";
+import BreadCrumbs from "../../UI/BreadCrumbs";
 import { withRouter } from "react-router-dom";
 
 /** Title */

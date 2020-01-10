@@ -1,0 +1,11 @@
+import React from "react";
+import Title from "../../Widgets/Title/Title";
+const Container = props => {
+  return (
+    <>
+      <Title type="admin" />
+      <hr />
+    </>
+  );
+};
+export default Container;

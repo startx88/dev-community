@@ -1,0 +1,56 @@
+._checkbox,
+._radio {
+  margin-right: 35px;
+  position: relative;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    visibility: hidden;
+    position: absolute;
+    &:checked + span {
+      &:after {
+        background-color: $primary;
+        border-color: $primary;
+      }
+    }
+  }
+  input[type="radio"] + span,
+  input[type="checkbox"] + span {
+    cursor: pointer;
+    margin: 0;
+    padding-left: 35px;
+    &:before,
+    &:after {
+      left: 0;
+      content: "";
+      display: inline-block;
+      position: absolute;
+    }
+    &:before {
+      width: 24px;
+      height: 24px;
+      border: 2px solid darken($border-color, 10);
+    }
+    &:after {
+      top: 4px;
+      left: 4px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.top {
+  span {
+    display: block;
+  }
+}
+
+.left {
+  padding-top: 20px;
+  display: inline-flex;
+}

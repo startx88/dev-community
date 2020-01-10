@@ -75,3 +75,6 @@ hr {
     padding-right: 10px;
   }
 }
+hr {
+  border-top-color: lighten($border-color, 20%);
+}

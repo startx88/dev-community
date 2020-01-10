@@ -1,0 +1,15 @@
+.form-group {
+  &.icon {
+    position: relative;
+
+    ._icon {
+      position: absolute;
+      left: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .form-control {
+      padding-left: 40px;
+    }
+  }
+}

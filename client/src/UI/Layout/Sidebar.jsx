@@ -23,65 +23,24 @@ const Sidebar = props => {
               Dashboard
             </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/brands"}>
+            <Links ismenu classname="nav-link" href={match.path + "/courses"}>
               <Icons icon="long-arrow-alt-right" />
-              Brands
+              Courses
             </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/category"}>
+            <Links ismenu classname="nav-link" href={match.path + "/posts"}>
               <Icons icon="long-arrow-alt-right" />
-              Category
+              Posts
             </Links>
 
-            <Links
-              ismenu
-              classname="nav-link"
-              href={match.path + "/subcategory"}
-            >
+            <Links ismenu classname="nav-link" href={match.path + "/profiles"}>
               <Icons icon="long-arrow-alt-right" />
-              Sub Category
+              Profiles
             </Links>
 
-            <Links
-              ismenu
-              classname="nav-link"
-              href={match.path + "/product-category"}
-            >
-              <Icons icon="long-arrow-alt-right" />
-              Product Category
-            </Links>
-
-            <Links ismenu classname="nav-link" href={match.path + "/product"}>
-              <Icons icon="long-arrow-alt-right" />
-              Products
-            </Links>
-
-            <Links ismenu classname="nav-link" href={match.path + "/cart"}>
-              <Icons icon="long-arrow-alt-right" />
-              Cart
-            </Links>
-
-            <Links ismenu classname="nav-link" href={match.path + "/orders"}>
-              <Icons icon="long-arrow-alt-right" />
-              Orders
-            </Links>
-
-            <Links ismenu classname="nav-link" href={match.path + "/size"}>
-              <Icons icon="long-arrow-alt-right" />
-              Size
-            </Links>
-
-            <Links ismenu classname="nav-link" href={match.path + "/color"}>
-              <Icons icon="long-arrow-alt-right" />
-              Color
-            </Links>
             <hr />
-            <Links ismenu classname="nav-link" href={match.path + "/users"}>
-              <Icons icon="user" />
-              Users
-            </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/product"}>
+            <Links ismenu classname="nav-link" href={match.path + "/settings"}>
               <Icons icon="cog" />
               Settings
             </Links>

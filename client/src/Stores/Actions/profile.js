@@ -23,3 +23,11 @@ export const getProfile = () => async dispatch => {
     console.log(err);
   }
 };
+
+export const addProfile=(inputdata)=> async dispatch=>{
+  try{
+     
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -12,7 +12,7 @@ const InputCheckbox = ({
   value,
   setFieldValue,
   top,
-  parentClass,
+  parentclass,
   left
 }) => {
   const changeHandler = event => {
@@ -27,8 +27,9 @@ const InputCheckbox = ({
 
   return (
     <div
-      className={["from-group", top ? "top" : "left", parentClass].join(" ")}
+      className={["from-group", parentclass].join(" ")}
     >
+      {top && <small className="_top">{label}</small>}
       <label htmlFor={id} className={["_checkbox"].join(" ")}>
         <input
           type={type}
@@ -38,8 +39,9 @@ const InputCheckbox = ({
           value={label}
           defaultChecked={value}
         />
-        <span>{label}</span>
+        <span />
       </label>
+      {!top && <small>{label}</small>}
     </div>
   );
 };

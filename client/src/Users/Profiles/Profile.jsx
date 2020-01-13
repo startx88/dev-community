@@ -10,13 +10,12 @@ import ExperienceShow from "./Controls/ExperienceShow";
 import { Link } from "react-router-dom";
 // Profiles
 const Profile = props => {
-  const [edit, setEdit] = useState(false);
   const { parentProp } = props;
 
   const {
     alert: { show, type },
     profile: { profile: info }
-  } = useSelector(state => state);
+  } = parentProp;
 
   // delete education
   const educationDeleteHandler = id => {
@@ -38,7 +37,6 @@ const Profile = props => {
     return <Spinner />;
   }
 
-  console.log(props);
   return (
     <>
       <AlertMessage show={show} type={type} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { ProfileSchema } from "./Schema";
 import AlertMessage from "../../UI/Alert";
@@ -11,8 +11,7 @@ import DynamicSelect from "../../UI/DynamicSelect";
 import Options from "../widgets/Options";
 import { statusData } from "./data";
 import useQuery from "../../_hooks/useQuery";
-import { useDispatch, useSelector } from "react-redux";
-import { getProfile } from "../../Stores/Actions";
+
 const returToArrayValue = event => {
   return event.map(size => size.value);
 };
@@ -23,7 +22,8 @@ const ProfileForm = props => {
   const { parentProp } = props;
 
   const {
-    profile: { profile }
+    profile: { profile },
+    alert: { show }
   } = parentProp;
 
   let query = useQuery();
@@ -69,12 +69,18 @@ const ProfileForm = props => {
     return <Redirect to="/users/profiles" />;
   }
 
+  // redirect if data submit success
+  let element = null;
+  if (parentProp.alert.show) {
+    element = <Redirect to="/users/profiles" />;
+  }
+
   return (
     <div className="profile-form">
-      <AlertMessage type={alert.type} show={alert.show}>
-        {alert.message}
+      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
+        {parentProp.alert.message}
       </AlertMessage>
-
+      {element}
       <form className="panel panel-white" onSubmit={handleSubmit}>
         <Title classname="mb-3">
           <h6>Add Profile</h6>
@@ -241,9 +247,24 @@ const ProfileForm = props => {
             )}
           </div>
           <div className="col-sm-12">
-            <Button type="submit" btnType="outline-info">
-              Add Education
-            </Button>
+            {!isEdit ? (
+              <Button type="submit" btnType="outline-info">
+                Add Profile
+              </Button>
+            ) : (
+              <>
+                <Button type="submit" btnType="outline-info" classname="mr-2">
+                  Update Profile
+                </Button>
+                <Link
+                  to="/users/profiles"
+                  type="submit"
+                  className="btn btn-cancel"
+                >
+                  Cancel
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </form>

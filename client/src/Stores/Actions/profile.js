@@ -63,51 +63,39 @@ export const getProfile = () => async dispatch => {
 ///////////////////////////////
 /////// add / update profile
 ///////////////////////////////////
-export const addProfile = (inputData, id, status) => async dispatch => {
-  const postData = {
-    ...inputData,
-    status: inputData.status.title
-  };
+export const addProfile = inputData => async dispatch => {
+  let postData = null;
+  if (typeof inputData.status === "object") {
+    postData = {
+      ...inputData,
+      status: inputData.status.title
+    };
+  } else {
+    postData = {
+      ...inputData,
+      status: inputData.status
+    };
+  }
   try {
-    if (status === "UPDATE") {
-      const response = await axios.post(`/profile/${id}`, postData);
-      const responseData = await response.data;
-      dispatch(
-        UPDATE_PROFILE(id, {
-          company: inputData.company,
-          website: inputData.website,
-          location: inputData.location,
-          status: inputData.status,
-          skills: inputData.skills,
-          bio: inputData.bio,
-          gitusername: inputData.gitusername,
-          youtube: inputData.youtube,
-          twitter: inputData.twitter,
-          facebook: inputData.facebook,
-          linkedin: inputData.linkedin,
-          instagram: inputData.instagram
-        })
-      );
-    } else {
-      const response = await axios.post("/profile", postData);
-      const responseData = await response.data;
-      dispatch(
-        ADD_PROFILE({
-          company: inputData.company,
-          website: inputData.website,
-          location: inputData.location,
-          status: inputData.status,
-          skills: inputData.skills,
-          bio: inputData.bio,
-          gitusername: inputData.gitusername,
-          youtube: inputData.youtube,
-          twitter: inputData.twitter,
-          facebook: inputData.facebook,
-          linkedin: inputData.linkedin,
-          instagram: inputData.instagram
-        })
-      );
-    }
+    const response = await axios.post("/profile", postData);
+    const responseData = await response.data;
+    dispatch(
+      ADD_PROFILE({
+        company: inputData.company,
+        website: inputData.website,
+        location: inputData.location,
+        status: inputData.status,
+        skills: inputData.skills,
+        bio: inputData.bio,
+        gitusername: inputData.gitusername,
+        youtube: inputData.youtube,
+        twitter: inputData.twitter,
+        facebook: inputData.facebook,
+        linkedin: inputData.linkedin,
+        instagram: inputData.instagram
+      })
+    );
+    dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
     console.log(err);
   }

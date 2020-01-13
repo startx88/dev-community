@@ -56,6 +56,8 @@ exports.addProfile = async (req, res, next) => {
     throw next(error);
   }
 
+  console.log(req.body);
+
   const {
     company,
     website,

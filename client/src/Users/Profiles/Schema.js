@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
 export const ProfileSchema = yup.object().shape({
-  status: yup.string().required(),
-  company: yup.string().required(),
-  location: yup.string().required()
+  //status: yup.string().required(),
+  //company: yup.string().required(),
+  //location: yup.string().required()
 });
 
 export const ExperienceSchema = yup.object().shape({

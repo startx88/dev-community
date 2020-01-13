@@ -44,9 +44,7 @@ const ExperienceForm = props => {
   return (
     <div className="profile-form">
       {element}
-      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
-        {parentProp.alert.message}
-      </AlertMessage>
+      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show} />
 
       <form className="panel  panel-white" onSubmit={handleSubmit}>
         <Title classname="mb-3">

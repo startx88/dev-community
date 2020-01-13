@@ -1,24 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AlertMessage from "../../UI/Alert";
 import Icons from "../../UI/Icons";
 import { useSelector } from "react-redux";
 import Spinner from "../../UI/Spinner/Spinner";
 import Date from "../../UI/Date";
+import Button from "../../UI/Button";
+import EducationShow from "./Controls/EducationShow";
+import ExperienceShow from "./Controls/ExperienceShow";
+import { Link } from "react-router-dom";
+// Profiles
 const Profile = props => {
+  const [edit, setEdit] = useState(false);
+  const { parentProp } = props;
+
   const {
     alert: { show, type },
     profile: { profile: info }
   } = useSelector(state => state);
-  console.log(info);
+
+  // delete education
+  const educationDeleteHandler = id => {
+    parentProp.deleteEducation(id);
+  };
+
+  // delete education
+  const experienceDeleteHandler = id => {
+    parentProp.deleteExperience(id);
+  };
+  const editProfile = () => {
+    props.history.push({
+      pathname: `${props.location.pathname}/profile`,
+      search: `?edit=${true}`
+    });
+  };
+
   if (!info) {
     return <Spinner />;
   }
+
+  console.log(props);
   return (
     <>
       <AlertMessage show={show} type={type} />
       <div className="personal-info">
         <div className="row">
-          <div className="col-sm-12 mb-3">
+          <div className="col-sm-12 mb-3 ">
+            <Button clicked={editProfile} classname="btn btn-edit-icon">
+              <Icons icon="edit" />
+            </Button>
             <h6>
               <Icons icon="user" /> About Me
             </h6>
@@ -52,41 +81,19 @@ const Profile = props => {
             <h6>
               <Icons icon="book-reader" /> Education
             </h6>
-            {info.education.map(edu => (
-              <div class="edu-info">
-                <Date from={edu.from} to={edu.to} />
-                <h6>
-                  Ignou
-                  <small>Delhi</small>
-                </h6>
-                <span>Computer science</span>
-                <p>
-                  Master of Science in Information and Communications Technology
-                  with a concentration in Web Design and Development{" "}
-                </p>
-              </div>
-            ))}
+            <EducationShow
+              education={info.education}
+              deleted={educationDeleteHandler}
+            />
           </div>
           <div className="col-sm-6">
             <h6>
               <Icons icon="briefcase" /> Experience
             </h6>
-            {info.experience.map(edu => (
-              <div class="edu-info">
-                <div className="date">
-                  <time>12-05-2019</time> - <time>12-05-2019</time>
-                </div>
-                <h6>
-                  Ignou
-                  <small>Delhi</small>
-                </h6>
-                <span>Computer science</span>
-                <p>
-                  Master of Science in Information and Communications Technology
-                  with a concentration in Web Design and Development{" "}
-                </p>
-              </div>
-            ))}
+            <ExperienceShow
+              experience={info.experience}
+              deleted={experienceDeleteHandler}
+            />
           </div>
         </div>
       </div>

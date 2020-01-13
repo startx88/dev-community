@@ -19,6 +19,43 @@ const fetch = (state, payloads) =>
     profile: payloads
   });
 
+// Education
+const addEducation = (state, payloads) =>
+  updateObject(state, {
+    ...state,
+    profile: {
+      ...state.profile,
+      education: [...state.profile.education, payloads]
+    }
+  });
+const deletEducation = (state, payloads) =>
+  updateObject(state, {
+    ...state,
+    profile: {
+      ...state.profile,
+      education: state.profile.education.filter(obj => obj._id !== payloads)
+    }
+  });
+
+// Experience
+const addExperience = (state, payloads) =>
+  updateObject(state, {
+    ...state,
+    profile: {
+      ...state.profile,
+      experience: [...state.profile.experience, payloads]
+    }
+  });
+
+const deleteExperience = (state, payloads) =>
+  updateObject(state, {
+    ...state,
+    profile: {
+      ...state.profile,
+      experience: state.profile.experience.filter(obj => obj._id !== payloads)
+    }
+  });
+
 const reducer = (state = initState, action) => {
   const { type, payloads } = action;
   switch (type) {
@@ -28,6 +65,16 @@ const reducer = (state = initState, action) => {
       return failed(state, payloads);
     case profile.PROFILE_FETCH:
       return fetch(state, payloads);
+    case profile.PROFILE_EXP_ADD:
+      console.log("exp add", payloads);
+      return addExperience(state, payloads);
+    case profile.PROFILE_EXP_DELETE:
+      console.log("exp dlt", payloads);
+      return deleteExperience(state, payloads);
+    case profile.PROFILE_EDU_ADD:
+      return addEducation(state, payloads);
+    case profile.PROFILE_EDU_DELETE:
+      return deletEducation(state, payloads);
     default:
       return state;
   }

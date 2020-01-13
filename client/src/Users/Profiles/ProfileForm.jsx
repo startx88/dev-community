@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { ProfileSchema } from "./Schema";
 import AlertMessage from "../../UI/Alert";
@@ -9,7 +10,9 @@ import Title from "../../Widgets/Title/Title";
 import DynamicSelect from "../../UI/DynamicSelect";
 import Options from "../widgets/Options";
 import { statusData } from "./data";
-
+import useQuery from "../../_hooks/useQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../Stores/Actions";
 const returToArrayValue = event => {
   return event.map(size => size.value);
 };
@@ -18,20 +21,27 @@ const returToArrayValue = event => {
 const ProfileForm = props => {
   const [social, setSocial] = useState(false);
   const { parentProp } = props;
+
+  const {
+    profile: { profile }
+  } = parentProp;
+
+  let query = useQuery();
+
   const formik = useFormik({
     initialValues: {
-      company: "",
-      website: "",
-      location: "",
-      status: "",
-      skills: "",
-      bio: "",
-      gitusername: "",
-      youtube: "",
-      twitter: "",
-      facebook: "",
-      linkedin: "",
-      instagram: ""
+      company: query.get("edit") && profile ? profile.company : "",
+      website: query.get("edit") && profile ? profile.website : "",
+      location: query.get("edit") && profile ? profile.location : "",
+      status: query.get("edit") && profile ? profile.status : "",
+      skills: query.get("edit") && profile ? profile.skills : "",
+      bio: query.get("edit") && profile ? profile.bio : "",
+      gitusername: query.get("edit") && profile ? profile.gitusername : "",
+      youtube: query.get("edit") && profile ? profile.youtube : "",
+      twitter: query.get("edit") && profile ? profile.twitter : "",
+      facebook: query.get("edit") && profile ? profile.facebook : "",
+      linkedin: query.get("edit") && profile ? profile.linkedin : "",
+      instagram: query.get("edit") && profile ? profile.instagram : ""
     },
     validationSchema: ProfileSchema,
     onSubmit: values => {
@@ -52,6 +62,13 @@ const ProfileForm = props => {
   const socialHandler = () => {
     setSocial(!social);
   };
+
+  // return profile page if query is false
+  const isEdit = query.get("edit");
+  if (isEdit === "false") {
+    return <Redirect to="/users/profiles" />;
+  }
+
   return (
     <div className="profile-form">
       <AlertMessage type={alert.type} show={alert.show}>

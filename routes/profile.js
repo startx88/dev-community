@@ -103,9 +103,6 @@ router.put(
       .isEmpty(),
     body("from", "from is required!")
       .not()
-      .isEmpty(),
-    body("current", "current is required!")
-      .not()
       .isEmpty()
   ],
   profileController.addUserEducation

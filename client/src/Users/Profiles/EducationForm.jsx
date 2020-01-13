@@ -18,7 +18,7 @@ const EducationForm = props => {
       fieldofstudy: "",
       from: "",
       to: "",
-      current: "",
+      current: false,
       description: ""
     },
     validationSchema: EducationSchema,
@@ -37,15 +37,16 @@ const EducationForm = props => {
   } = formik;
 
   // redirect if data submit success
-  console.log(parentProp.alert);
+  let element = null;
   if (parentProp.alert.show) {
-    return <Redirect to="/profile" />;
+    element = <Redirect to="/users/profiles" />;
   }
 
   return (
     <div className="profile-form">
-      <AlertMessage type={alert.type} show={alert.show}>
-        {alert.message}
+      {element}
+      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
+        {parentProp.alert.message}
       </AlertMessage>
 
       <form className="panel  panel-white" onSubmit={handleSubmit}>

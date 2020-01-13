@@ -13,7 +13,7 @@ const Sidebar = props => {
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
       id="accordionSidebar"
     >
-      <Scrollbars autoHide style={{ width: "100%", height: "100%" }}>
+      <Scrollbars style={{ width: "100%", height: "550px" }}>
         <div className="menu">
           {user.users && <UserControl sidebar userInfo={user.users} />}
           <hr />
@@ -33,11 +33,10 @@ const Sidebar = props => {
               My Posts
             </Links>
 
-            
             <Links ismenu classname="nav-link" href={match.path + "/profiles"}>
               <Icons icon="long-arrow-alt-right" />
               My Profiles
-            </Links> 
+            </Links>
 
             <hr />
 

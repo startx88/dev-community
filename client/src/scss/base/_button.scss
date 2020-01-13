@@ -13,4 +13,21 @@
       color: $info;
     }
   }
+  &-dlt-icon,
+  &-edit-icon {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+  &-dlt-icon {
+    span {
+      color: $danger !important;
+    }
+  }
+  &-edit-icon {
+    span {
+      color: $primary !important;
+    }
+  }
 }

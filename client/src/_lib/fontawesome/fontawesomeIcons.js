@@ -21,13 +21,15 @@ import {
   faMobileAlt,
   faTachometerAlt,
   faBookReader,
-  faBriefcase
+  faBriefcase,
+  faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faBookReader,
   faBriefcase,
   faTachometerAlt,
   faTrash,
+  faTrashAlt,
   faEnvelopeOpen,
   faBell,
   faUser,

@@ -7,7 +7,6 @@ const request = require("request");
 exports.getAllProfiles = async (req, res, next) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-    console.log("hello", profiles);
     if (!profiles) {
       const error = new Error("There is no profiles");
       error.statusCode = 404;
@@ -36,7 +35,6 @@ exports.getProfile = async (req, res, next) => {
       error.statusCode = 404;
       throw next(error);
     }
-    console.log(profile);
 
     res.status(200).json({
       success: true,
@@ -294,7 +292,7 @@ exports.deleteUserExperience = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User experience deleted successfully!",
-      profile
+      expId: expId
     });
   } catch (err) {
     console.log("error", err);
@@ -349,12 +347,11 @@ exports.addUserEducation = async (req, res, next) => {
 
     profile.education.unshift(newEdu);
     const result = await profile.save();
-    console.log("education", result);
 
     res.status(200).json({
       success: true,
       message: "User education added successfully!",
-      profileId: result._id
+      educationId: result._id
     });
   } catch (err) {
     console.log("error", err);
@@ -380,11 +377,11 @@ exports.deleteUserEducation = async (req, res, next) => {
     }
     const removeIndex = profile.education.map(item => item.id).indexOf(eduId);
     profile.education.splice(removeIndex, 1);
-    await profile.save();
+    const result = await profile.save();
     res.status(200).json({
       success: true,
       message: "User education deleted successfully!",
-      profile
+      educationId: eduId
     });
   } catch (err) {
     console.log("error", err);

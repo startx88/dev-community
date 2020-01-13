@@ -7,6 +7,11 @@
       color: $violet;
     }
   }
+  .btn-edit-icon {
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
 }
 
 // Skills
@@ -37,6 +42,15 @@
 }
 
 .edu-info {
+  position: relative;
+  padding: 10px;
+  background-image: linear-gradient(rgba($base-color, 0.03), rgba($white, 0.2));
+  .btn {
+    top: 5px;
+    position: absolute;
+    right: 0;
+  }
+
   span,
   p {
     font-size: $base-size - 2;

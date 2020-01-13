@@ -9,6 +9,7 @@ const Settings = lazy(() => import("./Settings"));
 
 const Container = props => {
   const { getProfile, match } = props;
+
   useEffect(() => {
     getProfile();
   }, [getProfile]);

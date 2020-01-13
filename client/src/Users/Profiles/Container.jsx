@@ -7,9 +7,11 @@ import EducationForm from "./EducationForm";
 import ExperienceForm from "./ExperienceForm";
 import ProfileForm from "./ProfileForm";
 import { Link } from "react-router-dom";
+
 const Container = props => {
   const { match } = props;
   const { profile } = useSelector(state => state.profile);
+
   return (
     <>
       <Title type="admin">
@@ -29,7 +31,12 @@ const Container = props => {
         </div>
       </Title>
       <hr />
-      <PrivateRoute path={match.url} exact component={Profile} />
+      <PrivateRoute
+        path={match.url}
+        exact
+        component={childProps => <Profile parentProp={props} {...childProps} />}
+      />
+
       <PrivateRoute
         path={match.url + "/profile"}
         component={childProps => (

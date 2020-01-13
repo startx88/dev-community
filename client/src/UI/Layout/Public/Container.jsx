@@ -7,7 +7,7 @@ const Container = props => {
   return (
     <div className="landing">
       <Header />
-      <Main classname="container">{props.children}</Main>
+       <Main classname="container">{props.children}</Main>
       <Footer />
     </div>
   );

@@ -1,0 +1,77 @@
+.personal-info {
+  h6 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    span {
+      margin-right: 5px;
+      color: $violet;
+    }
+  }
+}
+
+// Skills
+.skills-list {
+  li {
+    margin-bottom: 15px;
+    h6,
+    span {
+      font-size: $base-size - 2;
+    }
+    span {
+      color: $violet;
+      font-weight: bold;
+      font-family: $primary-secondary;
+    }
+  }
+  .progress {
+    height: 3px;
+    border-radius: 0;
+    &-bar {
+      background-color: $violet;
+    }
+  }
+  h6 {
+    text-transform: capitalize;
+    margin-bottom: 6px;
+  }
+}
+
+.edu-info {
+  span,
+  p {
+    font-size: $base-size - 2;
+  }
+  h6 {
+    margin: 5px 0;
+    text-transform: capitalize;
+    small {
+      margin-top: 5px;
+      color: rgba($black, 0.6);
+      font-size: $base-size - 4;
+    }
+  }
+  span {
+    color: $primary;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  p {
+    line-height: 1.3;
+  }
+  .date {
+    font-size: $base-size - 4;
+    font-weight: bold;
+    color: $info;
+    time {
+      &:only(:first-child) {
+        &:after {
+          content: "-";
+          display: inline-block;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

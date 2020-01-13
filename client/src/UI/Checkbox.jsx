@@ -18,7 +18,7 @@ const InputCheckbox = ({
   const changeHandler = event => {
     const { name, value, checked } = event.target;
     const item = event.target.name;
-    setFieldValue(name, value);
+    setFieldValue(name, checked);
     // const isChecked = e.target.checked;
     // setState(prevState => ({
     //   checkedItems: prevState.checkedItems.set(item, isChecked)
@@ -26,9 +26,7 @@ const InputCheckbox = ({
   };
 
   return (
-    <div
-      className={["from-group", parentclass].join(" ")}
-    >
+    <div className={["from-group", parentclass].join(" ")}>
       {top && <small className="_top">{label}</small>}
       <label htmlFor={id} className={["_checkbox"].join(" ")}>
         <input

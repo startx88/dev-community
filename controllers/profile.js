@@ -27,15 +27,16 @@ exports.getAllProfiles = async (req, res, next) => {
 // get user profile
 exports.getProfile = async (req, res, next) => {
   const userId = req.user.userId;
-  console.log("userId", userId);
+
   try {
     const profile = await Profile.findOne({ user: userId });
 
     if (!profile) {
       const error = new Error("There is no profile for this user");
-      error.statusCode = 400;
+      error.statusCode = 404;
       throw next(error);
     }
+    console.log(profile);
 
     res.status(200).json({
       success: true,
@@ -56,6 +57,7 @@ exports.addProfile = async (req, res, next) => {
     error.statusCode = 422;
     throw next(error);
   }
+
   const {
     company,
     website,
@@ -78,7 +80,7 @@ exports.addProfile = async (req, res, next) => {
   userprofile.website = website;
   userprofile.location = location;
   userprofile.status = status;
-  userprofile.skills = skills.split(",").map(skill => skill.trim());
+  userprofile.skills = skills;
   userprofile.bio = bio;
   userprofile.gitusername = gitusername;
 
@@ -110,6 +112,7 @@ exports.addProfile = async (req, res, next) => {
 
     // create new profile
     const profile = new Profile(userprofile);
+
     const result = await profile.save();
     res.status(201).json({
       success: true,
@@ -345,11 +348,13 @@ exports.addUserEducation = async (req, res, next) => {
     }
 
     profile.education.unshift(newEdu);
-    await profile.save();
+    const result = await profile.save();
+    console.log("education", result);
+
     res.status(200).json({
       success: true,
       message: "User education added successfully!",
-      profile
+      profileId: result._id
     });
   } catch (err) {
     console.log("error", err);

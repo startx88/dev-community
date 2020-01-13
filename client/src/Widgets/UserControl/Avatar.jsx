@@ -8,7 +8,6 @@ import Image from "../../UI/Image";
  * @param {*} props
  */
 const Avatar = ({ name, avatar, sidebar }) => {
-  console.log(name);
   return sidebar ? (
     <>
       <div className="image">

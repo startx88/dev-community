@@ -6,4 +6,11 @@ export {
   logout
 } from "./auth";
 
-export { getProfile } from "./profile";
+export {
+  getProfile,
+  addProfile,
+  addEducation,
+  deleteEducation,
+  addExperience,
+  deleteExperience
+} from "./profile";

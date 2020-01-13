@@ -13,27 +13,24 @@ const CustomSelect = ({
   renderProps,
   setFieldValue,
   classname,
-  method,
   isClearable,
   onBlur,
   errors,
   touched,
+  transformDataAs,
   ...rest
 }) => {
-  console.log('errors', errors)
   // Change Handler
   const changeHandler = event => {
     setFieldValue(name, event);
   };
 
   const customeDataHandler = debounce(event => {
-    console.log('event', event)
-    const newArray = event.map(size => size.value);
-    //console.log(newArray);
+    const newArray = transformDataAs(event);
     setFieldValue(name, newArray);
   }, 2000);
 
-  const handleBlur = (e) => {
+  const handleBlur = e => {
     onBlur(name, true);
   };
 
@@ -45,24 +42,21 @@ const CustomSelect = ({
           {...rest}
           placeholder="Type sizes press enter or tab."
           onChange={customeDataHandler}
+        />
+      ) : (
+        <Select
+          {...rest}
+          id={name}
+          name={name}
+          options={options}
+          getOptionLabel={option => renderProps(option)}
+          getOptionValue={option => option.id}
+          onChange={changeHandler}
           onBlur={handleBlur}
           value={value}
         />
-      ) : (
-          <Select
-            {...rest}
-            id={name}
-            name={name}
-            options={options}
-            getOptionLabel={option => renderProps(option)}
-            getOptionValue={option => option.id}
-            onChange={changeHandler}
-            onBlur={handleBlur}
-            value={value}
-          />
-        )}
+      )}
       <div className="invalid-feedback">{errors}</div>
-
     </div>
   );
 };
@@ -71,9 +65,9 @@ CustomSelect.defaultProps = {
   name: "select",
   label: "Select Options",
   value: "",
-  renderProps: () => { },
-  setFieldValue: () => { },
-  method: () => { }
+  renderProps: () => {},
+  setFieldValue: () => {},
+  transformDataAs: () => {}
 };
 
 CustomSelect.propTypes = {
@@ -81,7 +75,7 @@ CustomSelect.propTypes = {
   label: PropTypes.string.isRequired,
   renderProps: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  method: PropTypes.func
+  transformDataAs: PropTypes.func
 };
 
 export default CustomSelect;

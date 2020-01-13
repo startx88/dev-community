@@ -18,10 +18,15 @@ import {
   faUser,
   faLock,
   faMobile,
-  faMobileAlt
+  faMobileAlt,
+  faTachometerAlt,
+  faBookReader,
+  faBriefcase
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
-
+  faBookReader,
+  faBriefcase,
+  faTachometerAlt,
   faTrash,
   faEnvelopeOpen,
   faBell,

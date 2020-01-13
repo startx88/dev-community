@@ -15,15 +15,15 @@ const Title = ({
   ...rest
 }) => {
   const urls = match.path.split("/").filter(item => item !== "");
-
   let element = null;
+  let titles = urls[urls.length - 1];
 
   switch (type) {
     case "admin":
       element = (
         <div className={["admin-page-title", classname].join(" ")}>
           <h4>
-            {urls.length > 1 ? urls[1] : urls}
+            {urls.length > 1 ? titles : urls[0]}
             {tagline && <small>{tagline}</small>}
           </h4>
           {breadcrumb && <BreadCrumbs location={match} />}

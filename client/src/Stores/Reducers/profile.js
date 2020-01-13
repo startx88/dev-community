@@ -27,7 +27,6 @@ const reducer = (state = initState, action) => {
     case profile.PROFILE_FAILED:
       return failed(state, payloads);
     case profile.PROFILE_FETCH:
-      console.log("pp", payloads);
       return fetch(state, payloads);
     default:
       return state;

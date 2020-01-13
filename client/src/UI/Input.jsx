@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Icons from "./Icons";
 
@@ -18,6 +18,7 @@ const Input = ({
   classname,
   placeholder,
   touched,
+  refs,
   blur,
   icon
 }) => {
@@ -28,10 +29,16 @@ const Input = ({
     const { name, value } = e.target;
     setFieldValue(name, value);
   };
+
+  useEffect(() => {
+    if (refs) refs.current.focus();
+  }, []);
+
   switch (inputtype) {
     case "input":
       element = (
         <input
+          ref={refs}
           type={type}
           name={name}
           value={value}
@@ -69,7 +76,9 @@ const Input = ({
       throw new Error("no input type");
   }
   return (
-    <div className={["form-group input", icon && "icon", parentclass].join(" ")}>
+    <div
+      className={["form-group input", icon && "icon", parentclass].join(" ")}
+    >
       {icon && <Icons classname="_icon" icon={icon} />}
       {label && <label>{label}</label>}
       {element}

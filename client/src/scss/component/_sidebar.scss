@@ -5,10 +5,10 @@
   transition: all 0.5s;
   font-family: "Muli", sans-serif;
   background: #fff;
-  width: 250px;
+  width: 240px;
   height: calc(100vh - 60px);
-  position: fixed;
-  top: 60px;
+  position: relative;
+  top: 50px;
   left: 0;
   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
   z-index: 10;

@@ -3,26 +3,32 @@
   margin-right: 35px;
   position: relative;
   cursor: pointer;
+
   &:focus {
     outline: none;
   }
+
+
 
   input[type="radio"],
   input[type="checkbox"] {
     visibility: hidden;
     position: absolute;
-    &:checked + span {
+
+    &:checked+span {
       &:after {
         background-color: $primary;
         border-color: $primary;
       }
     }
   }
-  input[type="radio"] + span,
-  input[type="checkbox"] + span {
+
+  input[type="radio"]+span,
+  input[type="checkbox"]+span {
     cursor: pointer;
     margin: 0;
     padding-left: 35px;
+
     &:before,
     &:after {
       left: 0;
@@ -30,11 +36,13 @@
       display: inline-block;
       position: absolute;
     }
+
     &:before {
       width: 24px;
       height: 24px;
       border: 2px solid darken($border-color, 10);
     }
+
     &:after {
       top: 4px;
       left: 4px;
@@ -48,6 +56,11 @@
   span {
     display: block;
   }
+}
+
+._top {
+  display: block;
+  margin-bottom: 11px;
 }
 
 .left {

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import AuthImage from "./auth-image.png";
 
 const Container = props => {
   return (

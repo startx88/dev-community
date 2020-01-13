@@ -21,6 +21,7 @@ import {
   faMobileAlt
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+
   faTrash,
   faEnvelopeOpen,
   faBell,

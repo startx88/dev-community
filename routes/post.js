@@ -2,6 +2,20 @@ const router = require("express").Router();
 const postController = require("../controllers/post");
 const { body } = require("express-validator");
 const { auth } = require("../middleware/auth");
+const multer = require("multer");
+
+// storage
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "/uploads/posts");
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + "-" + file.fieldname);
+  }
+});
+
+const upload = multer({ storage: storage, filterFile: fileFilter });
+
 // Routes
 router.get("/", postController.getAllPosts);
 router.get("/:postId", postController.getPost);

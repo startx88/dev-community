@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 // config
 dotenv.config();
- 
+
 //////////////////////////
 //// Database connection
 //////////////////////////
@@ -39,7 +39,7 @@ const PORT = process.env.PORT || 4200;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
-app.use("/upload", express.static("upload"));
+app.use("/uploads", express.static("uploads"));
 
 // routes
 const authRoute = require("./routes/auth");

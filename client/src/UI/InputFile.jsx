@@ -13,6 +13,8 @@ const InputFile = ({
   value,
   setFieldValue,
   errors,
+  touched,
+  blur,
   classname,
   parentclass
 }) => {
@@ -38,6 +40,7 @@ const InputFile = ({
         type={type}
         onChange={imageChangeHandler}
         className="form-control"
+        onBlur={blur}
       />
       <div className="preview">
         {value && <Image src={value} alt={label} />}

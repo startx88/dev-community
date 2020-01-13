@@ -14,3 +14,5 @@ export {
   addExperience,
   deleteExperience
 } from "./profile";
+
+export { addPost, addComment, likePost, dislikePost } from "./post";

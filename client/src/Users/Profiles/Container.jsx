@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Container = props => {
   const { match } = props;
   const { profile } = useSelector(state => state.profile);
-
+  console.log("profile", props);
   return (
     <>
       <Title type="admin">

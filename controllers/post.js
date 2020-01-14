@@ -2,6 +2,7 @@ const Post = require("../models/posts");
 const User = require("../models/users");
 const Profile = require("../models/profile");
 const { validationResult } = require("express-validator");
+const { resizeImage, deleteFile } = require("../middleware/file");
 
 /////////////////////////////////////////////////
 /////////// Get All Posts
@@ -17,6 +18,45 @@ exports.getAllPosts = async (req, res, next) => {
     res.status(200).json({
       success: true,
       posts
+    });
+  } catch (err) {
+    console.log("error", err);
+    next(err);
+  }
+};
+
+/////////////////////////////////////////////////
+/////////// Get user post
+/////////////////////////////////////////////////
+exports.getUserPosts = async (req, res, next) => {
+  const userId = req.user.userId;
+  try {
+    const posts = await Post.find({ user: userId })
+      .sort({ insertAt: -1 })
+      .populate("user", ["name", "avatar", "email"]);
+
+    if (!posts) {
+      const error = new Error("No post found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+    res.status(200).json({
+      success: true,
+      data: posts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        description: post.description,
+        avatar: "http://localhost:4200/" + post.avatar,
+        insertAt: post.insertAt,
+        likes: post.likes,
+        comments: post.coments,
+        users: {
+          _id: post.user._id,
+          name: post.user.name,
+          email: post.user.email,
+          avatar: post.user.avatar
+        }
+      }))
     });
   } catch (err) {
     console.log("error", err);
@@ -65,11 +105,21 @@ exports.addPost = async (req, res, next) => {
   }
 
   const { title, description } = req.body;
+  const avatar = req.file;
+
+  // check if image is selected or not
+  if (!avatar) {
+    const error = new Error("Please select image");
+    error.statusCode = 422;
+    throw next(error);
+  }
+
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {
       const error = new Error("Unauthorized access");
       error.statusCode = 401;
+      deleteFile(avatar.path);
       throw next(error);
     }
 
@@ -77,16 +127,19 @@ exports.addPost = async (req, res, next) => {
       user: user._id,
       title: title,
       description: description,
-      name: user.name,
-      avatar: user.avatar
+      avatar: avatar.path,
+      name: user.name
     });
 
     const post = await newPost.save();
-    res.status(201).json({
-      success: true,
-      message: "Post added successfully",
-      post
-    });
+    if (post) {
+      resizeImage(1024, 600, avatar.path);
+      res.status(201).json({
+        success: true,
+        message: "Post added successfully",
+        post
+      });
+    }
   } catch (err) {
     console.log("error", err);
     next(err);
@@ -122,11 +175,14 @@ exports.deletePost = async (req, res, next) => {
       throw next(error);
     }
     const result = await post.remove();
-    res.status(200).json({
-      success: true,
-      message: "Post deleted successfully",
-      postId: result._id
-    });
+    if (result) {
+      deleteFile(post.avatar);
+      res.status(200).json({
+        success: true,
+        message: "Post deleted successfully",
+        postId: result._id
+      });
+    }
   } catch (err) {
     console.log("error", err);
     if (err.kind === "ObjectId") {

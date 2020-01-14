@@ -4,12 +4,16 @@ import {
   addPost,
   addComment,
   likePost,
-  dislikePost
+  dislikePost,
+  fetchUserPosts,
+  deletePost
 } from "../../Stores/Actions";
-const mapStateToProps = state => {
-  return state;
-};
+const mapStateToProps = state => ({
+  userPost: state.posts
+});
 const mapDispatchToProps = dispatch => ({
+  fetchUserPosts: () => dispatch(fetchUserPosts()),
+  deletePost: postId => dispatch(deletePost(postId)),
   addPost: data => dispatch(addPost(data)),
   addComment: data => dispatch(addComment(data)),
   likePost: data => dispatch(likePost(data)),

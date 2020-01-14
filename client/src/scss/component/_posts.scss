@@ -1,0 +1,26 @@
+.post {
+  position: relative;
+  h6 {
+    color: $danger-light;
+    margin-bottom: 10px;
+    font-weight: bold;
+    small {
+      font-size: $base-size - 5;
+      color: lighten($base-dark, 40%);
+      font-weight: bold;
+      margin-top: 3px;
+    }
+  }
+  p {
+    font-size: $base-size - 2;
+  }
+  .btn-dlt-icon {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+  }
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

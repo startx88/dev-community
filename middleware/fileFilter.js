@@ -1,1 +1,0 @@
-exports.fileFilter = (file, cb) => {};

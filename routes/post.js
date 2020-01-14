@@ -3,14 +3,15 @@ const postController = require("../controllers/post");
 const { body } = require("express-validator");
 const { auth } = require("../middleware/auth");
 const multer = require("multer");
+const { fileFilter } = require("../middleware/file");
 
 // storage
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "/uploads/posts");
+    cb(null, "uploads/posts");
   },
   filename: function(req, file, cb) {
-    cb(null, Date.now() + "-" + file.fieldname);
+    cb(null, Date.now() + "-" + file.originalname);
   }
 });
 
@@ -18,10 +19,12 @@ const upload = multer({ storage: storage, filterFile: fileFilter });
 
 // Routes
 router.get("/", postController.getAllPosts);
+router.get("/user", auth, postController.getUserPosts);
 router.get("/:postId", postController.getPost);
 router.post(
   "/",
   auth,
+  upload.single("avatar"),
   [
     body("title", "Title is required!")
       .not()
@@ -30,11 +33,13 @@ router.post(
       .not()
       .isEmpty()
   ],
+
   postController.addPost
 );
 router.put(
   "/:postId",
   auth,
+  upload.single("avatar"),
   [
     body("title", "Title is required!")
       .not()

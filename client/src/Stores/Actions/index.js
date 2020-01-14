@@ -15,4 +15,12 @@ export {
   deleteExperience
 } from "./profile";
 
-export { addPost, addComment, likePost, dislikePost } from "./post";
+export {
+  addPost,
+  addComment,
+  likePost,
+  dislikePost,
+  fetchUserPosts,
+  fetchAllPosts,
+  deletePost
+} from "./post";

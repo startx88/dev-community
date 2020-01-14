@@ -7,8 +7,8 @@ import InputFile from "../../UI/InputFile";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import Title from "../../Widgets/Title/Title";
-import Checkbox from "../../UI/Checkbox";
 
+// Add/Update post form
 const PostForm = props => {
   const refFocus = useRef(null);
   const { parentProp } = props;
@@ -21,8 +21,7 @@ const PostForm = props => {
     },
     validationSchema: PostSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      //parentProp.addPost(values);
+      parentProp.addPost(values);
     }
   });
 
@@ -37,16 +36,16 @@ const PostForm = props => {
 
   // redirect if data submit success
   let element = null;
-  if (parentProp.alert.show) {
-    element = <Redirect to="/users/profiles" />;
-  }
+  //if (parentProp.alert.show) {
+  //element = <Redirect to="/users/posts" />;
+  // }
 
   return (
     <div className="profile-form">
       {element}
-      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
+      {/* <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
         {parentProp.alert.message}
-      </AlertMessage>
+      </AlertMessage> */}
       <form className="panel  panel-white" onSubmit={handleSubmit}>
         <Title classname="mb-3">
           <h6>Add new post</h6>
@@ -72,9 +71,6 @@ const PostForm = props => {
             name="avatar"
             value={values.avatar}
             setFieldValue={setFieldValue}
-            errors={errors}
-            touched={touched}
-            blur={handleBlur}
           />
           <Input
             parentclass="col-sm-12"

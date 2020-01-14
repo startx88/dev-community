@@ -23,6 +23,6 @@ export const showAlert = (message, type) => dispatch => {
         type: alert.ALERT_HIDE,
         payloads: null
       }),
-    3000
+    2000
   );
 };

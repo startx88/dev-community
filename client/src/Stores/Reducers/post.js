@@ -15,18 +15,19 @@ const loading = (state, payloads) => updateObject(state, { loading: true });
 const failed = (state, payloads) =>
   updateObject(state, { loading: false, errors: payloads });
 
-// update
+// ADD POST
 const add = (state, payloads) =>
   updateObject(state, {
     loading: false,
     posts: [...state.posts, payloads]
   });
 
-const update = (state, payloads) =>
+// UPDATE POST
+const updated = (state, payloads) =>
   updateObject(state, {
     loading: false,
     posts: state.posts.map(item =>
-      item._id === payloads.id ? { ...payloads.data } : item
+      item._id === payloads.id ? { ...payloads.post } : item
     )
   });
 
@@ -68,7 +69,8 @@ const reducer = (state = initState, action) => {
     case post.POST_DELETE:
       return deletePost(state, payloads);
     case post.POST_UPDATE:
-      return update(state, payloads);
+      console.log("UPDATE POST", payloads);
+      return updated(state, payloads);
     case post.POST_COMMENT_ADD:
       return addComment(state, payloads);
     case post.POST_LIKE:

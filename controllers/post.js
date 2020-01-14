@@ -150,7 +150,41 @@ exports.addPost = async (req, res, next) => {
 /////////// Update Post
 /////////////////////////////////////////////////
 exports.updatePost = async (req, res, next) => {
+  const postId = req.params.postId;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error(errors.array()[0].msg);
+    error.statusCode = 422;
+    throw next(error);
+  }
+  const { title, description } = req.body;
+  const avatar = req.file;
+
   try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("There is no post");
+      error.statusCode = 404;
+      throw next(error);
+    }
+
+    post.title = title;
+    post.description = description;
+    if (avatar) {
+      deleteFile(post.avatar);
+      post.avatar = avatar.path;
+    }
+    const result = await post.save();
+    res.status(201).json({
+      success: true,
+      message: "Post added successfully",
+      postId: result._id,
+      post: {
+        ...post._doc,
+        avatar: "http://localhost:4200/" + post._doc.avatar
+      }
+    });
   } catch (err) {
     console.log("error", err);
     next(err);

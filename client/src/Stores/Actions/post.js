@@ -9,25 +9,34 @@ const loading = () => ({ type: post.POST_LOADING });
 const failed = error => ({ type: post.POST_FAILED, payloads: error });
 
 // ADD POST
-const add_post = post => ({ type: post.POST_ADD, payloads: post });
+const add_post = postdata => ({ type: post.POST_ADD, payloads: postdata });
 
 // DELETE POST
 const delete_post = id => ({ type: post.POST_DELETE, payloads: id });
 
 // UPDATE POST
-const update_post = (id, post) => ({
+const update_post = (id, postdata) => ({
   type: post.POST_UPDATE,
-  payloads: { id, post }
+  payloads: {
+    id: id,
+    post: postdata
+  }
 });
 
 // LIKE POST
-const like_post = data => ({ type: post.POST_LIKE, payloads: data });
+const like_post = like => ({ type: post.POST_LIKE, payloads: like });
 
 // DISLIKE POST
-const dislike_post = data => ({ type: post.POST_DISLIKE, payloads: data });
+const dislike_post = dislike => ({
+  type: post.POST_DISLIKE,
+  payloads: dislike
+});
 
 // comment
-const comment_post = data => ({ type: post.POST_COMMENT_ADD, payloads: data });
+const comment_post = comment => ({
+  type: post.POST_COMMENT_ADD,
+  payloads: comment
+});
 
 // FETCH USER POST
 const user_posts = posts => ({
@@ -73,7 +82,6 @@ export const fetchAllPosts = () => async dispatch => {
 // add post
 export const addPost = (inputdata, id, status) => async dispatch => {
   dispatch(loading());
-
   // Form Data
   const formdata = new FormData();
   formdata.append("title", inputdata.title);
@@ -82,13 +90,15 @@ export const addPost = (inputdata, id, status) => async dispatch => {
 
   try {
     if (status === "UPDATE") {
-      const response = await axios.post(`/posts/${id}`, formdata);
+      const response = await axios.put(`/posts/${id}`, formdata);
       const responseData = await response.data;
-      dispatch(update_post(responseData.post));
+      console.log("update", responseData);
+      dispatch(update_post(responseData.postId, responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     } else {
       const response = await axios.post("/posts", formdata);
       const responseData = await response.data;
+      console.log("hello", responseData);
       dispatch(add_post(responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     }

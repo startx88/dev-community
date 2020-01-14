@@ -5,7 +5,8 @@ import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import LikeDislike from "./like-dislike";
 
-const Post = ({ postData, deletePost, editedPost }) => {
+const Post = ({ postData, deletePost, editedPost, liked, disliked, likes }) => {
+  //console.log("likes", likes);
   return (
     <article className="post col-sm-6">
       <div className="post-btn">
@@ -27,7 +28,11 @@ const Post = ({ postData, deletePost, editedPost }) => {
       <Image src={postData.avatar} alt={postData.title} />
       <div className="d-flex justify-content-between">
         <Date from={postData.insertAt} />
-        <LikeDislike />
+        <LikeDislike
+          likes={likes}
+          liked={() => liked(postData._id)}
+          disliked={() => disliked(postData._id)}
+        />
       </div>
       <h6>
         {postData.title}

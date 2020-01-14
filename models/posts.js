@@ -10,7 +10,8 @@ const PostSchema = new Schema({
   active: { type: Number, default: 1 },
   likes: [
     {
-      user: { type: Schema.Types.ObjectId, ref: "User" }
+      user: { type: Schema.Types.ObjectId, ref: "User" },
+      active: { type: Boolean, default: false }
     }
   ],
   comments: [

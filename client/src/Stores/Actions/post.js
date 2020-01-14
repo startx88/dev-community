@@ -24,7 +24,10 @@ const update_post = (id, postdata) => ({
 });
 
 // LIKE POST
-const like_post = like => ({ type: post.POST_LIKE, payloads: like });
+const like_post = (id, like) => ({
+  type: post.POST_LIKE,
+  payloads: { id: id, like: like }
+});
 
 // DISLIKE POST
 const dislike_post = dislike => ({
@@ -112,6 +115,10 @@ export const addPost = (inputdata, id, status) => async dispatch => {
 
 // DELETE POST
 export const deletePost = postId => async dispatch => {
+  const confirm = window.confirm("Are you sure!");
+  if (!confirm) {
+    return false;
+  }
   try {
     const response = await axios.delete(`/posts/${postId}`);
     const responseData = await response.data;
@@ -133,16 +140,23 @@ export const addComment = inputdata => async dispatch => {
   }
 };
 
-export const likePost = inputdata => async dispatch => {
+export const likePost = postId => async dispatch => {
+  console.log(postId);
   try {
+    const response = await axios.put(`/posts/like/${postId}`);
+    const responseData = await response.data;
+    dispatch(like_post(responseData.likeId, responseData.likes));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
   }
 };
 
-export const dislikePost = inputdata => async dispatch => {
+export const dislikePost = postId => async dispatch => {
   try {
+    const response = await axios.put(`/posts/unlink/${postId}`);
+    const responseData = await response.data;
+    dispatch(like_post(responseData.likeId, responseData.likes));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

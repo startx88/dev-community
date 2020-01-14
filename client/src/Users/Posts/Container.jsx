@@ -8,7 +8,13 @@ const EditPost = lazy(() => import("./EditPost"));
 const PostList = lazy(() => import("./PostList"));
 
 const Container = props => {
-  const { match, fetchUserPosts, userPost, alert } = props;
+  //
+  const {
+    match,
+    fetchUserPosts,
+    postData: { alert }
+  } = props;
+
   const loadUserPost = useCallback(() => {
     fetchUserPosts();
   }, [fetchUserPosts]);

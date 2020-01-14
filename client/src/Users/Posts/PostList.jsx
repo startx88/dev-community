@@ -2,13 +2,19 @@ import React from "react";
 import Post from "../../Widgets/Post/Post";
 import Spinner from "../../UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
+
 const PostList = props => {
-  const { match } = props;
-  console.log("props", match);
+  console.log("postlist", props);
+  const { match, parentProp } = props;
+
   const {
-    userPost: { posts },
-    deletePost
-  } = props.parentProp;
+    postData: { posts },
+    likes,
+    dislikes,
+    deletePost,
+    likePost,
+    dislikePost
+  } = parentProp;
 
   const deletePostHandler = postId => {
     deletePost(postId);
@@ -21,6 +27,14 @@ const PostList = props => {
     });
   };
 
+  const likedPost = postId => {
+    likePost(postId);
+  };
+
+  const dislikedPost = postId => {
+    dislikePost(postId);
+  };
+
   return (
     <>
       <div className="row">
@@ -31,6 +45,9 @@ const PostList = props => {
               postData={post}
               deletePost={deletePostHandler}
               editedPost={editPostHandler}
+              likes={post.likes}
+              liked={likedPost}
+              disliked={dislikedPost}
             />
           ))
         ) : (

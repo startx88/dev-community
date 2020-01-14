@@ -50,10 +50,24 @@ const deletePost = (state, payloads) =>
 
 const addComment = (state, payloads) => updateObject(state, { loading: false });
 
-const likePost = (state, payloads) => updateObject(state, { loading: false });
+// like post
+const likePost = (state, payloads) =>
+  updateObject(state, {
+    posts: {
+      ...state.posts,
+      likes: [...state.posts.likes, payloads.like]
+    }
+  });
 
 const dislikePost = (state, payloads) =>
-  updateObject(state, { loading: false });
+  updateObject(state, {
+    posts: {
+      ...state.posts,
+      likes: state.posts.likes.map(item =>
+        item._id === payloads.id ? { ...payloads.like } : item
+      )
+    }
+  });
 
 const reducer = (state = initState, action) => {
   const { type, payloads } = action;
@@ -69,7 +83,6 @@ const reducer = (state = initState, action) => {
     case post.POST_DELETE:
       return deletePost(state, payloads);
     case post.POST_UPDATE:
-      console.log("UPDATE POST", payloads);
       return updated(state, payloads);
     case post.POST_COMMENT_ADD:
       return addComment(state, payloads);

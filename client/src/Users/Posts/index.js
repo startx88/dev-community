@@ -1,5 +1,12 @@
 import Container from "./Container";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import {
+  userPosts,
+  likesCounter,
+  dislikeCounter
+} from "../../Stores/Selectors";
+
 import {
   addPost,
   addComment,
@@ -8,16 +15,15 @@ import {
   fetchUserPosts,
   deletePost
 } from "../../Stores/Actions";
-const mapStateToProps = state => ({
-  userPost: state.posts,
-  alert: state.alert
+const mapStateToProps = createStructuredSelector({
+  postData: userPosts
 });
 const mapDispatchToProps = dispatch => ({
   fetchUserPosts: () => dispatch(fetchUserPosts()),
   deletePost: postId => dispatch(deletePost(postId)),
   addPost: (data, id, status) => dispatch(addPost(data, id, status)),
   addComment: data => dispatch(addComment(data)),
-  likePost: data => dispatch(likePost(data)),
-  dislikePost: data => dispatch(dislikePost(data))
+  likePost: postId => dispatch(likePost(postId)),
+  dislikePost: postId => dispatch(dislikePost(postId))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

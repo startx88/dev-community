@@ -174,8 +174,10 @@ exports.updatePost = async (req, res, next) => {
     if (avatar) {
       deleteFile(post.avatar);
       post.avatar = avatar.path;
+      resizeImage(1024, 600, avatar.path);
     }
     const result = await post.save();
+
     res.status(201).json({
       success: true,
       message: "Post added successfully",
@@ -196,6 +198,7 @@ exports.updatePost = async (req, res, next) => {
 /////////////////////////////////////////////////
 exports.deletePost = async (req, res, next) => {
   const postId = req.params.postId;
+
   try {
     const post = await Post.findById(postId);
     if (!post) {
@@ -256,23 +259,24 @@ exports.deleteComment = async (req, res, next) => {
 exports.addLike = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.user.userId;
-
+  console.log(postId, userId);
   try {
     const post = await Post.findById(postId);
-
-    if (post.likes.filter(like => like.user.toString() === userId).length > 0) {
+    const userLike = post.likes.filter(like => like.user.toString() === userId); // find the user
+    console.log("userlike", userLike);
+    if (userLike.length > 0) {
       return res.status(200).json({
         message: "Post is already liked"
       });
     }
 
-    post.likes.unshift({ user: userId });
+    post.likes.unshift({ user: userId, active: true });
     const result = await post.save();
-
     res.status(200).json({
       success: true,
       message: "Post liked",
-      postId: result._id
+      likeId: userLike._id,
+      likes: post.likes
     });
   } catch (err) {
     console.log("error", err);
@@ -288,26 +292,29 @@ exports.removeLike = async (req, res, next) => {
   const userId = req.user.userId;
   try {
     const post = await Post.findById(postId);
+    const userLike = post.likes.filter(like => like.user.toString() === userId);
 
-    if (
-      post.likes.filter(like => like.user.toString() === userId).length === 0
-    ) {
+    if (userLike.length === 0) {
       return res.status(200).json({
         message: "Post has not been liked "
       });
     }
 
-    const likeIndex = post.likes
-      .map(like => like.user.toString())
-      .indexOf(userId);
+    const likeIndex = post.likes.find(like => like.user.toString() === userId); // find index
+    const updateLikes = post.likes[likeIndex];
 
-    post.likes.splice(likeIndex, 1);
+    if (likeIndex) {
+      post.likes[likeIndex] = { ...updateLikes, active: false };
+    } else {
+      post.likes.unshift({ user: userId, active: false });
+    }
+
     const result = await post.save();
-
     res.status(200).json({
       success: true,
       message: "Post has not been liked",
-      postId: result._id
+      postId: result._id,
+      post
     });
   } catch (err) {
     console.log("error", err);

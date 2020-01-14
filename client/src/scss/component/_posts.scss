@@ -14,13 +14,31 @@
   p {
     font-size: $base-size - 2;
   }
-  .btn-dlt-icon {
+  &-btn {
     position: absolute;
-    right: 10px;
-    top: 0px;
+    right: 20px;
+    top: 5px;
+    .btn {
+      padding: 3px 5px;
+    }
   }
   img {
     width: 100%;
     margin-bottom: 10px;
+  }
+}
+
+.like-dislike {
+  display: inline-block;
+  .btn {
+    font-size: $base-size - 2;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  span {
+    &:first-of-type {
+      display: inline-block;
+      margin-right: 5px;
+    }
   }
 }

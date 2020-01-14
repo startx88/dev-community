@@ -22,9 +22,15 @@ import {
   faTachometerAlt,
   faBookReader,
   faBriefcase,
-  faTrashAlt
+  faTrashAlt,
+  faThumbsDown,
+  faThumbsUp,
+  faPencilAlt
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+  faPencilAlt,
+  faThumbsDown,
+  faThumbsUp,
   faBookReader,
   faBriefcase,
   faTachometerAlt,

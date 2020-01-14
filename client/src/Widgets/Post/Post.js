@@ -3,19 +3,32 @@ import Image from "../../UI/Image";
 import Icons from "../../UI/Icons";
 import Date from "../../UI/Date";
 import Button from "../../UI/Button";
+import LikeDislike from "./like-dislike";
 
-const Post = ({ postData, deletePost }) => {
+const Post = ({ postData, deletePost, editedPost }) => {
   return (
     <article className="post col-sm-6">
-      <Button
-        type="button"
-        clicked={() => deletePost(postData._id)}
-        btnType="dlt-icon"
-      >
-        <Icons icon="trash-alt" />
-      </Button>
+      <div className="post-btn">
+        <Button
+          type="button"
+          clicked={() => editedPost(postData._id)}
+          btnType="edit-icon"
+        >
+          <Icons icon="pencil-alt" />
+        </Button>
+        <Button
+          type="button"
+          clicked={() => deletePost(postData._id)}
+          btnType="dlt-icon"
+        >
+          <Icons icon="trash-alt" />
+        </Button>
+      </div>
       <Image src={postData.avatar} alt={postData.title} />
-      <Date from={postData.insertAt} />
+      <div className="d-flex justify-content-between">
+        <Date from={postData.insertAt} />
+        <LikeDislike />
+      </div>
       <h6>
         {postData.title}
         <small>{postData.users && postData.users.name}</small>

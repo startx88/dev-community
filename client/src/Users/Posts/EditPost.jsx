@@ -1,27 +1,36 @@
 import React, { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { PostSchema } from "./schema";
-import { Redirect } from "react-router-dom";
-import AlertMessage from "../../UI/Alert";
+import { Redirect, Link } from "react-router-dom";
 import InputFile from "../../UI/InputFile";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import Title from "../../Widgets/Title/Title";
+import useQuery from "../../_hooks/useQuery";
 
 // Add/Update post form
 const PostForm = props => {
+  const postId = props.match.params.id;
   const refFocus = useRef(null);
-  const { parentProp } = props;
+  const {
+    parentProp: { addPost, userPost, alert }
+  } = props;
+
+  const query = useQuery();
+  const post =
+    userPost.posts && userPost.posts.find(post => post._id === postId);
+  const isEdit = query.get("edit") && post;
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      avatar: "",
-      description: ""
+      title: isEdit ? post.title : "",
+      avatar: isEdit ? post.avatar : "",
+      description: isEdit ? post.description : ""
     },
+    enableReinitialize: true,
     validationSchema: PostSchema,
     onSubmit: (values, { resetForm }) => {
-      parentProp.addPost(values);
+      isEdit ? addPost(values, postId, "UPDATE") : addPost(values);
     }
   });
 
@@ -36,16 +45,13 @@ const PostForm = props => {
 
   // redirect if data submit success
   let element = null;
-  //if (parentProp.alert.show) {
-  //element = <Redirect to="/users/posts" />;
-  // }
+  if (alert.show) {
+    element = <Redirect to="/users/posts" />;
+  }
 
   return (
     <div className="profile-form">
       {element}
-      {/* <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
-        {parentProp.alert.message}
-      </AlertMessage> */}
       <form className="panel  panel-white" onSubmit={handleSubmit}>
         <Title classname="mb-3">
           <h6>Add new post</h6>
@@ -84,9 +90,24 @@ const PostForm = props => {
             blur={handleBlur}
           />
           <div className="col-sm-12">
-            <Button type="submit" btnType="outline-info">
-              Add Post
-            </Button>
+            {!isEdit ? (
+              <Button type="submit" btnType="outline-info">
+                Add Post
+              </Button>
+            ) : (
+              <>
+                <Button type="submit" btnType="outline-info" classname="mr-2">
+                  Update Post
+                </Button>
+                <Link
+                  to="/users/posts"
+                  type="submit"
+                  className="btn btn-cancel"
+                >
+                  Cancel
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </form>

@@ -1,15 +1,14 @@
 import React, { lazy, useCallback, useEffect } from "react";
 import Title from "../../Widgets/Title/Title";
-
-import { Link } from "react-router-dom";
 import PrivateRoute from "../../Web/PrivateRoute";
+import AlertMessage from "../../UI/Alert";
+import { Link } from "react-router-dom";
 
 const EditPost = lazy(() => import("./EditPost"));
 const PostList = lazy(() => import("./PostList"));
 
 const Container = props => {
-  const { match, fetchUserPosts, userPost } = props;
-
+  const { match, fetchUserPosts, userPost, alert } = props;
   const loadUserPost = useCallback(() => {
     fetchUserPosts();
   }, [fetchUserPosts]);
@@ -26,7 +25,9 @@ const Container = props => {
         </Link>
       </Title>
       <hr />
-
+      <AlertMessage type={alert.type} show={alert.show}>
+        {alert.message}
+      </AlertMessage>
       <PrivateRoute
         exact
         path={match.url}
@@ -35,7 +36,7 @@ const Container = props => {
         )}
       />
       <PrivateRoute
-        path={match.url + "/add-post"}
+        path={match.url + `/add-post/:id?`}
         component={childProps => (
           <EditPost parentProp={props} {...childProps} />
         )}

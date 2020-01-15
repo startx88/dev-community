@@ -6,7 +6,12 @@ const request = require("request");
 // Profiles
 exports.getAllProfiles = async (req, res, next) => {
   try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    //const users = await User.find({ active: 1 }).select("-password");
+    const profiles = await Profile.find().populate("user", [
+      "name",
+      "avatar",
+      "email"
+    ]);
     if (!profiles) {
       const error = new Error("There is no profiles");
       error.statusCode = 404;

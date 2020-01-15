@@ -46,6 +46,10 @@ hr {
   border-top-color: $border-color;
 }
 
+p {
+  font-size: $base-size - 2;
+}
+
 .preview {
   display: flex;
   padding-top: 10px;

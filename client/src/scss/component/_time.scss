@@ -18,4 +18,16 @@
       }
     }
   }
+
+  .date-icon {
+    span {
+      color: inherit;
+    }
+    time {
+      margin-left: 5px;
+      &:before {
+        display: none;
+      }
+    }
+  }
 }

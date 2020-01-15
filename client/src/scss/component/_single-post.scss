@@ -1,0 +1,56 @@
+.single-post {
+  margin-top: 20px;
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.like {
+  position: relative;
+  .like-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.post-user {
+  font-size: $base-size - 2;
+  color: lighten($base-color, 30%);
+  small {
+    font-size: inherit;
+    color: $base-color;
+  }
+}
+
+.single-post-image {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  img {
+    max-width: 100%;
+  }
+}
+
+.post-date-comment {
+  display: inline-flex;
+  align-items: center;
+  .btn {
+    margin-left: 10px;
+    padding: 0;
+    font-size: $base-size - 3;
+    span {
+      position: relative;
+      top: 1px;
+      margin-right: 4px;
+    }
+  }
+  .date {
+    margin-bottom: 0;
+    margin-right: 10px;
+    color: $base-color;
+    time {
+      font-weight: normal;
+    }
+  }
+}

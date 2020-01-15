@@ -3,42 +3,58 @@ import Image from "../../UI/Image";
 import Icons from "../../UI/Icons";
 import Date from "../../UI/Date";
 import Button from "../../UI/Button";
-import LikeDislike from "./like-dislike";
-
-const Post = ({ postData, deletePost, editedPost, liked, disliked, likes }) => {
-  //console.log("likes", likes);
+import LikeButton from "../LikeButton/LikeButton";
+import { Link } from "react-router-dom";
+// Post Component
+const Post = ({
+  postinfo,
+  deletePost,
+  editedPost,
+  likeHandler,
+  dislikeHandler,
+  likes,
+  link,
+  ...rest
+}) => {
   return (
     <article className="post col-sm-6">
       <div className="post-btn">
         <Button
           type="button"
-          clicked={() => editedPost(postData._id)}
+          clicked={() => editedPost(postinfo._id)}
           btnType="edit-icon"
         >
           <Icons icon="pencil-alt" />
         </Button>
         <Button
           type="button"
-          clicked={() => deletePost(postData._id)}
+          clicked={() => deletePost(postinfo._id)}
           btnType="dlt-icon"
         >
           <Icons icon="trash-alt" />
         </Button>
       </div>
-      <Image src={postData.avatar} alt={postData.title} />
+      {link ? (
+        <Link to={"/posts/" + postinfo._id}>
+          <Image src={postinfo.avatar} alt={postinfo.title} />
+        </Link>
+      ) : (
+        <Image src={postinfo.avatar} alt={postinfo.title} />
+      )}
+
       <div className="d-flex justify-content-between">
-        <Date from={postData.insertAt} />
-        <LikeDislike
+        <Date from={postinfo.insertAt} />
+        <LikeButton
           likes={likes}
-          liked={() => liked(postData._id)}
-          disliked={() => disliked(postData._id)}
+          likeHandler={() => likeHandler(postinfo._id)}
+          dislikeHandler={() => dislikeHandler(postinfo._id)}
         />
       </div>
       <h6>
-        {postData.title}
-        <small>{postData.users && postData.users.name}</small>
+        {postinfo.title}
+        <small>{postinfo.users && postinfo.users.name}</small>
       </h6>
-      <p>{postData.description.substr(0, 100)}...</p>
+      <p>{postinfo.description.substr(0, 100)}...</p>
     </article>
   );
 };

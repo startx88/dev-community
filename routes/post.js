@@ -52,7 +52,7 @@ router.put(
 );
 router.delete("/:postId", auth, postController.deletePost);
 router.put("/like/:postId", auth, postController.addLike);
-router.put("/unlink/:postId", auth, postController.removeLike);
+router.put("/dislike/:postId", auth, postController.removeLike);
 router.post(
   "/comment/:postId",
   auth,

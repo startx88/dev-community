@@ -12,13 +12,14 @@ import useQuery from "../../_hooks/useQuery";
 const PostForm = props => {
   const postId = props.match.params.id;
   const refFocus = useRef(null);
+  console.log(props);
   const {
-    parentProp: { addPost, userPost, alert }
+    parentProp: { addPost, postData }
   } = props;
 
   const query = useQuery();
   const post =
-    userPost.posts && userPost.posts.find(post => post._id === postId);
+    postData.posts && postData.posts.find(post => post._id === postId);
   const isEdit = query.get("edit") && post;
 
   const formik = useFormik({
@@ -45,7 +46,7 @@ const PostForm = props => {
 
   // redirect if data submit success
   let element = null;
-  if (alert.show) {
+  if (postData.alert.show) {
     element = <Redirect to="/users/posts" />;
   }
 

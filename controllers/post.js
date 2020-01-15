@@ -17,7 +17,21 @@ exports.getAllPosts = async (req, res, next) => {
     }
     res.status(200).json({
       success: true,
-      posts
+      data: posts.map(post => ({
+        _id: post._id,
+        title: post.title,
+        description: post.description,
+        avatar: "http://localhost:4200/" + post.avatar,
+        insertAt: post.insertAt,
+        likes: post.likes,
+        comments: post.comments,
+        users: {
+          _id: post.user._id,
+          name: post.user.name,
+          email: post.user.email,
+          avatar: post.user.avatar
+        }
+      }))
     });
   } catch (err) {
     console.log("error", err);
@@ -49,7 +63,7 @@ exports.getUserPosts = async (req, res, next) => {
         avatar: "http://localhost:4200/" + post.avatar,
         insertAt: post.insertAt,
         likes: post.likes,
-        comments: post.coments,
+        comments: post.comments,
         users: {
           _id: post.user._id,
           name: post.user.name,
@@ -71,7 +85,12 @@ exports.getPost = async (req, res, next) => {
   const postId = req.params.postId;
   try {
     try {
-      const post = await Post.findById(postId);
+      const post = await Post.findById(postId).populate("user", [
+        "name",
+        "email",
+        "avatar"
+      ]);
+      console.log(post);
       if (!post) {
         const error = new Error("No post found");
         error.statusCode = 404;
@@ -79,7 +98,21 @@ exports.getPost = async (req, res, next) => {
       }
       res.status(200).json({
         success: true,
-        post
+        data: {
+          _id: post._id,
+          title: post.title,
+          description: post.description,
+          avatar: "http://localhost:4200/" + post.avatar,
+          insertAt: post.insertAt,
+          likes: post.likes,
+          comments: post.comments,
+          users: {
+            _id: post.user._id,
+            name: post.user.name,
+            email: post.user.email,
+            avatar: post.user.avatar
+          }
+        }
       });
     } catch (err) {
       console.log("error", err);
@@ -259,23 +292,35 @@ exports.deleteComment = async (req, res, next) => {
 exports.addLike = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.user.userId;
-  console.log(postId, userId);
+
   try {
     const post = await Post.findById(postId);
-    const userLike = post.likes.filter(like => like.user.toString() === userId); // find the user
-    console.log("userlike", userLike);
-    if (userLike.length > 0) {
-      return res.status(200).json({
-        message: "Post is already liked"
-      });
+
+    const userLiked =
+      post.likes.filter(like => like.user.toString() === userId).length > 0;
+
+    if (userLiked) {
+      const findLike = post.likes.find(like => like.user.toString() === userId); // find the user
+      if (findLike.active) {
+        return res.status(200).json({
+          message: "Post already liked"
+        });
+      }
+
+      const likeIndex = post.likes.findIndex(
+        like => like.user.toString() === userId
+      );
+      const existingLikes = post.likes[likeIndex];
+      post.likes[likeIndex].active = true;
+    } else {
+      post.likes.unshift({ user: userId, active: true });
     }
 
-    post.likes.unshift({ user: userId, active: true });
     const result = await post.save();
     res.status(200).json({
       success: true,
       message: "Post liked",
-      likeId: userLike._id,
+      postId: result._id,
       likes: post.likes
     });
   } catch (err) {
@@ -291,20 +336,23 @@ exports.removeLike = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.user.userId;
   try {
-    const post = await Post.findById(postId);
-    const userLike = post.likes.filter(like => like.user.toString() === userId);
+    const post = await Post.findById(postId); // find the post
+    const userLiked =
+      post.likes.filter(like => like.user.toString() === userId).length > 0;
 
-    if (userLike.length === 0) {
-      return res.status(200).json({
-        message: "Post has not been liked "
-      });
-    }
+    if (userLiked) {
+      const findLike = post.likes.find(like => like.user.toString() === userId); // find the user
+      if (!findLike.active) {
+        return res.status(200).json({
+          message: "Post already unliked"
+        });
+      }
 
-    const likeIndex = post.likes.find(like => like.user.toString() === userId); // find index
-    const updateLikes = post.likes[likeIndex];
-
-    if (likeIndex) {
-      post.likes[likeIndex] = { ...updateLikes, active: false };
+      const likeIndex = post.likes.findIndex(
+        like => like.user.toString() === userId
+      );
+      const existingLikes = post.likes[likeIndex];
+      post.likes[likeIndex].active = false;
     } else {
       post.likes.unshift({ user: userId, active: false });
     }
@@ -312,9 +360,9 @@ exports.removeLike = async (req, res, next) => {
     const result = await post.save();
     res.status(200).json({
       success: true,
-      message: "Post has not been liked",
+      message: "Post unliked",
       postId: result._id,
-      post
+      likes: post.likes
     });
   } catch (err) {
     console.log("error", err);

@@ -21,6 +21,6 @@ export {
   likePost,
   dislikePost,
   fetchUserPosts,
-  fetchAllPosts,
+  getAllPosts,
   deletePost
 } from "./post";

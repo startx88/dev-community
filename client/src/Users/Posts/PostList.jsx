@@ -4,13 +4,10 @@ import Spinner from "../../UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 
 const PostList = props => {
-  console.log("postlist", props);
   const { match, parentProp } = props;
 
   const {
     postData: { posts },
-    likes,
-    dislikes,
     deletePost,
     likePost,
     dislikePost
@@ -27,11 +24,12 @@ const PostList = props => {
     });
   };
 
-  const likedPost = postId => {
+  // Likes button
+  const likePostHandler = postId => {
     likePost(postId);
   };
 
-  const dislikedPost = postId => {
+  const dislikePostHandler = postId => {
     dislikePost(postId);
   };
 
@@ -42,12 +40,12 @@ const PostList = props => {
           posts.map(post => (
             <Post
               key={post._id}
-              postData={post}
+              postinfo={post}
               deletePost={deletePostHandler}
               editedPost={editPostHandler}
               likes={post.likes}
-              liked={likedPost}
-              disliked={dislikedPost}
+              likeHandler={likePostHandler}
+              dislikeHandler={dislikePostHandler}
             />
           ))
         ) : (

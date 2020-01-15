@@ -1,5 +1,10 @@
 import React from "react";
+import Title from "../../Widgets/Title/Title";
 const Container = props => {
-  return <h1>Developers</h1>;
+  return (
+    <>
+      <Title />
+    </>
+  );
 };
 export default Container;

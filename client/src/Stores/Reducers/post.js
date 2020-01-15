@@ -53,20 +53,16 @@ const addComment = (state, payloads) => updateObject(state, { loading: false });
 // like post
 const likePost = (state, payloads) =>
   updateObject(state, {
-    posts: {
-      ...state.posts,
-      likes: [...state.posts.likes, payloads.like]
-    }
+    posts: state.posts.map(post =>
+      post._id === payloads.postId ? { ...post, likes: payloads.likes } : post
+    )
   });
 
 const dislikePost = (state, payloads) =>
   updateObject(state, {
-    posts: {
-      ...state.posts,
-      likes: state.posts.likes.map(item =>
-        item._id === payloads.id ? { ...payloads.like } : item
-      )
-    }
+    posts: state.posts.map(post =>
+      post._id === payloads.postId ? { ...post, likes: payloads.likes } : post
+    )
   });
 
 const reducer = (state = initState, action) => {

@@ -47,7 +47,10 @@ const Title = ({
       break;
     default:
       element = (
-        <div className={["title", classname].join(" ")}>{children}</div>
+        <div className={["title", classname].join(" ")}>
+          <h4>{urls}</h4>
+          {children}
+        </div>
       );
   }
 

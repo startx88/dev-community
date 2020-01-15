@@ -1,11 +1,7 @@
 import Container from "./Container";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import {
-  userPosts,
-  likesCounter,
-  dislikeCounter
-} from "../../Stores/Selectors";
+import { userPosts } from "../../Stores/Selectors";
 
 import {
   addPost,

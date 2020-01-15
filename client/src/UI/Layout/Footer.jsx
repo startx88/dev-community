@@ -4,7 +4,7 @@ const Footer = ({ admin, ...res }) => {
   return admin ? (
     <footer className="footer">
       <p>
-        Copyright &copy; shopkart {new Date().getFullYear()}, Powered by{" "}
+        Copyright &copy; - {new Date().getFullYear()}, Dev-Community, Powered by{" "}
         <a href="www.learnui.com" target="blank">
           Learnui.com
         </a>

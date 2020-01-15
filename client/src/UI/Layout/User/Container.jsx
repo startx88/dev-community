@@ -24,7 +24,7 @@ const Container = props => {
         <Main classname="container mt-4">{props.children}</Main>
       )}
 
-      <Footer />
+      <Footer admin />
     </>
   );
 };

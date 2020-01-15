@@ -90,7 +90,7 @@ exports.getPost = async (req, res, next) => {
         "email",
         "avatar"
       ]);
-      console.log(post);
+
       if (!post) {
         const error = new Error("No post found");
         error.statusCode = 404;

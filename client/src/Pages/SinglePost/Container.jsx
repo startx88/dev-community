@@ -6,6 +6,7 @@ import Icons from "../../UI/Icons";
 import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import LikeButton from "../../Widgets/LikeButton/LikeButton";
+import CommentForm from "./CommentForm";
 const Container = props => {
   const [postinfo, setPostInfo] = useState(null);
   const postId = props.match.params.id;
@@ -46,7 +47,10 @@ const Container = props => {
           </div>
           <h2>{postinfo.title}</h2>
           <p>{postinfo.description}</p>
-          <div className="leave-comment"></div>
+          <div className="leave-comment">
+            <h4>Leave a Comment</h4>
+            <CommentForm user={postinfo.users} postId={postinfo._id} />
+          </div>
         </div>
       </div>
     </div>

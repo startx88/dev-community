@@ -20,7 +20,8 @@ const Input = ({
   touched,
   refs,
   blur,
-  icon
+  icon,
+  readonly
 }) => {
   let element = null;
 
@@ -51,6 +52,7 @@ const Input = ({
             touched[name] && !errors[name] && "is-valid",
             classname
           ].join(" ")}
+          readOnly={readonly}
         />
       );
       break;

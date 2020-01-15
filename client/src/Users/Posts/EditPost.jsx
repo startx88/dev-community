@@ -53,7 +53,11 @@ const PostForm = props => {
   return (
     <div className="profile-form">
       {element}
-      <form className="panel  panel-white" onSubmit={handleSubmit}>
+      <form
+        enctype="multipart/form-data"
+        className="panel  panel-white"
+        onSubmit={handleSubmit}
+      >
         <Title classname="mb-3">
           <h6>Add new post</h6>
         </Title>

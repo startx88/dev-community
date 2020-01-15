@@ -13,7 +13,7 @@ const Container = props => {
 
       {auth.isAuth ? (
         <Main classname="container">
-          <div className="row">
+          <div className="row row-user-mod">
             <div className="col-sm-3">
               <Sidebar user={auth} />
             </div>
@@ -21,7 +21,7 @@ const Container = props => {
           </div>
         </Main>
       ) : (
-        <Main classname="container mt-4">{props.children}</Main>
+        <Main classname="container flex-1 mt-4">{props.children}</Main>
       )}
 
       <Footer admin />

@@ -268,7 +268,37 @@ exports.deletePost = async (req, res, next) => {
 /////////// Add Comment
 /////////////////////////////////////////////////
 exports.addComment = async (req, res, next) => {
+  const userId = req.user.userId;
+  const postId = req.params.postId;
   try {
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      const error = new Error("Unauthrozed access");
+      error.statusCode = 401;
+      throw next(error);
+    }
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("No post found!");
+      error.statusCode = 404;
+      throw next(error);
+    }
+
+    const comment = {
+      user: userId,
+      name: req.body.name,
+      email: req.body.email,
+      text: req.body.text
+    };
+
+    post.comments.unshift(comment);
+    const result = await post.save();
+
+    res.staus(201).json({
+      success: true,
+      postId: result._id,
+      comments: post.comments
+    });
   } catch (err) {
     console.log("error", err);
     next(err);
@@ -279,7 +309,48 @@ exports.addComment = async (req, res, next) => {
 /////////// Delete Comment
 /////////////////////////////////////////////////
 exports.deleteComment = async (req, res, next) => {
+  const userId = req.user.userId;
+  const postId = req.params.postId;
+  const commentId = req.params.commentId;
   try {
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      const error = new Error("Unauthrozed access");
+      error.statusCode = 401;
+      throw next(error);
+    }
+    const post = await Post.findById(postId);
+    if (!post) {
+      const error = new Error("No post found!");
+      error.statusCode = 404;
+      throw next(error);
+    }
+
+    const commentIndex = post.comments.findIndex(
+      comment => comment._id.toString() === commentId
+    );
+    const existComment = post.comments[commentIndex];
+
+    if (!existComment) {
+      const error = new Error("There is no comment exist!");
+      error.statusCode = 404;
+      throw next(error);
+    }
+
+    if (existComment.user.toString() !== userId) {
+      const error = new Error("User not authrized!");
+      error.statusCode = 401;
+      throw next(error);
+    }
+
+    post.comments.splice(commentIndex, 1);
+    const result = await post.save();
+
+    res.staus(201).json({
+      success: true,
+      postId: result._id,
+      comments: post.comments
+    });
   } catch (err) {
     console.log("error", err);
     next(err);

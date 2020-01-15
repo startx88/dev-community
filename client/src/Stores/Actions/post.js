@@ -42,9 +42,17 @@ const dislike_post = (postId, likes) => ({
 });
 
 // comment
-const comment_post = comment => ({
+const add_comment = (id, comment) => ({
   type: post.POST_COMMENT_ADD,
-  payloads: comment
+  payloads: {
+    id: id,
+    comment: comment
+  }
+});
+
+const delete_comment = commentId => ({
+  type: post.POST_COMMENT_ADD,
+  payloads: commentId
 });
 
 // FETCH USER POST
@@ -139,8 +147,26 @@ export const deletePost = postId => async dispatch => {
   }
 };
 
-export const addComment = inputdata => async dispatch => {
+// Comment
+export const addComment = (postId, inputdata) => async dispatch => {
   try {
+    const response = await axios.post(`/posts/comment/${postId}`, inputdata);
+    const responseData = await response.data;
+    dispatch(add_comment(postId, responseData.comments));
+    dispatch(showAlert(responseData.message, "success"));
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+  }
+};
+
+// Comment
+export const deleteComment = (postId, commentId) => async dispatch => {
+  try {
+    const response = await axios.post(`/posts/comment/${postId}${commentId}`);
+    const responseData = await response.data;
+    dispatch(add_comment(commentId));
+    dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

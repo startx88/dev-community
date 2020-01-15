@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import Title from "../../Widgets/Title/Title";
 import Spinner from "../../UI/Spinner/Spinner";
 import Post from "../../Widgets/Post/Post";
+import Section from "../../UI/Layout/Section";
 const Container = props => {
   const { getAllPost, posts } = props;
 
@@ -19,17 +20,29 @@ const Container = props => {
 
   return (
     <>
-      <Title />
-      <div className="row">
-        <div className="col-sm-9">
-          <div className="row">
-            {posts.map(post => (
-              <Post link key={post._id} postinfo={post} likes={post.likes} />
-            ))}
-          </div>
-          <div className="col-sm-3"></div>
-        </div>
-      </div>
+      <Section>
+        {user => {
+          return (
+            <>
+              <Section.LeftCol {...user}>
+                <Title />
+                <div className="row">
+                  {posts.map(post => (
+                    <Post
+                      link
+                      key={post._id}
+                      postinfo={post}
+                      likes={post.likes}
+                      classname="col-sm-12"
+                    />
+                  ))}
+                </div>
+              </Section.LeftCol>
+              <Section.RightCol {...user}>hello</Section.RightCol>
+            </>
+          );
+        }}
+      </Section>
     </>
   );
 };

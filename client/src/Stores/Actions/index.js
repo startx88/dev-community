@@ -18,6 +18,7 @@ export {
 export {
   addPost,
   addComment,
+  deleteComment,
   likePost,
   dislikePost,
   fetchUserPosts,

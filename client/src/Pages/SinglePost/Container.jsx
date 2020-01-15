@@ -7,6 +7,8 @@ import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import LikeButton from "../../Widgets/LikeButton/LikeButton";
 import CommentForm from "./CommentForm";
+import Section from "../../UI/Layout/Section";
+
 const Container = props => {
   const [postinfo, setPostInfo] = useState(null);
   const postId = props.match.params.id;
@@ -14,7 +16,6 @@ const Container = props => {
   const loadPost = async () => {
     const responose = await axios.get("/posts/" + postId);
     const responseData = await responose.data;
-    console.log(responseData);
     setPostInfo(responseData.data);
   };
 
@@ -27,33 +28,41 @@ const Container = props => {
   }
 
   return (
-    <div className="single-post">
-      <div className="row">
-        <div className="col-sm-9">
-          <div className="post-user-info d-flex justify-content-between">
-            <div className="post-user">
-              by <small>{postinfo.users.name}</small>
-            </div>
-            <div className="post-date-comment">
-              <Date icon from={postinfo.insertAt} />
-              <Button>
-                <Icons icon="comment-alt" /> 0
-              </Button>
-            </div>
-          </div>
-          <div className="like">
-            <Image classname="single-post-image" src={postinfo.avatar} />
-            <LikeButton likes={postinfo.likes} />
-          </div>
-          <h2>{postinfo.title}</h2>
-          <p>{postinfo.description}</p>
-          <div className="leave-comment">
-            <h4>Leave a Comment</h4>
-            <CommentForm user={postinfo.users} postId={postinfo._id} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Section>
+      {user => {
+        return (
+          <>
+            <Section.LeftCol {...user}>
+              <div className="post-user-info d-flex justify-content-between">
+                <div className="post-user">
+                  by <small>{postinfo.users.name}</small>
+                </div>
+                <div className="post-date-comment">
+                  <Date icon from={postinfo.insertAt} />
+                  <Button>
+                    <Icons icon="comment-alt" /> 0
+                  </Button>
+                </div>
+              </div>
+              <div className="like">
+                <Image classname="single-post-image" src={postinfo.avatar} />
+                <LikeButton likes={postinfo.likes} />
+              </div>
+              <h2>{postinfo.title}</h2>
+              <p>{postinfo.description}</p>
+              <div className="leave-comment">
+                <h4>Leave a Comment</h4>
+                <CommentForm user={postinfo.users} postId={postinfo._id} />
+              </div>
+            </Section.LeftCol>
+            <Section.RightCol {...user}>
+              {" "}
+              <h1>Hello world</h1>
+            </Section.RightCol>
+          </>
+        );
+      }}
+    </Section>
   );
 };
 

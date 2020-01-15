@@ -5,6 +5,7 @@ import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import LikeButton from "../LikeButton/LikeButton";
 import { Link } from "react-router-dom";
+
 // Post Component
 const Post = ({
   postinfo,
@@ -17,6 +18,26 @@ const Post = ({
   classname,
   ...rest
 }) => {
+  const deletePostHandler = postId => {
+    deletePost(postId);
+  };
+
+  const editPostHandler = id => {
+    props.history.push({
+      pathname: match.url + `/add-post/${id}`,
+      search: "?edit=true"
+    });
+  };
+
+  // Likes button
+  const likePostHandler = postId => {
+    likePost(postId);
+  };
+
+  const dislikePostHandler = postId => {
+    dislikePost(postId);
+  };
+
   return (
     <article className={["post", classname].join(" ")}>
       <div className="post-btn">

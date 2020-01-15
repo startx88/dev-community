@@ -37,13 +37,13 @@ const Web = props => {
         component={Developers}
       />
       <PublicRoute path="/courses" layout={UserLayout} component={Course} />
+      <PublicRoute path="/logout" component={Logout} />
       <PublicRoute
         path="/posts/:id"
         layout={UserLayout}
         component={SinglePost}
       />
       <PublicRoute path="/posts" layout={UserLayout} component={Posts} />
-      <PublicRoute path="/logout" component={Logout} />
       <PrivateRoute path="/users" layout={UserLayout} component={User} />
     </Switch>
   );

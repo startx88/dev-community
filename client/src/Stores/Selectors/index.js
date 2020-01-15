@@ -18,3 +18,10 @@ export const userPosts = createSelector(
     alert: alert
   })
 );
+
+////////////////////////////////////
+///////// Current user
+///////////////////////////////////
+const userState = state => state.auth;
+
+export const userSelector = createSelector([userState], state => state);

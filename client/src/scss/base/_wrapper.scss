@@ -17,3 +17,16 @@
     padding: 20px;
   }
 }
+
+.flex-1 {
+  flex: 1;
+}
+
+.row-user-mod {
+  > div[class^="col-sm"] {
+    &:first-child {
+      padding-right: 0;
+      flex: 0 0 24%;
+    }
+  }
+}

@@ -8,6 +8,7 @@ import UserControl from "../../Widgets/UserControl";
 /** Sidebar */
 const Sidebar = props => {
   const { match, user } = props;
+
   return (
     <aside
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -18,29 +19,27 @@ const Sidebar = props => {
           {user.users && <UserControl sidebar userInfo={user.users} />}
           <hr />
           <ul>
-            <Links ismenu classname="nav-link" href={match.path}>
+            <Links ismenu classname="nav-link" href="/users">
               <Icons icon="th" />
               Dashboard
             </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/courses"}>
+            <Links ismenu classname="nav-link" href={"/users/courses"}>
               <Icons icon="long-arrow-alt-right" />
               My Courses
             </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/posts"}>
+            <Links ismenu classname="nav-link" href={"/users/posts"}>
               <Icons icon="long-arrow-alt-right" />
               My Posts
             </Links>
 
-            <Links ismenu classname="nav-link" href={match.path + "/profiles"}>
+            <Links ismenu classname="nav-link" href={"/users/profiles"}>
               <Icons icon="long-arrow-alt-right" />
               My Profiles
             </Links>
-
             <hr />
-
-            <Links ismenu classname="nav-link" href={match.path + "/settings"}>
+            <Links ismenu classname="nav-link" href={"/users/settings"}>
               <Icons icon="cog" />
               Settings
             </Links>

@@ -27,36 +27,46 @@ const Container = props => {
     return <Spinner />;
   }
 
+  // LOGIN REDIRECT
+  const backToLogin = () => {
+    props.history.push("/login");
+  };
+
   return (
     <Section>
       {user => {
         return (
           <>
             <Section.LeftCol {...user}>
-              <div className="post-user-info d-flex justify-content-between">
-                <div className="post-user">
-                  by <small>{postinfo.users.name}</small>
+              <div className="single-post">
+                <div className="post-user-info d-flex justify-content-between">
+                  <div className="post-user">
+                    by <small>{postinfo.users.name}</small>
+                  </div>
+                  <div className="post-date-comment">
+                    <Date icon from={postinfo.insertAt} />
+                    <Button>
+                      <Icons icon="comment-alt" /> 0
+                    </Button>
+                  </div>
                 </div>
-                <div className="post-date-comment">
-                  <Date icon from={postinfo.insertAt} />
-                  <Button>
-                    <Icons icon="comment-alt" /> 0
-                  </Button>
+                <div className="like">
+                  <Image classname="single-post-image" src={postinfo.avatar} />
+                  <LikeButton
+                    likeHandler={backToLogin}
+                    dislikeHandler={backToLogin}
+                    likes={postinfo.likes}
+                  />
                 </div>
-              </div>
-              <div className="like">
-                <Image classname="single-post-image" src={postinfo.avatar} />
-                <LikeButton likes={postinfo.likes} />
-              </div>
-              <h2>{postinfo.title}</h2>
-              <p>{postinfo.description}</p>
-              <div className="leave-comment">
-                <h4>Leave a Comment</h4>
-                <CommentForm user={postinfo.users} postId={postinfo._id} />
+                <h2>{postinfo.title}</h2>
+                <p>{postinfo.description}</p>
+                <div className="leave-comment">
+                  <h4>Leave a Comment</h4>
+                  <CommentForm user={postinfo.users} postId={postinfo._id} />
+                </div>
               </div>
             </Section.LeftCol>
             <Section.RightCol {...user}>
-              {" "}
               <h1>Hello world</h1>
             </Section.RightCol>
           </>

@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import Title from "../../Widgets/Title/Title";
 import Spinner from "../../UI/Spinner/Spinner";
-import Post from "../../Widgets/Post/Post";
 import Section from "../../UI/Layout/Section";
 import PostList from "../../Widgets/PostList";
 const Container = props => {

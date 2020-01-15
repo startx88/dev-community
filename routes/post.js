@@ -57,15 +57,11 @@ router.post(
   "/comment/:postId",
   auth,
   [
-    body("name", "Name is required")
-      .not()
-      .isEmpty(),
-    body("email", "Email is required").isEmail(),
     body("text", "Text is required")
       .not()
       .isEmpty()
   ],
-  postController.deleteComment
+  postController.addComment
 );
 router.delete(
   "/comment/:postId/:commentId",

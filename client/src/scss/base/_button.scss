@@ -33,7 +33,10 @@
   }
   &-dlt-icon {
     span {
-      color: $danger !important;
+      color: $danger;
+      &:hover {
+        color: $danger-light;
+      }
     }
   }
   &-edit-icon {

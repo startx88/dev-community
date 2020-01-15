@@ -149,9 +149,11 @@ export const deletePost = postId => async dispatch => {
 
 // Comment
 export const addComment = (postId, inputdata) => async dispatch => {
+  console.log(postId, inputdata);
   try {
     const response = await axios.post(`/posts/comment/${postId}`, inputdata);
     const responseData = await response.data;
+    console.log("res", responseData);
     dispatch(add_comment(postId, responseData.comments));
     dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
@@ -165,6 +167,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
   try {
     const response = await axios.post(`/posts/comment/${postId}${commentId}`);
     const responseData = await response.data;
+
     dispatch(add_comment(commentId));
     dispatch(showAlert(responseData.message, "success"));
   } catch (err) {

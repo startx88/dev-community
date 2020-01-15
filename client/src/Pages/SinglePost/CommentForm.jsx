@@ -3,6 +3,9 @@ import Button from "../../UI/Button";
 import Input from "../../UI/Input";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import useAccess from "../../_hooks/isAuth";
+import { useDispatch } from "react-redux";
+import { addComment } from "../../Stores/Actions";
 
 // Comment Schema
 const commentSchema = yup.object().shape({
@@ -11,19 +14,26 @@ const commentSchema = yup.object().shape({
     .string()
     .email()
     .required(),
-  name: yup.string().required()
+  text: yup.string().required()
 });
 
 const CommentForm = props => {
+  const { user } = useAccess();
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       name: "",
       email: props.user.email,
       text: ""
     },
-    validationSchema: commentSchema,
+
     onSubmit: values => {
-      console.log(values);
+      if (user.isAuth) {
+        dispatch(addComment(props.postId, values));
+      } else {
+        props.history.push("/login");
+      }
     }
   });
   const {
@@ -75,7 +85,9 @@ const CommentForm = props => {
         placeholder="Write your comment here..."
       />
 
-      <Button btnType="outline-info">Add Comment</Button>
+      <Button type="submit" btnType="outline-info">
+        Add Comment
+      </Button>
     </form>
   );
 };

@@ -8,11 +8,12 @@ import Button from "../../UI/Button";
 import LikeButton from "../../Widgets/LikeButton/LikeButton";
 import CommentForm from "./CommentForm";
 import Section from "../../UI/Layout/Section";
-
+import Comments from "../../Widgets/Comment/Comment";
+import useAccess from "../../_hooks/isAuth";
 const Container = props => {
   const [postinfo, setPostInfo] = useState(null);
   const postId = props.match.params.id;
-
+  const { user } = useAccess();
   const loadPost = async () => {
     const responose = await axios.get("/posts/" + postId);
     const responseData = await responose.data;
@@ -29,7 +30,10 @@ const Container = props => {
 
   // LOGIN REDIRECT
   const backToLogin = () => {
-    props.history.push("/login");
+    if (user.isAuth) {
+    } else {
+      props.history.push("/login");
+    }
   };
 
   return (
@@ -60,6 +64,7 @@ const Container = props => {
                 </div>
                 <h2>{postinfo.title}</h2>
                 <p>{postinfo.description}</p>
+                <Comments comments={postinfo.comments} />
                 <div className="leave-comment">
                   <h4>Leave a Comment</h4>
                   <CommentForm user={postinfo.users} postId={postinfo._id} />

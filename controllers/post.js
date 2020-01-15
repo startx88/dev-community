@@ -270,6 +270,14 @@ exports.deletePost = async (req, res, next) => {
 exports.addComment = async (req, res, next) => {
   const userId = req.user.userId;
   const postId = req.params.postId;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error(errors.array()[0].msg);
+    error.statusCode = 422;
+    throw next(error);
+  }
+
+  console.log("hello", req.body, userId, postId);
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {
@@ -294,7 +302,7 @@ exports.addComment = async (req, res, next) => {
     post.comments.unshift(comment);
     const result = await post.save();
 
-    res.staus(201).json({
+    res.status(201).json({
       success: true,
       postId: result._id,
       comments: post.comments

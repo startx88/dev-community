@@ -48,7 +48,14 @@ const deletePost = (state, payloads) =>
     posts: state.posts.filter(post => post._id !== payloads)
   });
 
-const addComment = (state, payloads) => updateObject(state, { loading: false });
+// ADD COMMENT
+const addComment = (state, payloads) =>
+  updateObject(state, {
+    loading: false,
+    posts: state.posts.map(post =>
+      post._id === payloads.id ? { ...post, comments: payloads.comment } : post
+    )
+  });
 
 // like post
 const likePost = (state, payloads) =>

@@ -12,7 +12,7 @@ import useQuery from "../../_hooks/useQuery";
 const PostForm = props => {
   const postId = props.match.params.id;
   const refFocus = useRef(null);
-  console.log(props);
+
   const {
     parentProp: { addPost, postData }
   } = props;
@@ -53,12 +53,8 @@ const PostForm = props => {
   return (
     <div className="profile-form">
       {element}
-      <form
-        enctype="multipart/form-data"
-        className="panel  panel-white"
-        onSubmit={handleSubmit}
-      >
-        <Title classname="mb-3">
+      <form className="panel  panel-white" onSubmit={handleSubmit}>
+        <Title notile classname="mb-3">
           <h6>Add new post</h6>
         </Title>
         <div className="row">

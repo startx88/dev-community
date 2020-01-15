@@ -1,48 +1,64 @@
 import React from "react";
-import Post from "../../Widgets/Post/Post";
+import Post from "./Post";
 import Spinner from "../../UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
-
+import useAccess from "../../_hooks/isAuth";
+// POST LIST COMPONENT
 const PostList = props => {
-  const { match, parentProp } = props;
-  const {
-    postData: { posts },
-    deletePost,
-    likePost,
-    dislikePost
-  } = parentProp;
+  const { postdata, deletePost, likePost, dislikePost } = props;
+  const { user } = useAccess();
 
+  // DELETE HANDLER
   const deletePostHandler = postId => {
-    deletePost(postId);
+    if (user.isAuth) {
+      deletePost(postId);
+    } else {
+      props.history.push("/login");
+    }
   };
 
+  // EDIT HANDLER
   const editPostHandler = id => {
-    props.history.push({
-      pathname: match.url + `/add-post/${id}`,
-      search: "?edit=true"
-    });
+    if (user.isAuth) {
+      props.history.push({
+        pathname: `/users/posts/add-post/${id}`,
+        search: "?edit=true"
+      });
+    } else {
+      props.history.push("/login");
+    }
   };
 
-  // Likes button
+  // LIKE HANDLER
   const likePostHandler = postId => {
-    likePost(postId);
+    if (user.isAuth) {
+      likePost(postId);
+    } else {
+      props.history.push("/login");
+    }
   };
 
+  // DISLIKE HANDLER
   const dislikePostHandler = postId => {
-    dislikePost(postId);
+    if (user.isAuth) {
+      dislikePost(postId);
+    } else {
+      props.history.push("/login");
+    }
   };
 
   return (
     <>
       <div className="row">
-        {posts ? (
-          posts.map(post => (
+        {postdata ? (
+          postdata.map(post => (
             <Post
               key={post._id}
+              isAuth={user.isAuth}
               postinfo={post}
+              likes={post.likes}
               deletePost={deletePostHandler}
               editedPost={editPostHandler}
-              likes={post.likes}
               likeHandler={likePostHandler}
               dislikeHandler={dislikePostHandler}
               classname="col-sm-6"

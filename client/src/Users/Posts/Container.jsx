@@ -5,14 +5,14 @@ import AlertMessage from "../../UI/Alert";
 import { Link } from "react-router-dom";
 
 const EditPost = lazy(() => import("./EditPost"));
-const PostList = lazy(() => import("./PostList"));
+const PostList = lazy(() => import("../../Widgets/PostList"));
 
 const Container = props => {
   //
   const {
     match,
     fetchUserPosts,
-    postData: { alert }
+    postData: { posts, alert }
   } = props;
 
   const loadUserPost = useCallback(() => {
@@ -37,9 +37,7 @@ const Container = props => {
       <PrivateRoute
         exact
         path={match.url}
-        component={childProps => (
-          <PostList parentProp={props} {...childProps} />
-        )}
+        component={childProps => <PostList postdata={posts} {...childProps} />}
       />
       <PrivateRoute
         path={match.url + `/add-post/:id?`}

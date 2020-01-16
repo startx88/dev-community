@@ -12,7 +12,7 @@ const Title = ({
   classname,
   match,
   breadcrumb,
-  notile,
+  notitle,
   ...rest
 }) => {
   const urls = match.path.split("/").filter(item => item !== "");
@@ -49,7 +49,7 @@ const Title = ({
     default:
       element = (
         <div className={["title", classname].join(" ")}>
-          {!notile && <h4>{urls}</h4>}
+          {!notitle && <h4>{urls}</h4>}
           {children}
         </div>
       );

@@ -8,7 +8,7 @@ import Button from "../../UI/Button";
 import Title from "../../Widgets/Title/Title";
 import Checkbox from "../../UI/Checkbox";
 const ExperienceForm = props => {
-  const { parentProp } = props;
+  const { parentProps } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -22,7 +22,7 @@ const ExperienceForm = props => {
     },
     validationSchema: ExperienceSchema,
     onSubmit: values => {
-      parentProp.addExperience(values);
+      parentProps.addExperience(values);
     }
   });
 
@@ -37,17 +37,20 @@ const ExperienceForm = props => {
 
   // redirect if data submit success
   let element = null;
-  if (parentProp.alert.show) {
+  if (parentProps.alert.show) {
     element = <Redirect to="/users/profiles" />;
   }
 
   return (
     <div className="profile-form">
       {element}
-      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show} />
+      <AlertMessage
+        type={parentProps.alert.type}
+        show={parentProps.alert.show}
+      />
 
       <form className="panel  panel-white" onSubmit={handleSubmit}>
-        <Title classname="mb-3">
+        <Title notitle classname="mb-3">
           <h6>Add Experience</h6>
         </Title>
         <div className="row">

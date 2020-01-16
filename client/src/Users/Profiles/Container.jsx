@@ -10,22 +10,24 @@ import { Link } from "react-router-dom";
 
 const Container = props => {
   const { match } = props;
-  const { profile } = useSelector(state => state.profile);
-  console.log("profile", props);
+
   return (
     <>
       <Title type="admin">
         <div>
-          <Link to={match.url + "/profile"} className="btn btn-info btn-sm">
+          <Link to={match.url + "/add-profile"} className="btn btn-info btn-sm">
             Add Profile
           </Link>
           <Link
-            to={match.url + "/experience"}
+            to={match.url + "/add-experience"}
             className="btn btn-info ml-2 mr-2 btn-sm"
           >
             Add Experience
           </Link>
-          <Link to={match.url + "/education"} className="btn btn-info btn-sm">
+          <Link
+            to={match.url + "/add-education"}
+            className="btn btn-info btn-sm"
+          >
             Add Education
           </Link>
         </div>
@@ -34,25 +36,27 @@ const Container = props => {
       <PrivateRoute
         path={match.url}
         exact
-        component={childProps => <Profile parentProp={props} {...childProps} />}
+        component={childProps => (
+          <Profile parentProps={props} {...childProps} />
+        )}
       />
 
       <PrivateRoute
-        path={match.url + "/profile"}
+        path={match.url + "/add-profile"}
         component={childProps => (
-          <ProfileForm parentProp={props} {...childProps} />
+          <ProfileForm parentProps={props} {...childProps} />
         )}
       />
       <PrivateRoute
-        path={match.url + "/education"}
+        path={match.url + "/add-education"}
         component={childProps => (
-          <EducationForm parentProp={props} {...childProps} />
+          <EducationForm parentProps={props} {...childProps} />
         )}
       />
       <PrivateRoute
-        path={match.url + "/experience"}
+        path={match.url + "/add-experience"}
         component={childProps => (
-          <ExperienceForm parentProp={props} {...childProps} />
+          <ExperienceForm parentProps={props} {...childProps} />
         )}
       />
     </>

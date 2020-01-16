@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import Button from "../../UI/Button";
 import Input from "../../UI/Input";
 import { useFormik } from "formik";
@@ -17,26 +18,28 @@ const commentSchema = yup.object().shape({
   text: yup.string().required()
 });
 
+// Add Comment
 const CommentForm = props => {
   const { user } = useAccess();
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: props.user.name,
       email: props.user.email,
       text: ""
     },
-
-    onSubmit: (values, { resetForm }) => {
+    validationSchema: commentSchema,
+    onSubmit: (values, { resetForm, initialValues, setSubmitting }) => {
       if (user.isAuth) {
         dispatch(addComment(props.postId, values));
+        resetForm(initialValues);
       } else {
         props.history.push("/login");
       }
-      resetForm("");
     }
   });
+
   const {
     values,
     touched,
@@ -59,6 +62,7 @@ const CommentForm = props => {
         errors={errors}
         touched={touched}
         blur={handleBlur}
+        readonly
       />
       <Input
         parentclass="col-sm-6"
@@ -93,4 +97,4 @@ const CommentForm = props => {
   );
 };
 
-export default CommentForm;
+export default withRouter(CommentForm);

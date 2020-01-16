@@ -19,12 +19,12 @@ const returToArrayValue = event => {
 // Profile component
 const ProfileForm = props => {
   const [social, setSocial] = useState(false);
-  const { parentProp } = props;
+  const { parentProps } = props;
 
   const {
-    profile: { profile },
-    alert: { show }
-  } = parentProp;
+    profile,
+    alert: { show, type, message }
+  } = parentProps;
 
   let query = useQuery();
 
@@ -45,7 +45,7 @@ const ProfileForm = props => {
     },
     validationSchema: ProfileSchema,
     onSubmit: values => {
-      parentProp.addProfile(values);
+      parentProps.addProfile(values);
     }
   });
 
@@ -71,18 +71,18 @@ const ProfileForm = props => {
 
   // redirect if data submit success
   let element = null;
-  if (parentProp.alert.show) {
+  if (show) {
     element = <Redirect to="/users/profiles" />;
   }
 
   return (
     <div className="profile-form">
-      <AlertMessage type={parentProp.alert.type} show={parentProp.alert.show}>
-        {parentProp.alert.message}
+      <AlertMessage type={type} show={show}>
+        {message}
       </AlertMessage>
       {element}
       <form className="panel panel-white" onSubmit={handleSubmit}>
-        <Title classname="mb-3">
+        <Title notitle classname="mb-3">
           <h6>Add Profile</h6>
         </Title>
         <div className="row">

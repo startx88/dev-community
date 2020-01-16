@@ -1,6 +1,13 @@
 import Container from "./Container";
 import { connect } from "react-redux";
 import {
+  userSelector,
+  selectAlert,
+  selectUserProfile
+} from "../../Stores/Selectors";
+import { createStructuredSelector } from "reselect";
+
+import {
   addProfile,
   addEducation,
   deleteEducation,
@@ -8,9 +15,12 @@ import {
   deleteExperience
 } from "../../Stores/Actions";
 
-const mapStateToProps = state => {
-  return state;
-};
+const mapStateToProps = createStructuredSelector({
+  userinfo: userSelector,
+  profile: selectUserProfile,
+  alert: selectAlert
+});
+
 const mapDispatchToProps = dispatch => ({
   addProfile: postData => dispatch(addProfile(postData)),
   addExperience: postData => dispatch(addExperience(postData)),

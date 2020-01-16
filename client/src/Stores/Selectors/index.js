@@ -29,6 +29,13 @@ export const userPosts = createSelector(
 ///////// Current user
 ///////////////////////////////////
 const userState = state => state.auth;
-
 export const userSelector = createSelector([userState], state => state);
-export const getUserId = createSelector([userState], state => state.users);
+
+////////////////////////////////////
+///////// Current user profile
+///////////////////////////////////
+const profileState = state => state.profile;
+export const selectUserProfile = createSelector(
+  [profileState],
+  state => state.profile
+);

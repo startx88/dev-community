@@ -8,32 +8,36 @@ import Button from "../../UI/Button";
 import EducationShow from "./Controls/EducationShow";
 import ExperienceShow from "./Controls/ExperienceShow";
 import { Link } from "react-router-dom";
+
 // Profiles
 const Profile = props => {
-  const { parentProp } = props;
-
+  const { parentProps } = props;
   const {
     alert: { show, type },
-    profile: { profile: info }
-  } = parentProp;
+    profile,
+    deleteEducation,
+    deleteExperience
+  } = parentProps;
 
-  // delete education
+  // DELETE EDUCATION HANDLER
   const educationDeleteHandler = id => {
-    parentProp.deleteEducation(id);
+    parentProps.deleteEducation(id);
   };
 
-  // delete education
+  // DELETE EXPERIENCE HANDLER
   const experienceDeleteHandler = id => {
-    parentProp.deleteExperience(id);
+    parentProps.deleteExperience(id);
   };
+
+  // EDIT PROFILE HANDLER
   const editProfile = () => {
     props.history.push({
-      pathname: `${props.location.pathname}/profile`,
+      pathname: `${props.location.pathname}/add-profile`,
       search: `?edit=${true}`
     });
   };
 
-  if (!info) {
+  if (!profile) {
     return <Spinner />;
   }
 
@@ -42,6 +46,7 @@ const Profile = props => {
       <AlertMessage show={show} type={type} />
       <div className="personal-info">
         <div className="row">
+          {/* User Info */}
           <div className="col-sm-12 mb-3 ">
             <Button clicked={editProfile} classname="btn btn-edit-icon">
               <Icons icon="edit" />
@@ -49,14 +54,14 @@ const Profile = props => {
             <h6>
               <Icons icon="user" /> About Me
             </h6>
-            <p>{info.bio}</p>
+            <p>{profile.bio}</p>
           </div>
           <div className="col-sm-12 mb-3">
             <h6>
               <Icons icon="tachometer-alt" /> Skills
             </h6>
             <ul className="skills-list row">
-              {info.skills.map(skill => (
+              {profile.skills.map(skill => (
                 <li key={skill} className="col-sm-6">
                   <div className="d-flex justify-content-between">
                     <h6>{skill}</h6>
@@ -80,7 +85,7 @@ const Profile = props => {
               <Icons icon="book-reader" /> Education
             </h6>
             <EducationShow
-              education={info.education}
+              education={profile.education}
               deleted={educationDeleteHandler}
             />
           </div>
@@ -89,7 +94,7 @@ const Profile = props => {
               <Icons icon="briefcase" /> Experience
             </h6>
             <ExperienceShow
-              experience={info.experience}
+              experience={profile.experience}
               deleted={experienceDeleteHandler}
             />
           </div>

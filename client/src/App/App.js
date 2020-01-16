@@ -4,7 +4,7 @@ import Web from "../Web/Web";
 import Spinner from "../UI/Spinner/Spinner";
 import { checkUserIsAuthenticate } from "../Stores/Actions";
 import { useDispatch } from "react-redux";
-
+import ErrorBoundary from "../Widgets/ErrorBoundary/ErrorBoundary";
 // App Component
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +15,9 @@ function App() {
 
   return (
     <Suspense fallback={<Spinner fixed />}>
-      <Web />
+      <ErrorBoundary>
+        <Web />
+      </ErrorBoundary>
     </Suspense>
   );
 }

@@ -6,7 +6,7 @@ import Image from "../../UI/Image";
 
 const Container = ({ userInfo, sidebar, ...rest }) => {
   const { name, avatar, email, mobile } = userInfo;
-  console.log(userInfo);
+
   return sidebar ? (
     <div className="user-info">
       <div className="image">

@@ -18,6 +18,7 @@ const Post = ({
   classname,
   ...rest
 }) => {
+  console.log("postinfo", postinfo);
   return (
     <article className={["post", classname].join(" ")}>
       {isAuth.isAuth && isAuth.users._id === postinfo.users._id && (

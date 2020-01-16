@@ -19,6 +19,7 @@ const Profile = props => {
     deleteExperience
   } = parentProps;
 
+  console.log(profile);
   // DELETE EDUCATION HANDLER
   const educationDeleteHandler = id => {
     parentProps.deleteEducation(id);

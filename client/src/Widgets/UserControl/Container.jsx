@@ -5,7 +5,8 @@ import Icons from "../../UI/Icons";
 import Image from "../../UI/Image";
 
 const Container = ({ userInfo, sidebar, ...rest }) => {
-  const { name, avatar } = userInfo;
+  const { name, avatar, email, mobile } = userInfo;
+  console.log(userInfo);
   return sidebar ? (
     <div className="user-info">
       <div className="image">
@@ -14,8 +15,11 @@ const Container = ({ userInfo, sidebar, ...rest }) => {
         </Links>
       </div>
       <div className="detail mb-3">
-        <h4>Pradeep Kumar</h4>
-        <small>Sr. Software Engineer</small>
+        <h4>
+          {name}
+          <small>Sr. Software Engineer</small>
+        </h4>
+        <small>{mobile}</small>
       </div>
       <Links
         href="events.html"
@@ -24,13 +28,13 @@ const Container = ({ userInfo, sidebar, ...rest }) => {
       >
         <Icons icon="calendar-alt" />
       </Links>
-      <Links
-        href="events.html"
+      <a
+        href={`mailto:${email}`}
         title="Events"
-        classname=" waves-effect waves-block"
+        className=" waves-effect waves-block"
       >
         <Icons icon="envelope" />
-      </Links>
+      </a>
       <Links
         href="mail-inbox.html"
         title="Inbox"
@@ -48,12 +52,12 @@ const Container = ({ userInfo, sidebar, ...rest }) => {
     </div>
   ) : (
     <li className="nav-item dropdown user-control no-arrow">
-      {userInfo && <Avatar name={userInfo.name} avatar={userInfo.avatar} />}
+      {userInfo && <Avatar name={name} avatar={avatar} />}
       <div
         className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
         aria-labelledby="userDropdown"
       >
-        <Links classname="dropdown-item" href="#">
+        <Links classname="dropdown-item" href="/users/profiles">
           <Icons icon="user" classname="mr-2" />
           Profile
         </Links>

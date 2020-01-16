@@ -3,8 +3,10 @@ import Title from "../../Widgets/Title/Title";
 import Spinner from "../../UI/Spinner/Spinner";
 import Section from "../../UI/Layout/Section";
 import PostList from "../../Widgets/PostList";
+import AlertMessage from "../../UI/Alert";
+
 const Container = props => {
-  const { getAllPost, posts } = props;
+  const { getAllPost, posts, alert } = props;
 
   const loadPosts = useCallback(() => {
     getAllPost();
@@ -20,6 +22,9 @@ const Container = props => {
 
   return (
     <>
+      <AlertMessage type={alert.type} show={alert.show}>
+        {alert.message}
+      </AlertMessage>
       <Section>
         {user => {
           return (

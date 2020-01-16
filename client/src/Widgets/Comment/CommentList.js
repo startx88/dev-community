@@ -4,6 +4,7 @@ import Icons from "../../UI/Icons";
 import useAccess from "../../_hooks/isAuth";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "../../Stores/Actions";
+
 ///////
 /// Comment Component
 /////////////
@@ -21,8 +22,8 @@ const Comment = ({ postId, comments }) => {
       <h4>Comments</h4>
       <ul>
         {comments.map(comment => (
-          <li id={comment._id}>
-            {user.isAuth && (
+          <li key={comment._id}>
+            {user.isAuth && user.users._id === comment.user && (
               <Button
                 clicked={() => deleteCommentHandler(comment._id)}
                 btnType="dlt-icon"

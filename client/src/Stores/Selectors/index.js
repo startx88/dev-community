@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 const alertState = state => state.alert;
-
+export const selectAlert = createSelector([alertState], state => state);
 ////////////////////////////////////
 ///////// Posts
 ///////////////////////////////////
@@ -31,3 +31,4 @@ export const userPosts = createSelector(
 const userState = state => state.auth;
 
 export const userSelector = createSelector([userState], state => state);
+export const getUserId = createSelector([userState], state => state.users);

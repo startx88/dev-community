@@ -47,7 +47,6 @@ const Container = props => {
     }
   };
 
-  console.log("hello", postinfo);
   return (
     <Section>
       {user => {

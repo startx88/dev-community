@@ -4,12 +4,24 @@ const User = require("../models/users");
 const { body } = require("express-validator");
 const { auth } = require("../middleware/auth");
 
-// routes
-
 // @route       POST api/user/
 // @des         register user
 // @access      Private
 router.get("/", auth, authController.userProfile);
+
+// @route       POST api/user
+// @des         register user
+// @access      public
+router.post(
+  "/",
+  [
+    body("email", "Email is required").isEmail(),
+    body("password", "Password is required")
+      .not()
+      .isEmpty()
+  ],
+  authController.userLogin
+);
 
 // @route       POST api/user/signup
 // @des         register user
@@ -45,18 +57,5 @@ router.post(
   authController.userSignup
 );
 
-// @route       POST api/user/signin
-// @des         register user
-// @access      public
-router.post(
-  "/",
-  [
-    body("email", "Email is required").isEmail(),
-    body("password", "Password is required")
-      .not()
-      .isEmpty()
-  ],
-  authController.userLogin
-);
 // Export route
 module.exports = router;

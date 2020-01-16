@@ -232,6 +232,7 @@ exports.updatePost = async (req, res, next) => {
 /////////////////////////////////////////////////
 exports.deletePost = async (req, res, next) => {
   const postId = req.params.postId;
+  const userId = req.user.userId;
 
   try {
     const post = await Post.findById(postId);
@@ -240,12 +241,15 @@ exports.deletePost = async (req, res, next) => {
       error.statusCode = 404;
       throw next(error);
     }
+
     if (post.user.toString() !== req.user.userId) {
-      const error = new Error("User not authorized");
-      error.statusCode = 401;
-      throw next(error);
+      return res.status(401).json({
+        message: "You are not authrized to delete this post"
+      });
     }
+
     const result = await post.remove();
+
     if (result) {
       deleteFile(post.avatar);
       res.status(200).json({
@@ -255,12 +259,6 @@ exports.deletePost = async (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log("error", err);
-    if (err.kind === "ObjectId") {
-      const e = new Error("Post not fuond");
-      e.statusCode = 401;
-      next(e);
-    }
     next(err);
   }
 };

@@ -11,18 +11,21 @@ const UserSchema = new Schema({
   mobile: { type: String },
   avatar: { type: String },
   active: { type: Number, default: 1 },
+  isAdmin: { type: Number, default: 0 },
   insertAt: { type: Date, default: Date.now }
 });
 
-// Methods
+// Password encryption
 UserSchema.statics.encryptPassword = async password => {
   return await bcrypt.hash(password, 12);
 };
 
+// Password decryption
 UserSchema.statics.decryptPassword = async (password, hash) => {
   return await bcrypt.compare(password, hash);
 };
 
+// get current user
 UserSchema.statics.getCurrentUser = async userId => {
   const user = await this.findById(userId);
   if (!user) {
@@ -31,6 +34,7 @@ UserSchema.statics.getCurrentUser = async userId => {
   return user;
 };
 
+// get user avatar
 UserSchema.statics.genAvatar = async email => {
   return await avatar.url(email, { s: "200", r: "pg", d: "mm" });
 };

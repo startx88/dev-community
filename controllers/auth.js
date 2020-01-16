@@ -88,9 +88,6 @@ exports.userLogin = async (req, res, next) => {
       expiresIn: 3600
     });
   } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
     next(error);
   }
 };
@@ -112,7 +109,6 @@ exports.userProfile = async (req, res, next) => {
       success: true,
       user
     });
-    
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

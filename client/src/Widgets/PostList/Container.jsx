@@ -54,7 +54,7 @@ const PostList = props => {
           postdata.map(post => (
             <Post
               key={post._id}
-              isAuth={user.isAuth}
+              isAuth={user}
               postinfo={post}
               likes={post.likes}
               deletePost={deletePostHandler}

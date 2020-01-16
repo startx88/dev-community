@@ -20,7 +20,7 @@ const Post = ({
 }) => {
   return (
     <article className={["post", classname].join(" ")}>
-      {isAuth && (
+      {isAuth.isAuth && isAuth.users._id === postinfo.users._id && (
         <div className="post-btn">
           <Button
             type="button"

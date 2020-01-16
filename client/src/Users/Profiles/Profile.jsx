@@ -37,8 +37,12 @@ const Profile = props => {
     });
   };
 
-  if (!profile) {
+  if (profile.loading) {
     return <Spinner />;
+  }
+
+  if (!profile.profile) {
+    return <p>There is no profile found</p>;
   }
 
   return (
@@ -54,14 +58,14 @@ const Profile = props => {
             <h6>
               <Icons icon="user" /> About Me
             </h6>
-            <p>{profile.bio}</p>
+            <p>{profile.profile.bio}</p>
           </div>
           <div className="col-sm-12 mb-3">
             <h6>
               <Icons icon="tachometer-alt" /> Skills
             </h6>
             <ul className="skills-list row">
-              {profile.skills.map(skill => (
+              {profile.profile.skills.map(skill => (
                 <li key={skill} className="col-sm-6">
                   <div className="d-flex justify-content-between">
                     <h6>{skill}</h6>
@@ -85,7 +89,7 @@ const Profile = props => {
               <Icons icon="book-reader" /> Education
             </h6>
             <EducationShow
-              education={profile.education}
+              education={profile.profile.education}
               deleted={educationDeleteHandler}
             />
           </div>
@@ -94,7 +98,7 @@ const Profile = props => {
               <Icons icon="briefcase" /> Experience
             </h6>
             <ExperienceShow
-              experience={profile.experience}
+              experience={profile.profile.experience}
               deleted={experienceDeleteHandler}
             />
           </div>

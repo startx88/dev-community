@@ -35,7 +35,4 @@ export const userSelector = createSelector([userState], state => state);
 ///////// Current user profile
 ///////////////////////////////////
 const profileState = state => state.profile;
-export const selectUserProfile = createSelector(
-  [profileState],
-  state => state.profile
-);
+export const selectUserProfile = createSelector([profileState], state => state);

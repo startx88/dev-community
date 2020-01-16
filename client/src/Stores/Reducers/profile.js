@@ -66,10 +66,8 @@ const reducer = (state = initState, action) => {
     case profile.PROFILE_FETCH:
       return fetch(state, payloads);
     case profile.PROFILE_EXP_ADD:
-      console.log("exp add", payloads);
       return addExperience(state, payloads);
     case profile.PROFILE_EXP_DELETE:
-      console.log("exp dlt", payloads);
       return deleteExperience(state, payloads);
     case profile.PROFILE_EDU_ADD:
       return addEducation(state, payloads);

@@ -96,7 +96,8 @@ exports.getPost = async (req, res, next) => {
         error.statusCode = 404;
         throw next(error);
       }
-      res.status(200).json({
+
+      const user = res.status(200).json({
         success: true,
         data: {
           _id: post._id,
@@ -277,7 +278,6 @@ exports.addComment = async (req, res, next) => {
     throw next(error);
   }
 
-  console.log("hello", req.body, userId, postId);
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {
@@ -320,6 +320,7 @@ exports.deleteComment = async (req, res, next) => {
   const userId = req.user.userId;
   const postId = req.params.postId;
   const commentId = req.params.commentId;
+
   try {
     const user = await User.findById(userId).select("-password");
     if (!user) {
@@ -337,6 +338,7 @@ exports.deleteComment = async (req, res, next) => {
     const commentIndex = post.comments.findIndex(
       comment => comment._id.toString() === commentId
     );
+
     const existComment = post.comments[commentIndex];
 
     if (!existComment) {
@@ -354,7 +356,7 @@ exports.deleteComment = async (req, res, next) => {
     post.comments.splice(commentIndex, 1);
     const result = await post.save();
 
-    res.staus(201).json({
+    res.status(200).json({
       success: true,
       postId: result._id,
       comments: post.comments

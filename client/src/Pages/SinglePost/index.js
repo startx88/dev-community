@@ -1,10 +1,14 @@
 import Container from "./Container";
 import { connect } from "react-redux";
-import { addComment, deleteComment } from "../../Stores/Actions";
+import { addComment, deleteComment, getPost } from "../../Stores/Actions";
+import { createStructuredSelector } from "reselect";
+import { selectPost } from "../../Stores/Selectors";
 
 // Redux Connecter
-const mapStateToProps = state => ({ posts: state.posts });
+const mapStateToProps = createStructuredSelector({ postinfo: selectPost });
+
 const mapDispatchToProps = dispatch => ({
+  getPost: postId => dispatch(getPost(postId)),
   addComment: comment => dispatch(addComment(comment)),
   deleteComment: (postId, commentId) =>
     dispatch(deleteComment(postId, commentId))

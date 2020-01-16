@@ -17,7 +17,7 @@ const Login = props => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      email: "arya.creativemind@gmail.com",
+      email: "sukanya.ghosh0109@gmail.com",
       password: "Admin123"
     },
     validationSchema: loginSchema,

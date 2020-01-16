@@ -28,12 +28,13 @@ const CommentForm = props => {
       text: ""
     },
 
-    onSubmit: values => {
+    onSubmit: (values, { resetForm }) => {
       if (user.isAuth) {
         dispatch(addComment(props.postId, values));
       } else {
         props.history.push("/login");
       }
+      resetForm("");
     }
   });
   const {

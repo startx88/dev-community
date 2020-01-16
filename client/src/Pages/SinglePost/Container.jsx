@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import axios from "../../axios_instance";
 import Spinner from "../../UI/Spinner/Spinner";
 import Image from "../../UI/Image";
@@ -8,21 +8,32 @@ import Button from "../../UI/Button";
 import LikeButton from "../../Widgets/LikeButton/LikeButton";
 import CommentForm from "./CommentForm";
 import Section from "../../UI/Layout/Section";
-import Comments from "../../Widgets/Comment/Comment";
+import CommentList from "../../Widgets/Comment/CommentList";
 import useAccess from "../../_hooks/isAuth";
+
+////////
+// Single Post Compoent
+///////////////////////
 const Container = props => {
-  const [postinfo, setPostInfo] = useState(null);
-  const postId = props.match.params.id;
+  const {
+    postinfo,
+    getPost,
+    match: { params }
+  } = props;
+
+  const postId = params.id;
   const { user } = useAccess();
-  const loadPost = async () => {
-    const responose = await axios.get("/posts/" + postId);
-    const responseData = await responose.data;
-    setPostInfo(responseData.data);
-  };
+
+  const loadPost = useCallback(
+    postId => {
+      getPost(postId);
+    },
+    [getPost]
+  );
 
   useEffect(() => {
-    loadPost();
-  }, []);
+    loadPost(postId);
+  }, [loadPost]);
 
   if (!postinfo) {
     return <Spinner />;
@@ -36,6 +47,7 @@ const Container = props => {
     }
   };
 
+  console.log("hello", postinfo);
   return (
     <Section>
       {user => {
@@ -64,7 +76,12 @@ const Container = props => {
                 </div>
                 <h2>{postinfo.title}</h2>
                 <p>{postinfo.description}</p>
-                <Comments comments={postinfo.comments} />
+
+                <CommentList
+                  postId={postinfo._id}
+                  comments={postinfo.comments}
+                />
+
                 <div className="leave-comment">
                   <h4>Leave a Comment</h4>
                   <CommentForm user={postinfo.users} postId={postinfo._id} />

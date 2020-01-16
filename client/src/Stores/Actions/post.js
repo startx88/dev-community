@@ -41,20 +41,6 @@ const dislike_post = (postId, likes) => ({
   }
 });
 
-// comment
-const add_comment = (id, comment) => ({
-  type: post.POST_COMMENT_ADD,
-  payloads: {
-    id: id,
-    comment: comment
-  }
-});
-
-const delete_comment = commentId => ({
-  type: post.POST_COMMENT_ADD,
-  payloads: commentId
-});
-
 // FETCH USER POST
 const user_posts = posts => ({
   type: post.FETCH_USER_POSTS,
@@ -147,35 +133,6 @@ export const deletePost = postId => async dispatch => {
   }
 };
 
-// Comment
-export const addComment = (postId, inputdata) => async dispatch => {
-  console.log(postId, inputdata);
-  try {
-    const response = await axios.post(`/posts/comment/${postId}`, inputdata);
-    const responseData = await response.data;
-    console.log("res", responseData);
-    dispatch(add_comment(postId, responseData.comments));
-    dispatch(showAlert(responseData.message, "success"));
-  } catch (err) {
-    const { message } = err.response.data.errors;
-    dispatch(showAlert(message, "warning"));
-  }
-};
-
-// Comment
-export const deleteComment = (postId, commentId) => async dispatch => {
-  try {
-    const response = await axios.post(`/posts/comment/${postId}${commentId}`);
-    const responseData = await response.data;
-
-    dispatch(add_comment(commentId));
-    dispatch(showAlert(responseData.message, "success"));
-  } catch (err) {
-    const { message } = err.response.data.errors;
-    dispatch(showAlert(message, "warning"));
-  }
-};
-
 // LIKED POST
 export const likePost = postId => async dispatch => {
   try {
@@ -196,6 +153,64 @@ export const dislikePost = postId => async dispatch => {
     const responseData = await response.data;
     dispatch(dislike_post(postId, responseData.likes));
     dispatch(showAlert(responseData.message, "success"));
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+  }
+};
+
+//////////////////////
+////// Get Single Post
+//////////////////////////////////////////////
+const get_single_post = postdata => ({
+  type: post.FETCH_SINGLE_POST,
+  payloads: postdata
+});
+export const getPost = postId => async dispatch => {
+  dispatch(loading());
+  try {
+    const responose = await axios.get("/posts/" + postId);
+    const responseData = await responose.data;
+    dispatch(get_single_post(responseData.data));
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+  }
+};
+
+////////////////////
+///// Comments add / delete
+////////////////////////////////////////////////
+const add_comment = comments => ({
+  type: post.ADD_COMMENT,
+  payloads: comments
+});
+
+const delete_comment = commentId => ({
+  type: post.DELETE_COMMENT,
+  payloads: commentId
+});
+export const addComment = (postId, inputdata) => async dispatch => {
+  try {
+    const response = await axios.post(`/posts/comment/${postId}`, inputdata);
+    const { data } = await response;
+    dispatch(add_comment(data.comments));
+    dispatch(showAlert(data.message, "success"));
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+  }
+};
+
+// Comment
+export const deleteComment = (postId, commentId) => async dispatch => {
+  try {
+    const response = await axios.delete(
+      `/posts/comment/${postId}/${commentId}`
+    );
+    const { data } = await response;
+    dispatch(add_comment(data.comments));
+    dispatch(showAlert(data.message, "success"));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

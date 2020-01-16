@@ -16,6 +16,7 @@ export {
 } from "./profile";
 
 export {
+  getPost,
   addPost,
   addComment,
   deleteComment,

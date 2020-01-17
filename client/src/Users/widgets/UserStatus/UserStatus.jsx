@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "../../UI/Input";
-import Button from "../../UI/Button";
+import Input from "../../../UI/Input";
+import Button from "../../../UI/Button";
 const UserStatus = props => {
   return (
     <div class="user-status">

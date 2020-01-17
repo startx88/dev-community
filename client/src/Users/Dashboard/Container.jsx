@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import Title from "../../Widgets/Title/Title";
-import UserPost from "../../Widgets/PostList/controls/userPost";
 import Section from "../../UI/Layout/Section";
-import UserStatus from "../../Widgets/UserStatus/UserStatus";
+import UserPost from "../widgets/userPost";
+import UserStatus from "../widgets/UserStatus/UserStatus";
 import Panel from "../../UI/Panel";
 const Container = props => {
   const { match, getAllPosts, allposts } = props;

@@ -5,7 +5,7 @@ import React from "react";
  */
 const Image = ({ src, alt, classname, width, thumb, refs }) => {
   return (
-    <div className={[thumb ? "thumb" : "image", classname].join(" ")}>
+    <div className={classname}>
       <img ref={refs} width={width} src={src} alt={alt} />
     </div>
   );

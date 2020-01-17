@@ -7,13 +7,14 @@
     margin-top: 10px;
     margin-bottom: 15px;
     position: relative;
-    .image {
-      border-radius: 5px;
-      overflow: hidden;
+    .full {
       border: 1px solid lighten($border-color, 20%);
-      img {
-        max-width: 100%;
-      }
+    }
+    .avatar {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      border-radius: 5px;
     }
     .like-buttons {
       position: absolute;

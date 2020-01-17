@@ -10,7 +10,7 @@ import CommentForm from "./CommentForm";
 import Section from "../../UI/Layout/Section";
 import CommentList from "../../Widgets/Comment/CommentList";
 import useAccess from "../../_hooks/isAuth";
-
+import Avatar from "../../Widgets/Avatar/Avatar";
 ////////
 // Single Post Compoent
 ///////////////////////
@@ -36,8 +36,6 @@ const Container = props => {
     loadPost(postId);
   }, [loadPost]);
 
-  console.log("single", props);
-
   // LOGIN REDIRECT
   const backToLogin = () => {
     if (user.isAuth) {
@@ -46,6 +44,7 @@ const Container = props => {
     }
   };
 
+  console.log("single", postinfo);
   return (
     <Section>
       {user => {
@@ -67,14 +66,15 @@ const Container = props => {
                   </div>
                 </div>
                 <div className="single-post-image">
-                  <Image src={postinfo.avatar} />
+                  <Avatar classname="avatar" avatar={postinfo.user.avatar} />
+                  <Image classname="full" src={postinfo.avatar} />
                   <LikeButton
                     likeHandler={backToLogin}
                     dislikeHandler={backToLogin}
                     likes={postinfo.likes}
                   />
                 </div>
-                <h2>{postinfo.title}</h2>
+                <h6>{postinfo.title}</h6>
                 <p>{postinfo.description}</p>
                 <CommentList
                   postId={postinfo._id}

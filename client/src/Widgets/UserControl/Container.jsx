@@ -1,9 +1,9 @@
 import React from "react";
-import Avatar from "./Avatar";
 import Links from "../Links/Links";
 import Icons from "../../UI/Icons";
 import Image from "../../UI/Image";
 import Spinner from "../../UI/Spinner/Spinner";
+import Avatar from "../Avatar/Avatar";
 
 // User control
 const Container = ({ userinfo, sidebar, ...rest }) => {
@@ -15,11 +15,13 @@ const Container = ({ userinfo, sidebar, ...rest }) => {
 
   return sidebar ? (
     <div className="sidebar-user">
-      <div className="image">
-        <Links href="/users/profiles" classname="waves-effect waves-block">
-          <Image alt={user.name} src={user.avatar} />
-        </Links>
-      </div>
+      <Avatar
+        type="sidebar"
+        name={user.name}
+        alt={user.name}
+        avatar={user.avatar}
+      />
+
       <div className="detail mb-3">
         <h4>
           {user.name}
@@ -62,8 +64,8 @@ const Container = ({ userinfo, sidebar, ...rest }) => {
       </div>
     </div>
   ) : (
-    <li className="nav-item dropdown user-control no-arrow">
-      {user && <Avatar username={user.name} useravatar={user.avatar} />}
+    <li className="nav-item dropdown navbar-user-control">
+      {user && <Avatar type="header" name={user.name} avatar={user.avatar} />}
       <div
         className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
         aria-labelledby="userDropdown"

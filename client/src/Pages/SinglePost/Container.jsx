@@ -44,7 +44,7 @@ const Container = props => {
     }
   };
 
-  console.log("single", postinfo);
+  console.log("single", user);
   return (
     <Section>
       {user => {
@@ -53,7 +53,12 @@ const Container = props => {
         ) : (
           <>
             <Section.LeftCol {...user}>
-              <div className="single-post panel panel-white">
+              <div
+                className={[
+                  "single-post",
+                  user.isAuth && "panel panel-white"
+                ].join(" ")}
+              >
                 <div className="post-user-info d-flex justify-content-between">
                   <div className="post-user">
                     by <small>{postinfo.user.name}</small>

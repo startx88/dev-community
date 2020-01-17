@@ -12,7 +12,7 @@ const Header = ({ admin, auth, ...rest }) => {
         <Navigation />
         <ul className="navbar-nav ml-auto">
           <div className="topbar-divider d-none d-sm-block"></div>
-          {auth.isAuth && <UserControl />}
+          {auth && auth.isAuth && <UserControl />}
         </ul>
       </div>
     </header>

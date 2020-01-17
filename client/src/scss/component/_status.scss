@@ -1,0 +1,23 @@
+.user-status {
+  background-color: $white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  .form-group {
+    margin-bottom: 0;
+  }
+  .status-title {
+    margin-bottom: 10px;
+  }
+  .status-form {
+    display: flex;
+    justify-content: space-between;
+  }
+  .input {
+    flex: 0 0 80%;
+  }
+  .btn {
+    border-radius: 5px;
+    flex: 0 0 18%;
+  }
+}

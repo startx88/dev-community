@@ -6,7 +6,7 @@ const Courses = lazy(() => import("./Courses"));
 const Posts = lazy(() => import("./Posts"));
 const Profiles = lazy(() => import("./Profiles"));
 const Settings = lazy(() => import("./Settings"));
-const SinglePost = lazy(() => import("../Pages/SinglePost"));
+
 const EditPost = lazy(() => import("./Posts/EditPost/EditPost"));
 
 const Container = props => {
@@ -20,11 +20,6 @@ const Container = props => {
     <Switch>
       <PrivateRoute path={match.url} exact component={Dashboard} />
       <PrivateRoute path={match.url + "/courses"} component={Courses} />
-      <PrivateRoute
-        path={match.url + "/posts/add-post/:id?"}
-        component={EditPost}
-      />
-      <PrivateRoute path={match.url + "/posts/:id"} component={SinglePost} />
       <PrivateRoute path={match.url + "/posts"} component={Posts} />
       <PrivateRoute path={match.url + "/profiles"} component={Profiles} />
       <PrivateRoute path={match.url + "/settings"} component={Settings} />

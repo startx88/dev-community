@@ -1,11 +1,12 @@
 import Container from "./Container";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { userPosts } from "../../Stores/Selectors";
+import { userPosts, selectAlert } from "../../Stores/Selectors";
 
 import { addPost, getUserPosts } from "../../Stores/Actions";
 const mapStateToProps = createStructuredSelector({
-  userposts: userPosts
+  userposts: userPosts,
+  alert: selectAlert
 });
 const mapDispatchToProps = dispatch => ({
   getUserPosts: () => dispatch(getUserPosts()),

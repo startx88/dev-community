@@ -20,7 +20,7 @@ const failed = (state, payloads) =>
 const add = (state, payloads) =>
   updateObject(state, {
     loading: false,
-    posts: [...state.posts, payloads]
+    userpost: [...state.userpost, payloads]
   });
 
 // UPDATE POST

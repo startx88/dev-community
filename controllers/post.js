@@ -39,7 +39,9 @@ exports.getUserPost = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const posts = await Post.find({ user: userId }).sort({ insertAt: -1 });
+    const posts = await Post.find({ user: userId })
+      .sort({ insertAt: -1 })
+      .populate("user");
 
     if (!posts) {
       const error = new Error("No post found");
@@ -133,7 +135,13 @@ exports.addPost = async (req, res, next) => {
       res.status(201).json({
         success: true,
         message: "Post added successfully",
-        post
+        post: {
+          ...post._doc,
+          user: {
+            _id: post.user
+          },
+          avatar: "http://localhost:4200/" + post.avatar
+        }
       });
     }
   } catch (err) {

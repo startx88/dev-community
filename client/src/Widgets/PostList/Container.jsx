@@ -7,7 +7,6 @@ import useAccess from "../../_hooks/isAuth";
 const PostList = props => {
   const { postdata, deletePost, likePost, dislikePost } = props;
   const { user } = useAccess();
-  console.log(postdata);
 
   // DELETE HANDLER
   const deletePostHandler = postId => {

@@ -12,9 +12,10 @@ import useQuery from "../../../_hooks/useQuery";
 const PostForm = props => {
   const postId = props.match.params.id;
   const refFocus = useRef(null);
+  const { addPost, alert, getPost, userposts } = props.parentProps;
 
   const query = useQuery();
-  const post = {};
+  const post = userposts && userposts.find(post => post.id === postId);
   const isEdit = query.get("edit") && post;
 
   const formik = useFormik({
@@ -26,7 +27,7 @@ const PostForm = props => {
     enableReinitialize: true,
     validationSchema: PostSchema,
     onSubmit: (values, { resetForm }) => {
-      // isEdit ? addPost(values, postId, "UPDATE") : addPost(values);
+      isEdit ? addPost(values, postId, "UPDATE") : addPost(values);
     }
   });
 
@@ -41,9 +42,9 @@ const PostForm = props => {
 
   // redirect if data submit success
   let element = null;
-  // if (postData.alert.show) {
-  //   element = <Redirect to="/users/posts" />;
-  // }
+  if (alert.show) {
+    element = <Redirect to="/users/posts" />;
+  }
 
   return (
     <div className="profile-form">

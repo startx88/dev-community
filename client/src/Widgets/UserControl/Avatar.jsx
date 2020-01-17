@@ -7,16 +7,16 @@ import Image from "../../UI/Image";
  * Avatar
  * @param {*} props
  */
-const Avatar = ({ name, avatar, sidebar }) => {
+const Avatar = ({ username, useravatar, sidebar }) => {
   return sidebar ? (
     <>
       <div className="image">
         <Links href="/users/profile" classname="waves-effect waves-block">
-          <Image src={avatar} />
+          <Image src={useravatar} />
         </Links>
       </div>
       <div className="detail mb-3">
-        <h4>{name}</h4>
+        <h4>{username}</h4>
         <small>Sr. Software Engineer</small>
       </div>
     </>
@@ -31,13 +31,13 @@ const Avatar = ({ name, avatar, sidebar }) => {
       className="nav-link dropdown-toggle"
     >
       <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-        {name}
+        {username}
       </span>
       <img
         width="40"
         className="img-profile rounded-circle"
         alt={""}
-        src={avatar ? avatar : AvatarImage}
+        src={useravatar ? useravatar : AvatarImage}
       />
     </Link>
   );

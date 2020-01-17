@@ -1,19 +1,22 @@
 import { createSelector } from "reselect";
 const alertState = state => state.alert;
 export const selectAlert = createSelector([alertState], state => state);
+
 ////////////////////////////////////
 ///////// Posts
 ///////////////////////////////////
 const postState = state => state.posts;
 
 // get single post
-export const selectPost =
-  ([postState], state => state.posts !== null && state.posts.post);
+export const selectPost = createSelector(
+  [postState],
+  state => state.post !== null && state.post
+);
 
 // get all posts
 export const selectAllPost = createSelector(
   [postState],
-  state => state !== null && state.publicPosts
+  state => state !== null && state.posts
 );
 
 // get user posts

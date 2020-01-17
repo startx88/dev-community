@@ -12,6 +12,6 @@ const mapStateToProps = createStructuredSelector({
 // dispatch
 const mapDispatchToProps = dispatch => ({
   getAlert: () => dispatch(showAlert()),
-  getAllPost: () => dispatch(getAllPosts())
+  getAllPosts: () => dispatch(getAllPosts())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

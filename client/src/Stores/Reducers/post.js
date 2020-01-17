@@ -2,7 +2,6 @@ import { post } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
 const initState = {
-  publicPosts: null,
   posts: null,
   post: null,
   error: null,
@@ -32,16 +31,10 @@ const updated = (state, payloads) =>
     )
   });
 
-const fetchUserPosts = (state, payloads) =>
+const allPosts = (state, payloads) =>
   updateObject(state, {
     loading: false,
     posts: payloads
-  });
-
-const fetchPublicPosts = (state, payloads) =>
-  updateObject(state, {
-    loading: false,
-    publicPosts: payloads
   });
 
 const deletePost = (state, payloads) =>
@@ -86,9 +79,7 @@ const reducer = (state = initState, action) => {
     case post.FETCH_SINGLE_POST:
       return fetchPost(state, payloads);
     case post.FETCH_ALL_POSTS:
-      return fetchPublicPosts(state, payloads);
-    case post.FETCH_USER_POSTS:
-      return fetchUserPosts(state, payloads);
+      return allPosts(state, payloads);
     case post.POST_ADD:
       return add(state, payloads);
     case post.POST_DELETE:

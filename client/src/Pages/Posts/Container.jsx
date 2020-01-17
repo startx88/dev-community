@@ -6,11 +6,10 @@ import PostList from "../../Widgets/PostList";
 import AlertMessage from "../../UI/Alert";
 
 const Container = props => {
-  const { getAllPost, posts, alert } = props;
-
+  const { getAllPosts, posts, alert } = props;
   const loadPosts = useCallback(() => {
-    getAllPost();
-  }, [getAllPost]);
+    getAllPosts();
+  }, [getAllPosts]);
 
   useEffect(() => {
     loadPosts();

@@ -25,8 +25,8 @@ const CommentForm = props => {
 
   const formik = useFormik({
     initialValues: {
-      name: props.user.name,
-      email: props.user.email,
+      name: "",
+      email: "",
       text: ""
     },
     validationSchema: commentSchema,

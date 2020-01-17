@@ -99,6 +99,7 @@ exports.userProfile = async (req, res, next) => {
   const userId = req.user.userId;
   try {
     const user = await User.findById(userId).select("-password");
+    console.log(user);
     if (!user) {
       const error = new Error("User not found");
       error.statusCode = 404;

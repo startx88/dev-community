@@ -22,6 +22,7 @@ const Container = props => {
   } = props;
 
   const postId = params.id;
+
   const { user } = useAccess();
 
   const loadPost = useCallback(
@@ -35,9 +36,7 @@ const Container = props => {
     loadPost(postId);
   }, [loadPost]);
 
-  if (!postinfo) {
-    return <Spinner />;
-  }
+  console.log("single", props);
 
   // LOGIN REDIRECT
   const backToLogin = () => {
@@ -50,13 +49,15 @@ const Container = props => {
   return (
     <Section>
       {user => {
-        return (
+        return !postinfo ? (
+          <Spinner />
+        ) : (
           <>
             <Section.LeftCol {...user}>
-              <div className="single-post">
+              <div className="single-post panel panel-white">
                 <div className="post-user-info d-flex justify-content-between">
                   <div className="post-user">
-                    by <small>{postinfo.users.name}</small>
+                    by <small>{postinfo.user.name}</small>
                   </div>
                   <div className="post-date-comment">
                     <Date icon from={postinfo.insertAt} />
@@ -65,8 +66,8 @@ const Container = props => {
                     </Button>
                   </div>
                 </div>
-                <div className="like">
-                  <Image classname="single-post-image" src={postinfo.avatar} />
+                <div className="single-post-image">
+                  <Image src={postinfo.avatar} />
                   <LikeButton
                     likeHandler={backToLogin}
                     dislikeHandler={backToLogin}
@@ -75,7 +76,6 @@ const Container = props => {
                 </div>
                 <h2>{postinfo.title}</h2>
                 <p>{postinfo.description}</p>
-
                 <CommentList
                   postId={postinfo._id}
                   comments={postinfo.comments}
@@ -83,7 +83,7 @@ const Container = props => {
 
                 <div className="leave-comment">
                   <h4>Leave a Comment</h4>
-                  <CommentForm user={postinfo.users} postId={postinfo._id} />
+                  <CommentForm user={postinfo.user} postId={postinfo._id} />
                 </div>
               </div>
             </Section.LeftCol>

@@ -5,11 +5,12 @@
   background-image: url("../../Pages/Home/auth-image.png");
   background-position: center;
   background-size: contain;
-  @extend %flex;
+  display: flex;
+  flex-direction: column;
   .nav-link {
     color: $white;
   }
-  .container {
+  > .container {
     flex: 1;
     display: flex;
     align-items: center;

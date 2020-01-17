@@ -13,7 +13,6 @@ const Home = lazy(() => import("../Pages/Home"));
 const Developers = lazy(() => import("../Pages/Developers"));
 const Course = lazy(() => import("../Pages/Courses"));
 const Posts = lazy(() => import("../Pages/Posts"));
-const SinglePost = lazy(() => import("../Pages/SinglePost"));
 const User = lazy(() => import("../Users"));
 
 const Web = props => {
@@ -38,11 +37,6 @@ const Web = props => {
       />
       <PublicRoute path="/courses" layout={UserLayout} component={Course} />
       <PublicRoute path="/logout" component={Logout} />
-      <PublicRoute
-        path="/posts/:id"
-        layout={UserLayout}
-        component={SinglePost}
-      />
       <PublicRoute path="/posts" layout={UserLayout} component={Posts} />
       <PrivateRoute path="/users" layout={UserLayout} component={User} />
     </Switch>

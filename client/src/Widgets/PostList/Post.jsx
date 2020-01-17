@@ -4,7 +4,7 @@ import Icons from "../../UI/Icons";
 import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import LikeButton from "../LikeButton/LikeButton";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // Post Component
 const Post = ({
@@ -18,10 +18,10 @@ const Post = ({
   classname,
   ...rest
 }) => {
-  console.log("postinfo", postinfo);
+  const { match } = rest;
   return (
     <article className={["post", classname].join(" ")}>
-      {isAuth.isAuth && isAuth.users._id === postinfo.users._id && (
+      {isAuth.isAuth && isAuth.user._id === postinfo.user._id && (
         <div className="post-btn">
           <Button
             type="button"
@@ -40,7 +40,7 @@ const Post = ({
         </div>
       )}
 
-      <Link to={"/posts/" + postinfo._id}>
+      <Link to={`${match.path}/` + postinfo._id}>
         <Image src={postinfo.avatar} alt={postinfo.title} />
       </Link>
 
@@ -61,4 +61,4 @@ const Post = ({
   );
 };
 
-export default Post;
+export default withRouter(Post);

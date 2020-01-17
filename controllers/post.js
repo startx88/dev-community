@@ -8,8 +8,12 @@ const { resizeImage, deleteFile } = require("../middleware/file");
 /////////// Get All Posts
 /////////////////////////////////////////////////
 exports.getAllPosts = async (req, res, next) => {
+  const userId = req.query.userId;
   try {
-    const posts = await Post.find().sort({ insertAt: -1 });
+    const posts = await Post.find()
+      .sort({ insertAt: -1 })
+      .populate("user")
+      .exec();
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;
@@ -18,19 +22,8 @@ exports.getAllPosts = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: posts.map(post => ({
-        _id: post._id,
-        title: post.title,
-        description: post.description,
-        avatar: "http://localhost:4200/" + post.avatar,
-        insertAt: post.insertAt,
-        likes: post.likes,
-        comments: post.comments,
-        users: {
-          _id: post.user._id,
-          name: post.user.name,
-          email: post.user.email,
-          avatar: post.user.avatar
-        }
+        ...post._doc,
+        avatar: "http://localhost:4200/" + post.avatar
       }))
     });
   } catch (err) {
@@ -42,13 +35,11 @@ exports.getAllPosts = async (req, res, next) => {
 /////////////////////////////////////////////////
 /////////// Get user post
 /////////////////////////////////////////////////
-exports.getUserPosts = async (req, res, next) => {
-  const userId = req.user.userId;
+exports.getPostByUserId = async (req, res, next) => {
+  const userId = req.query.userId;
   try {
-    const posts = await Post.find({ user: userId })
-      .sort({ insertAt: -1 })
-      .populate("user", ["name", "avatar", "email"]);
-
+    const posts = await Post.find({ user: userId }).sort({ insertAt: -1 });
+    console.log(posts);
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;
@@ -57,19 +48,8 @@ exports.getUserPosts = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: posts.map(post => ({
-        _id: post._id,
-        title: post.title,
-        description: post.description,
-        avatar: "http://localhost:4200/" + post.avatar,
-        insertAt: post.insertAt,
-        likes: post.likes,
-        comments: post.comments,
-        users: {
-          _id: post.user._id,
-          name: post.user.name,
-          email: post.user.email,
-          avatar: post.user.avatar
-        }
+        ...post._doc,
+        avatar: "http://localhost:4200/" + post.avatar
       }))
     });
   } catch (err) {
@@ -83,42 +63,23 @@ exports.getUserPosts = async (req, res, next) => {
 /////////////////////////////////////////////////
 exports.getPost = async (req, res, next) => {
   const postId = req.params.postId;
+
   try {
-    try {
-      const post = await Post.findById(postId).populate("user", [
-        "name",
-        "email",
-        "avatar"
-      ]);
+    const post = await Post.findById(postId).populate("user");
 
-      if (!post) {
-        const error = new Error("No post found");
-        error.statusCode = 404;
-        throw next(error);
-      }
-
-      const user = res.status(200).json({
-        success: true,
-        data: {
-          _id: post._id,
-          title: post.title,
-          description: post.description,
-          avatar: "http://localhost:4200/" + post.avatar,
-          insertAt: post.insertAt,
-          likes: post.likes,
-          comments: post.comments,
-          users: {
-            _id: post.user._id,
-            name: post.user.name,
-            email: post.user.email,
-            avatar: post.user.avatar
-          }
-        }
-      });
-    } catch (err) {
-      console.log("error", err);
-      next(err);
+    if (!post) {
+      const error = new Error("No post found");
+      error.statusCode = 404;
+      throw next(error);
     }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        ...post._doc,
+        avatar: "http://localhost:4200/" + post.avatar
+      }
+    });
   } catch (err) {
     console.log("error", err);
     next(err);

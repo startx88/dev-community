@@ -5,7 +5,7 @@ const { auth } = require("../middleware/auth");
 const multer = require("multer");
 const { fileFilter } = require("../middleware/file");
 
-// storage
+// Upload file
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "uploads/posts");
@@ -14,13 +14,21 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
-
 const upload = multer({ storage: storage, filterFile: fileFilter });
 
-// Routes
+// @route       POST api/posts
+// @des         get all the posts
+// @access      Public
 router.get("/", postController.getAllPosts);
-router.get("/user", auth, postController.getUserPosts);
+
+// @route       POST api/posts/:postId
+// @des         get single post
+// @access      Public
 router.get("/:postId", postController.getPost);
+
+// @route       POST api/posts
+// @des         Add Post
+// @access      Private
 router.post(
   "/",
   auth,
@@ -36,6 +44,10 @@ router.post(
 
   postController.addPost
 );
+
+// @route       POST api/posts/:postId
+// @des         Update Post
+// @access      Private
 router.put(
   "/:postId",
   auth,

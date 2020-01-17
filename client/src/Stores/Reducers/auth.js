@@ -2,7 +2,7 @@ import { auth } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
 const initState = {
-  users: null,
+  user: null,
   token: null,
   error: null,
   isAuth: false,
@@ -23,7 +23,7 @@ const success = (state, payloads) =>
 const fetchUser = (state, payloads) =>
   updateObject(state, {
     loading: false,
-    users: payloads.user,
+    user: payloads.user,
     token: payloads.token,
     isAuth: true
   });
@@ -31,7 +31,7 @@ const fetchUser = (state, payloads) =>
 const logout = (state, payloads) =>
   updateObject(state, {
     loading: false,
-    users: null,
+    user: null,
     token: null,
     isAuth: false
   });

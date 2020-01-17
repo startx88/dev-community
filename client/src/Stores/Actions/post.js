@@ -41,12 +41,6 @@ const dislike_post = (postId, likes) => ({
   }
 });
 
-// FETCH USER POST
-const user_posts = posts => ({
-  type: post.FETCH_USER_POSTS,
-  payloads: posts
-});
-
 // FETCH ALL POST FOR PUBLIC USE
 const all_posts = posts => ({
   type: post.FETCH_ALL_POSTS,
@@ -54,27 +48,12 @@ const all_posts = posts => ({
 });
 
 // FETCH USER POSTS
-export const fetchUserPosts = () => async dispatch => {
-  dispatch(loading());
-  try {
-    const response = await axios.get("/posts/user");
-    const responseData = await response.data;
-    dispatch(user_posts(responseData.data));
-  } catch (err) {
-    console.log("error on add and update post", err);
-    const { message } = err.response.data.errors;
-    dispatch(showAlert(message, "warning"));
-    dispatch(failed(message));
-  }
-};
-
-// FETCH USER POSTS
 export const getAllPosts = () => async dispatch => {
   dispatch(loading());
   try {
     const response = await axios.get("/posts");
-    const responseData = await response.data;
-    dispatch(all_posts(responseData.data));
+    const { data } = await response.data;
+    dispatch(all_posts(data));
   } catch (err) {
     console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
@@ -170,8 +149,8 @@ export const getPost = postId => async dispatch => {
   dispatch(loading());
   try {
     const responose = await axios.get("/posts/" + postId);
-    const responseData = await responose.data;
-    dispatch(get_single_post(responseData.data));
+    const { data } = await responose.data;
+    dispatch(get_single_post(data));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

@@ -14,38 +14,36 @@ const Sidebar = props => {
       className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
       id="accordionSidebar"
     >
-      <Scrollbars style={{ width: "100%", height: "550px" }}>
-        <div className="menu">
-          {user.users && <UserControl sidebar userInfo={user.users} />}
+      <div className="menu">
+        <UserControl sidebar />
+        <hr />
+        <ul>
+          <Links ismenu classname="nav-link" href="/users">
+            <Icons icon="th" />
+            Dashboard
+          </Links>
+
+          <Links ismenu classname="nav-link" href={"/users/courses"}>
+            <Icons icon="long-arrow-alt-right" />
+            My Courses
+          </Links>
+
+          <Links ismenu classname="nav-link" href={"/users/posts"}>
+            <Icons icon="long-arrow-alt-right" />
+            My Posts
+          </Links>
+
+          <Links ismenu classname="nav-link" href={"/users/profiles"}>
+            <Icons icon="long-arrow-alt-right" />
+            My Profiles
+          </Links>
           <hr />
-          <ul>
-            <Links ismenu classname="nav-link" href="/users">
-              <Icons icon="th" />
-              Dashboard
-            </Links>
-
-            <Links ismenu classname="nav-link" href={"/users/courses"}>
-              <Icons icon="long-arrow-alt-right" />
-              My Courses
-            </Links>
-
-            <Links ismenu classname="nav-link" href={"/users/posts"}>
-              <Icons icon="long-arrow-alt-right" />
-              My Posts
-            </Links>
-
-            <Links ismenu classname="nav-link" href={"/users/profiles"}>
-              <Icons icon="long-arrow-alt-right" />
-              My Profiles
-            </Links>
-            <hr />
-            <Links ismenu classname="nav-link" href={"/users/settings"}>
-              <Icons icon="cog" />
-              Settings
-            </Links>
-          </ul>
-        </div>
-      </Scrollbars>
+          <Links ismenu classname="nav-link" href={"/users/settings"}>
+            <Icons icon="cog" />
+            Settings
+          </Links>
+        </ul>
+      </div>
     </aside>
   );
 };

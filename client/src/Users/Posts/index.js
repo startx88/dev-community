@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { userPosts } from "../../Stores/Selectors";
 
-import { addPost, fetchUserPosts } from "../../Stores/Actions";
+import { addPost, getAllPosts } from "../../Stores/Actions";
 const mapStateToProps = createStructuredSelector({
-  postData: userPosts
+  allposts: userPosts
 });
 const mapDispatchToProps = dispatch => ({
-  fetchUserPosts: () => dispatch(fetchUserPosts()),
+  getAllPosts: () => dispatch(getAllPosts()),
   addPost: (data, id, status) => dispatch(addPost(data, id, status))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

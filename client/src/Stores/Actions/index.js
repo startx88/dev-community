@@ -22,7 +22,6 @@ export {
   deleteComment,
   likePost,
   dislikePost,
-  fetchUserPosts,
   getAllPosts,
   deletePost
 } from "./post";

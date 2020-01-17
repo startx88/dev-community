@@ -8,21 +8,21 @@ const EditPost = lazy(() => import("./EditPost"));
 const PostList = lazy(() => import("../../Widgets/PostList"));
 
 const Container = props => {
-  //
   const {
     match,
-    fetchUserPosts,
-    postData: { posts, alert }
+    getAllPosts,
+    allposts: { posts, alert }
   } = props;
 
   const loadUserPost = useCallback(() => {
-    fetchUserPosts();
-  }, [fetchUserPosts]);
+    getAllPosts();
+  }, [getAllPosts]);
 
   useEffect(() => {
     loadUserPost();
   }, [loadUserPost]);
 
+  console.log("user", props);
   return (
     <>
       <Title type="admin">

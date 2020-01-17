@@ -8,9 +8,7 @@ const Container = props => {
         return (
           <>
             <Section.LeftCol>
-              <div className="col-sm-12">
-                <Title />
-              </div>
+              <Title type="page" />
             </Section.LeftCol>
             <Section.RightCol>hello</Section.RightCol>
           </>

@@ -35,14 +35,12 @@ const Title = ({
     case "page":
       element = (
         <div className={["page-title", classname].join(" ")}>
-          <div className="container">
-            <h4>
-              {urls.length > 1 ? urls[1] : urls}
-              {tagline && <small>{tagline}</small>}
-            </h4>
-            {breadcrumb && <BreadCrumbs location={match} />}
-            {children}
-          </div>
+          <h4>
+            {urls.length > 1 ? urls[1] : urls}
+            {tagline && <small>{tagline}</small>}
+          </h4>
+          {breadcrumb && <BreadCrumbs location={match} />}
+          {children}
         </div>
       );
       break;

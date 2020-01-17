@@ -27,7 +27,7 @@ const Container = props => {
     <>
       <Header auth={auth} admin />
       <Main classname="container flex-1">{props.children}</Main>
-      <Footer />
+      <Footer admin />
     </>
   );
 };

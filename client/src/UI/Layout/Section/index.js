@@ -7,7 +7,9 @@ import useAccess from "../../../_hooks/isAuth";
 const Section = ({ children, classname }) => {
   const { user } = useAccess();
   return (
-    <div className={[user.isAuth && "in-user", classname].join(" ")}>
+    <div
+      className={[user.isAuth ? "in-user" : "public-post", classname].join(" ")}
+    >
       <div className="row">{children(user)}</div>
     </div>
   );

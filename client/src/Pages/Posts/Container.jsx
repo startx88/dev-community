@@ -29,7 +29,7 @@ const Container = props => {
           return (
             <>
               <Section.LeftCol {...user}>
-                <Title />
+                <Title type="page" />
                 <PostList postdata={posts} />
               </Section.LeftCol>
               <Section.RightCol {...user}>hello</Section.RightCol>

@@ -4,10 +4,11 @@ import Icons from "../../UI/Icons";
 import { Scrollbars } from "react-custom-scrollbars";
 import { withRouter } from "react-router-dom";
 import UserControl from "../../Widgets/UserControl";
+import { useSelector } from "react-redux";
 
 /** Sidebar */
 const Sidebar = props => {
-  const { match, user } = props;
+  const { match } = props;
 
   return (
     <aside

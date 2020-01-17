@@ -35,11 +35,12 @@ exports.getAllPosts = async (req, res, next) => {
 /////////////////////////////////////////////////
 /////////// Get user post
 /////////////////////////////////////////////////
-exports.getPostByUserId = async (req, res, next) => {
-  const userId = req.query.userId;
+exports.getUserPost = async (req, res, next) => {
+  const userId = req.user.userId;
+
   try {
     const posts = await Post.find({ user: userId }).sort({ insertAt: -1 });
-    console.log(posts);
+
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;

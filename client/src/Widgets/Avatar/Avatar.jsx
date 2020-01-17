@@ -12,9 +12,9 @@ const Avatar = ({ type, name, href, avatar, alt, classname, mobile }) => {
     case "sidebar":
       element = (
         <div className="image">
-          <Links href={href} classname="waves-effect waves-block">
+          <Link to="" className="waves-effect waves-block">
             <Image src={avatar ? avatar : AvatarImage} alt={alt} />
-          </Links>
+          </Link>
         </div>
       );
       break;

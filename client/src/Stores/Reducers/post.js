@@ -2,6 +2,7 @@ import { post } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
 const initState = {
+  userpost: null,
   posts: null,
   post: null,
   error: null,
@@ -35,6 +36,12 @@ const allPosts = (state, payloads) =>
   updateObject(state, {
     loading: false,
     posts: payloads
+  });
+
+const userPosts = (state, payloads) =>
+  updateObject(state, {
+    loading: false,
+    userpost: payloads
   });
 
 const deletePost = (state, payloads) =>
@@ -80,6 +87,8 @@ const reducer = (state = initState, action) => {
       return fetchPost(state, payloads);
     case post.FETCH_ALL_POSTS:
       return allPosts(state, payloads);
+    case post.FETCH_USER_POSTS:
+      return userPosts(state, payloads);
     case post.POST_ADD:
       return add(state, payloads);
     case post.POST_DELETE:

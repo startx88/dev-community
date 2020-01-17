@@ -21,11 +21,8 @@ export const selectAllPost = createSelector(
 
 // get user posts
 export const userPosts = createSelector(
-  [postState, alertState],
-  (state, alert) => ({
-    posts: state.posts !== null && state.posts,
-    alert: alert
-  })
+  [postState],
+  state => state.userpost !== null && state.userpost
 );
 
 ////////////////////////////////////

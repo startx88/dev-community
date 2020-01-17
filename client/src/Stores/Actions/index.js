@@ -23,5 +23,6 @@ export {
   likePost,
   dislikePost,
   getAllPosts,
-  deletePost
+  deletePost,
+  getUserPosts
 } from "./post";

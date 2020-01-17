@@ -47,6 +47,11 @@ const all_posts = posts => ({
   payloads: posts
 });
 
+const user_posts = posts => ({
+  type: post.FETCH_USER_POSTS,
+  payloads: posts
+});
+
 // FETCH USER POSTS
 export const getAllPosts = () => async dispatch => {
   dispatch(loading());
@@ -54,6 +59,22 @@ export const getAllPosts = () => async dispatch => {
     const response = await axios.get("/posts");
     const { data } = await response.data;
     dispatch(all_posts(data));
+  } catch (err) {
+    console.log("error on add and update post", err);
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+    dispatch(failed(message));
+  }
+};
+
+// FETCH USER POSTS
+export const getUserPosts = () => async dispatch => {
+  dispatch(loading());
+  try {
+    const response = await axios.get("/posts/user");
+    const { data } = await response.data;
+    console.log("data", data);
+    dispatch(user_posts(data));
   } catch (err) {
     console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
@@ -145,6 +166,7 @@ const get_single_post = postdata => ({
   type: post.FETCH_SINGLE_POST,
   payloads: postdata
 });
+
 export const getPost = postId => async dispatch => {
   dispatch(loading());
   try {

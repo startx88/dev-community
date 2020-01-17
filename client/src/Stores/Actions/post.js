@@ -95,7 +95,8 @@ export const addPost = (inputdata, id, status) => async dispatch => {
     if (status === "UPDATE") {
       const response = await axios.put(`/posts/${id}`, formdata);
       const responseData = await response.data;
-      dispatch(update_post(responseData.post));
+      console.log(responseData);
+      dispatch(update_post(responseData.postId, responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     } else {
       const response = await axios.post("/posts", formdata);

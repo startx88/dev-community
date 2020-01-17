@@ -188,7 +188,10 @@ exports.updatePost = async (req, res, next) => {
       postId: result._id,
       post: {
         ...post._doc,
-        avatar: "http://localhost:4200/" + post._doc.avatar
+        user: {
+          _id: post.user
+        },
+        avatar: "http://localhost:4200/" + post.avatar
       }
     });
   } catch (err) {

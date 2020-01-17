@@ -33,7 +33,7 @@ const Container = props => {
       </AlertMessage>
       <Switch>
         <PrivateRoute
-          path={match.url + "/add-post"}
+          path={match.url + "/add-post/:id?"}
           component={childprops => (
             <EditPost parentProps={props} {...childprops} />
           )}

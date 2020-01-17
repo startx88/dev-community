@@ -15,7 +15,7 @@ const PostForm = props => {
   const { addPost, alert, getPost, userposts } = props.parentProps;
 
   const query = useQuery();
-  const post = userposts && userposts.find(post => post.id === postId);
+  const post = userposts && userposts.find(post => post._id === postId);
   const isEdit = query.get("edit") && post;
 
   const formik = useFormik({

@@ -51,6 +51,10 @@
 
   &-landing {
     padding: 10px 0;
+    .nav-link {
+      font-size: $base-size - 2;
+      font-family: $base-family;
+    }
   }
 
   &-user-control {

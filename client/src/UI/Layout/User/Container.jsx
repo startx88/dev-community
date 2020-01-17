@@ -8,7 +8,9 @@ import { createStructuredSelector } from "reselect";
 import { userSelector } from "../../../Stores/Selectors";
 
 const Container = props => {
-  return (
+  const { auth } = useSelector(state => state);
+
+  return auth.isAuth ? (
     <>
       <Header admin />
       <Main classname="container flex-1">
@@ -20,6 +22,12 @@ const Container = props => {
         </div>
       </Main>
       <Footer admin />
+    </>
+  ) : (
+    <>
+      <Header auth={auth} admin />
+      <Main classname="container flex-1">{props.children}</Main>
+      <Footer />
     </>
   );
 };

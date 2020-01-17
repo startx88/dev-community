@@ -6,7 +6,6 @@ import useAccess from "../../../_hooks/isAuth";
 /** Admin Content */
 const Section = ({ children, classname }) => {
   const { user } = useAccess();
-  console.log("user", user);
   return (
     <div className={[user.isAuth && "in-user", classname].join(" ")}>
       <div className="row">{children(user)}</div>

@@ -4,7 +4,7 @@ import UserControl from "../../Widgets/UserControl";
 import Links from "../../Widgets/Links/Links";
 import Navigation from "./Navigation";
 
-const Header = ({ admin, ...rest }) => {
+const Header = ({ admin, auth, ...rest }) => {
   return admin ? (
     <header className="navbar navbar-expand-lg navbar-admin">
       <div className="container">
@@ -12,7 +12,7 @@ const Header = ({ admin, ...rest }) => {
         <Navigation />
         <ul className="navbar-nav ml-auto">
           <div className="topbar-divider d-none d-sm-block"></div>
-          <UserControl />
+          {auth.isAuth && <UserControl />}
         </ul>
       </div>
     </header>
@@ -20,17 +20,7 @@ const Header = ({ admin, ...rest }) => {
     <header className="navbar navbar-expand-lg navbar-landing">
       <div className="container">
         <Logo href="/" brandname="DC" />
-        <ul className="navbar-nav ml-auto">
-          <Links ismenu classname="nav-link" href="/developers">
-            Developers
-          </Links>
-          <Links ismenu classname="nav-link" href="/courses">
-            Courses
-          </Links>
-          <Links ismenu classname="nav-link" href="/posts">
-            Posts
-          </Links>
-        </ul>
+        <Navigation />
       </div>
     </header>
   );

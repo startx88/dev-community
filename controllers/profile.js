@@ -2,25 +2,31 @@ const User = require("../models/users");
 const Profile = require("../models/profile");
 const { validationResult } = require("express-validator");
 const request = require("request");
+const { isAdmin, isUserActive } = require('../middleware/isUser');
 
 // Profiles
 exports.getAllProfiles = async (req, res, next) => {
+  const query = req.query.active;
+
   try {
-    //const users = await User.find({ active: 1 }).select("-password");
-    const profiles = await Profile.find().populate("user", [
+    const allProfile = await Profile.find().populate("user", [
       "name",
       "avatar",
-      "email"
+      "email",
+      "active"
     ]);
-    if (!profiles) {
+
+    if (!allProfile) {
       const error = new Error("There is no profiles");
       error.statusCode = 404;
       throw next(error);
     }
 
+    const profiles = allProfile.filter(profile => query ? profile.user.active === Number(query) : profile)
+
     res.status(200).json({
       success: true,
-      message: "All profiles",
+      message: "Get all profiles",
       profiles
     });
   } catch (error) {
@@ -33,13 +39,19 @@ exports.getProfile = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const profile = await Profile.findOne({ user: userId });
+    const profile = await Profile.findOne({ user: userId }).populate("user", [
+      "name",
+      "avatar", "email",
+      "active"
+    ]);
 
     if (!profile) {
       const error = new Error("There is no profile for this user");
       error.statusCode = 404;
       throw next(error);
     }
+
+    isUserActive(profile.user.active); // if user active
 
     res.status(200).json({
       success: true,
@@ -49,6 +61,37 @@ exports.getProfile = async (req, res, next) => {
     next(error);
   }
 };
+
+// Get profile by user id
+exports.getProfileByUserId = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  try {
+    const profile = await Profile.findOne({ user: userId })
+      .populate("user", [
+        "name",
+        "avatar",
+        "email",
+        "active"
+      ]);
+
+    if (!profile) {
+      const error = new Error("There is no profile for this user");
+      error.statusCode = 400;
+      throw next(error);
+    }
+    isUserActive(profile.user.active, "This user profile is deactivate"); // if user active
+    res.status(200).json({
+      success: true,
+      profile
+    });
+  } catch (err) {
+    console.log("error", err);
+    next(err);
+  }
+};
+
+
 
 // add profile
 exports.addProfile = async (req, res, next) => {
@@ -127,32 +170,6 @@ exports.addProfile = async (req, res, next) => {
   }
 };
 
-// Get profile by user id
-exports.getProfileByUserId = async (req, res, next) => {
-  const userId = req.params.userId;
-
-  try {
-    const profile = await Profile.findOne({ user: userId }).populate("user", [
-      "name",
-      "avatar"
-    ]);
-
-    if (!profile) {
-      const error = new Error("There is no profile for this user");
-      error.statusCode = 400;
-      throw next(error);
-    }
-
-    res.status(200).json({
-      success: true,
-      profile
-    });
-  } catch (err) {
-    console.log("error", err);
-    next(err);
-  }
-};
-
 /**
  * Delete user, profile and its posts
  */
@@ -182,14 +199,23 @@ exports.deleteUser = async (req, res, next) => {
  */
 exports.activeUser = async (req, res, next) => {
   const userId = req.user.userId;
+
   try {
     const user = await User.findById(userId);
+
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
     user.active = 1;
     const result = await user.save();
     res.status(200).json({
       success: true,
       message: "User activated successfully!",
-      userId: result._id
+      userId: result._id,
+      user
     });
   } catch (err) {
     console.log("error", err);
@@ -206,14 +232,22 @@ exports.activeUser = async (req, res, next) => {
  */
 exports.deactiveUser = async (req, res, next) => {
   const userId = req.user.userId;
+
   try {
     const user = await User.findById(userId);
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+    isAdmin(userId);
     user.active = 0;
     const result = await user.save();
     res.status(200).json({
       success: true,
       message: "User deactivated successfully!",
-      userId: result._id
+      userId: result._id,
+      user
     });
   } catch (err) {
     console.log("error", err);
@@ -423,3 +457,6 @@ exports.getGithubProfile = async (req, res, next) => {
     next(err);
   }
 };
+
+
+

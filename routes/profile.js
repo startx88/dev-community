@@ -43,12 +43,12 @@ router.delete("/", auth, profileController.deleteUser);
 //@route          GET api/profile/user/userId
 //@desc           Get user profile by userid
 //@access         Public
-router.post("/active", auth, profileController.activeUser);
+router.put("/activate", auth, profileController.activeUser);
 
 //@route          GET api/profile/user/userId
 //@desc           Get user profile by userid
 //@access         Public
-router.post("/deactive", auth, profileController.deactiveUser);
+router.put("/deactive", auth, profileController.deactiveUser);
 
 //////////////////////////////////////////////////
 /////////////// Experience ///////////////////////

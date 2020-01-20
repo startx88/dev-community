@@ -7,9 +7,9 @@ const cors = require("cors");
 dotenv.config();
 
 //////////////////////////
-//// Database connection
+//// Database connection ${process.env.USER}:${process.env.PASSWORD}@ds229068.mlab.com
 //////////////////////////
-const DATABASE = `mongodb://${process.env.USER}:${process.env.PASSWORD}@ds229068.mlab.com:29068/${process.env.DATABASE}`;
+const DATABASE = `mongodb://127.0.0.1:27017/dev-community`;
 mongoose
   .connect(DATABASE, {
     useNewUrlParser: true,
@@ -42,9 +42,11 @@ app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
 // routes
+const adminRoute = require("./routes/admin");
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
 const postRoute = require("./routes/post");
+app.use("/api/admin", adminRoute);
 app.use("/api/user", authRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/posts", postRoute);

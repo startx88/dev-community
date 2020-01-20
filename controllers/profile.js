@@ -287,7 +287,9 @@ exports.addUserExperience = async (req, res, next) => {
   try {
     const profile = await Profile.findOne({ user: userId }).populate("user", [
       "name",
-      "avatar"
+      "avatar",
+      "email",
+      "active"
     ]);
 
     if (!profile) {
@@ -301,6 +303,7 @@ exports.addUserExperience = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User experience update successfully!",
+      profileId: profile._id,
       profile
     });
   } catch (err) {
@@ -316,7 +319,9 @@ exports.deleteUserExperience = async (req, res, next) => {
   try {
     const profile = await Profile.findOne({ user: userId }).populate("user", [
       "name",
-      "avatar"
+      "avatar",
+      "email",
+      "active"
     ]);
 
     if (!profile) {
@@ -375,7 +380,9 @@ exports.addUserEducation = async (req, res, next) => {
   try {
     const profile = await Profile.findOne({ user: userId }).populate("user", [
       "name",
-      "avatar"
+      "avatar",
+      "email",
+      "active"
     ]);
 
     if (!profile) {
@@ -390,7 +397,8 @@ exports.addUserEducation = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User education added successfully!",
-      educationId: result._id
+      profileId: result._id,
+      profile
     });
   } catch (err) {
     console.log("error", err);
@@ -406,7 +414,9 @@ exports.deleteUserEducation = async (req, res, next) => {
   try {
     const profile = await Profile.findOne({ user: userId }).populate("user", [
       "name",
-      "avatar"
+      "avatar",
+      "email",
+      "active"
     ]);
 
     if (!profile) {
@@ -439,6 +449,7 @@ exports.getGithubProfile = async (req, res, next) => {
       headers: { "user-agent": "node.js" }
     };
 
+    console.log(options)
     request(options, (err, response, body) => {
       if (err) console.log(err);
       if (response.statusCode !== 200) {

@@ -18,7 +18,7 @@ router.get("/user/:userId", profileController.getProfileByUserId);
 //@access         private
 router.get("/me", auth, profileController.getProfile);
 
-//@route          POST api/profile
+//@route          POST api/profile 
 //@desc           Add the profile info
 //@access         Private
 router.post(
@@ -69,9 +69,6 @@ router.put(
       .isEmpty(),
     body("from", "From date is required!")
       .not()
-      .isEmpty(),
-    body("current", "Current is required!")
-      .not()
       .isEmpty()
   ],
   profileController.addUserExperience
@@ -89,7 +86,7 @@ router.delete(
 //@desc           Update the education
 //@access         Private
 router.put(
-  "/education",
+  "/education", 
   auth,
   [
     body("school", "school is required!")
@@ -99,7 +96,7 @@ router.put(
       .not()
       .isEmpty(),
     body("fieldofstudy", "fieldofstudy is required!")
-      .not()
+      .not() 
       .isEmpty(),
     body("from", "from is required!")
       .not()

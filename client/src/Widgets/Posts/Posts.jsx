@@ -5,7 +5,41 @@ import LikeButton from "../LikeButton/LikeButton";
 import CommentList from "../Comment/CommentList";
 import PostComment from "../Comment/PostComment";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import useAccess from "../../_hooks/isAuth";
+import { likePost, dislikePost, deletePost } from "../../Stores/Actions";
+
 const Posts = ({ info, status, deleted, ...rest }) => {
+  const dispatch = useDispatch();
+  const { user } = useAccess();
+
+  // DELETE HANDLER
+  const deletePostHandler = postId => {
+    if (user.isAuth) {
+      dispatch(deletePost(postId));
+    } else {
+      rest.history.push("/login");
+    }
+  };
+
+  // LIKE HANDLER
+  const likePostHandler = postId => {
+    if (user.isAuth) {
+      dispatch(likePost(postId));
+    } else {
+      rest.history.push("/login");
+    }
+  };
+
+  // DISLIKE HANDLER
+  const dislikePostHandler = postId => {
+    if (user.isAuth) {
+      dispatch(dislikePost(postId));
+    } else {
+      rest.history.push("/login");
+    }
+  };
+
   return (
     <div className="panel panel-white posts">
       <PostAvatar
@@ -15,17 +49,18 @@ const Posts = ({ info, status, deleted, ...rest }) => {
         avatar={info.user.avatar}
         date={info.insertAt}
       />
-
       <Image classname="posts-image" src={info.avatar} alt="" />
-
       <div className="posts-body">
         <p>{info.description}</p>
       </div>
-      <LikeButton likes={info.likes} />
+      <LikeButton
+        likes={info.likes}
+        likeHandler={() => likePostHandler(info._id)}
+        dislikeHandler={() => dislikePostHandler(info._id)}
+      />
       <div className="posts-comments">
-        <CommentList comments={info.comments} />
+        <CommentList postId={info._id} comments={info.comments} />
       </div>
-
       <PostComment postId={info._id} />
     </div>
   );

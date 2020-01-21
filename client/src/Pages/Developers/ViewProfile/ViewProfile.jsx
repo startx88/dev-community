@@ -14,7 +14,11 @@ const ViewProfile = props => {
   const dispatch = useDispatch();
   const {
     profile: { profiles },
-    posts: { posts }
+    posts: { posts },
+    deletePost,
+    likePost,
+    dislikePost,
+    addComment
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -23,7 +27,6 @@ const ViewProfile = props => {
   }, []);
 
   const profile = profiles.find(profile => profile.user._id === userId);
-
   if (!profile) {
     return <Spinner />;
   }

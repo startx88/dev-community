@@ -1,5 +1,4 @@
 .comments {
-  position: relative;
   margin-top: 20px;
   h4 {
     margin-bottom: 20px;
@@ -8,10 +7,11 @@
     padding-left: 0;
 
     li {
-      margin-bottom: 25px;
+      position: relative;
+      margin-bottom: 15px;
       &:not(:last-child) {
         border-bottom: 1px solid #eee;
-        padding-bottom: 25px;
+        padding-bottom: 15px;
       }
       .btn {
         position: absolute;

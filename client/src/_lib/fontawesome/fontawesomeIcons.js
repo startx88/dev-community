@@ -30,9 +30,11 @@ import {
   faClock,
   faNewspaper,
   faInfoCircle,
-  faImages
+  faImages,
+  faHeart
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+  faHeart,
   faImages,
   faNewspaper,
   faInfoCircle,

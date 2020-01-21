@@ -382,9 +382,9 @@ exports.addLike = async (req, res, next) => {
     if (userLiked) {
       const findLike = post.likes.find(like => like.user.toString() === userId); // find the user
       if (findLike.active) {
-        return res.status(200).json({
-          message: "Post already liked"
-        });
+        const error = new Error("Post already liked!");
+        error.statusCode = 403;
+        throw next(error);
       }
 
       const likeIndex = post.likes.findIndex(

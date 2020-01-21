@@ -137,9 +137,12 @@ export const likePost = postId => async dispatch => {
   try {
     const response = await axios.put(`/posts/like/${postId}`);
     const responseData = await response.data;
+    console.log(responseData);
+
     dispatch(like_post(postId, responseData.likes));
     dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
+    console.log(err);
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
   }
@@ -189,10 +192,6 @@ const add_comment = (postId, comments) => ({
   }
 });
 
-const delete_comment = commentId => ({
-  type: post.DELETE_COMMENT,
-  payloads: commentId
-});
 export const addComment = (postId, inputdata) => async dispatch => {
   try {
     const response = await axios.post(`/posts/comment/${postId}`, inputdata);

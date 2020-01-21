@@ -4,6 +4,7 @@ import Icons from "../../../UI/Icons";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProfiles, getPostByUserId } from "../../../Stores/Actions";
 import Spinner from "../../../UI/Spinner/Spinner";
+import AlertMessage from "../../../UI/Alert";
 import Skills from "../../../Users/Profiles/Controls/Skills";
 import Experience from "../../../Widgets/User/Experience";
 import Education from "../../../Widgets/User/Education";
@@ -12,13 +13,15 @@ import PostInfo from "../../../Widgets/Posts/Posts";
 const ViewProfile = props => {
   const userId = props.match.params.id;
   const dispatch = useDispatch();
+  console.log(props);
   const {
     profile: { profiles },
     posts: { posts },
     deletePost,
     likePost,
     dislikePost,
-    addComment
+    addComment,
+    alert: { show, type, message }
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -57,6 +60,7 @@ const ViewProfile = props => {
         <TabPanel>
           <div className="row">
             <div className="col-sm-8">
+              <AlertMessage type={type} show={show} />
               {posts &&
                 posts.map(post => (
                   <PostInfo

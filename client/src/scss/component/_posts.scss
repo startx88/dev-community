@@ -71,6 +71,7 @@
   }
   &-add-comment {
     display: flex;
+    margin-top: 40px;
     align-items: center;
     form {
       margin-left: 15px;
@@ -78,10 +79,11 @@
       display: flex;
       .form-group {
         margin-bottom: 0;
-      }
-      .input {
         margin-right: 10px;
         flex: 1;
+      }
+      .form-control {
+        font-size: $small;
       }
       .btn {
         border-radius: 5px;

@@ -18,25 +18,26 @@ const Comment = ({ postId, comments }) => {
   };
 
   return (
-    <div className="comments">
-      <h4>Comments</h4>
-      <ul>
-        {comments.map(comment => (
-          <li key={comment._id}>
-            {user.isAuth && user.user._id === comment.user && (
-              <Button
-                clicked={() => deleteCommentHandler(comment._id)}
-                btnType="dlt-icon"
-              >
-                <Icons icon="trash-alt" />
-              </Button>
-            )}
-            <h6>{comment.name}</h6>
-            <p>{comment.text}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    comments && (
+      <div className="comments">
+        <ul>
+          {comments.map(comment => (
+            <li key={comment._id}>
+              {user.isAuth && user.user._id === comment.user && (
+                <Button
+                  clicked={() => deleteCommentHandler(comment._id)}
+                  btnType="dlt-icon"
+                >
+                  <Icons icon="trash-alt" />
+                </Button>
+              )}
+              <h6>{comment.name}</h6>
+              <p>{comment.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 };
 

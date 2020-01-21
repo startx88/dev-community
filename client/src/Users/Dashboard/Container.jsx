@@ -4,6 +4,7 @@ import Section from "../../UI/Layout/Section";
 import UserPost from "../widgets/userPost";
 import UserStatus from "../widgets/UserStatus/UserStatus";
 import Panel from "../../UI/Panel";
+
 const Container = props => {
   const { match, getAllPosts, allposts } = props;
 

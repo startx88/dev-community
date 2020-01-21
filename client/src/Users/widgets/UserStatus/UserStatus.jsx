@@ -3,7 +3,7 @@ import Input from "../../../UI/Input";
 import Button from "../../../UI/Button";
 const UserStatus = props => {
   return (
-    <div class="user-status">
+    <div className="user-status">
       <div className="status-title">
         <h6>Add Your Status</h6>
       </div>

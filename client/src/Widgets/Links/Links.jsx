@@ -5,15 +5,19 @@ import { NavLink, Link } from "react-router-dom";
  * Links
  * @param {*} param0
  */
-const Links = ({ href, ismenu, children, classname }) => {
+const Links = ({ href, ismenu, title, children, classname }) => {
   return ismenu ? (
     <li className="nav-item">
-      <NavLink className={["nav-link", classname].join(" ")} to={href}>
+      <NavLink
+        title={title}
+        className={["nav-link", classname].join(" ")}
+        to={href}
+      >
         {children}
       </NavLink>
     </li>
   ) : (
-    <Link className={classname} to={href}>
+    <Link className={classname} title={title} to={href}>
       {children}
     </Link>
   );

@@ -3,15 +3,15 @@ import Avatar from "../../../Widgets/Avatar/Avatar";
 import { Link, withRouter } from "react-router-dom";
 
 const Profile = ({ info, match, columns }) => {
+  console.log("info", info);
   return (
     <div className="profile">
       <Avatar
         classname="profile-image"
-        href={`${match.url}/${info._id}`}
+        href={`${match.url}/${info.user._id}`}
         avatar={info.user.avatar}
         alt={info.user.name}
       />
-
       <div className="profile-body">
         <h6>
           {info.user.name}
@@ -20,7 +20,7 @@ const Profile = ({ info, match, columns }) => {
         <p></p>
       </div>
       <div className="profile-footer">
-        <Link to={`${match.url}/${info._id}`}>View Profile</Link>
+        <Link to={`${match.url}/${info.user._id}`}>View Profile</Link>
       </div>
     </div>
   );

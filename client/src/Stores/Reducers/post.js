@@ -73,9 +73,14 @@ const addComment = (state, payloads) => {
     }
   });
 };
+
 // Fetch Post
 const fetchPost = (state, payloads) =>
   updateObject(state, { loading: false, post: payloads });
+
+// FETCH POST BY USER ID
+const postByUserId = (state, payloads) =>
+  updateObject(state, { loading: false, userpost: payloads });
 
 // RETUDER
 const reducer = (state = initState, action) => {
@@ -89,6 +94,8 @@ const reducer = (state = initState, action) => {
       return allPosts(state, payloads);
     case post.FETCH_USER_POSTS:
       return userPosts(state, payloads);
+    case post.FETCH_POST_BY_USER_ID:
+      return postByUserId(state, payloads);
     case post.POST_ADD:
       return add(state, payloads);
     case post.POST_DELETE:

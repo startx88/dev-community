@@ -41,9 +41,11 @@ const Avatar = ({ type, name, href, avatar, alt, classname, mobile }) => {
       break;
     default:
       element = (
-        <Link className={classname} to={href}>
-          <Image src={avatar ? avatar : AvatarImage} alt={alt} />
-        </Link>
+        <Image
+          classname={classname}
+          src={avatar ? avatar : AvatarImage}
+          alt={alt}
+        />
       );
       break;
   }

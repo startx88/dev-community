@@ -216,3 +216,20 @@ export const deleteComment = (postId, commentId) => async dispatch => {
     dispatch(showAlert(message, "warning"));
   }
 };
+
+// FETCH POST BY USER ID
+export const getPostByUserId = userId => async dispatch => {
+  dispatch(loading());
+  try {
+    const responose = await axios.get("/posts/user/" + userId);
+    const { data } = await responose.data;
+    console.log("userpost", data);
+    dispatch({
+      type: post.FETCH_POST_BY_USER_ID,
+      payloads: data
+    });
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
+  }
+};

@@ -32,10 +32,10 @@ exports.getAllPosts = async (req, res, next) => {
   }
 };
 
-/////////////////////////////////////////////////
-/////////// Get user post
-/////////////////////////////////////////////////
-exports.getUserPost = async (req, res, next) => {
+/**********
+ * Get user Posts
+ ************************/
+exports.getLoggedInUserPost = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
@@ -43,6 +43,35 @@ exports.getUserPost = async (req, res, next) => {
       .sort({ insertAt: -1 })
       .populate("user");
 
+    if (!posts) {
+      const error = new Error("No post found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+    res.status(200).json({
+      success: true,
+      data: posts.map(post => ({
+        ...post._doc,
+        avatar: "http://localhost:4200/" + post.avatar
+      }))
+    });
+  } catch (err) {
+    console.log("error", err);
+    next(err);
+  }
+};
+
+/**********
+ * Get user Posts
+ ************************/
+exports.getPostByUserId = async (req, res, next) => {
+  const userId = req.params.userId;
+  try {
+    const posts = await Post.find({ user: userId })
+      .sort({ insertAt: -1 })
+      .populate("user", ["name", "avatar", "email", "active"]);
+
+    console.log("userid", posts, userId);
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;

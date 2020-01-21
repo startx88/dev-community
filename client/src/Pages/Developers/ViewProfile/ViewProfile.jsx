@@ -2,27 +2,31 @@ import React, { useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Icons from "../../../UI/Icons";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllProfiles } from "../../../Stores/Actions";
+import { getAllProfiles, getPostByUserId } from "../../../Stores/Actions";
 import Spinner from "../../../UI/Spinner/Spinner";
 import Skills from "../../../Users/Profiles/Controls/Skills";
 import Experience from "../../../Widgets/User/Experience";
 import Education from "../../../Widgets/User/Education";
+import PostInfo from "../../../Widgets/Posts/Posts";
 
 const ViewProfile = props => {
-  const profileId = props.match.params.id;
+  const userId = props.match.params.id;
   const dispatch = useDispatch();
-  const { profiles } = useSelector(state => state.profile);
+  const {
+    profile: { profiles },
+    posts: { userpost }
+  } = useSelector(state => state);
 
   useEffect(() => {
     dispatch(getAllProfiles());
+    dispatch(getPostByUserId(userId));
   }, []);
 
-  const profile = profiles.find(profile => profile._id === profileId);
+  const profile = profiles.find(profile => profile.user._id === userId);
 
   if (!profile) {
     return <Spinner />;
   }
-  console.log(profile);
 
   return (
     <div className="view-profile">
@@ -48,7 +52,18 @@ const ViewProfile = props => {
           </Tab>
         </TabList>
         <TabPanel>
-          <h2>Any content 1</h2>
+          <div className="row">
+            <div className="col-sm-8">
+              {userpost &&
+                userpost.map(post => (
+                  <PostInfo
+                    key={post._id}
+                    status={profile.status}
+                    info={post}
+                  />
+                ))}
+            </div>
+          </div>
         </TabPanel>
         <TabPanel>
           <div className="panel panel-white">

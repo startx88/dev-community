@@ -51,6 +51,10 @@ p {
   font-size: $base-size - 2;
 }
 
+img {
+  max-width: 100%;
+}
+
 .preview {
   display: flex;
   padding-top: 10px;

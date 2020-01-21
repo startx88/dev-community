@@ -19,12 +19,17 @@ const upload = multer({ storage: storage, filterFile: fileFilter });
 // @route       POST api/posts
 // @des         get all the posts
 // @access      Public
-router.get("/", postController.getAllPosts);
+router.get("/", auth, postController.getAllPosts);
 
 // @route       POST api/posts
 // @des         get all the posts
 // @access      Public
-router.get("/user", auth, postController.getUserPost);
+router.get("/user", auth, postController.getLoggedInUserPost);
+
+// @route       POST api/posts/user/:userId
+// @des         Get posts by user id
+// @access      Public
+router.get("/user/:userId", auth, postController.getPostByUserId);
 
 // @route       POST api/posts/:postId
 // @des         get single post

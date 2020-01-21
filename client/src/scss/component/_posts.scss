@@ -32,3 +32,60 @@
     margin-bottom: 10px;
   }
 }
+
+.posts {
+  .like-buttons {
+    padding: 10px;
+    margin-left: -20px;
+    margin-right: -20px;
+    display: block;
+    border-top: 1px solid lighten($border-color, 20%);
+    border-bottom: 1px solid lighten($border-color, 20%);
+  }
+  &-image {
+    margin-top: 15px;
+    position: relative;
+    max-height: 150px;
+    overflow: hidden;
+  }
+  &-body {
+    margin: 15px 0 20px;
+  }
+  &-user {
+    display: inline-flex;
+
+    &-avatar {
+      display: flex;
+      align-items: center;
+      h6 {
+        small {
+          font-size: $small;
+          margin-top: 2px;
+          color: lighten($base-color, 10%);
+        }
+      }
+      a {
+        margin-right: 10px;
+      }
+    }
+  }
+  &-add-comment {
+    display: flex;
+    align-items: center;
+    form {
+      margin-left: 15px;
+      flex: 1;
+      display: flex;
+      .form-group {
+        margin-bottom: 0;
+      }
+      .input {
+        margin-right: 10px;
+        flex: 1;
+      }
+      .btn {
+        border-radius: 5px;
+      }
+    }
+  }
+}

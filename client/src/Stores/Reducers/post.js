@@ -2,7 +2,6 @@ import { post } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
 const initState = {
-  userpost: null,
   posts: null,
   post: null,
   error: null,
@@ -32,18 +31,6 @@ const updated = (state, payloads) =>
     )
   });
 
-const allPosts = (state, payloads) =>
-  updateObject(state, {
-    loading: false,
-    posts: payloads
-  });
-
-const userPosts = (state, payloads) =>
-  updateObject(state, {
-    loading: false,
-    userpost: payloads
-  });
-
 const deletePost = (state, payloads) =>
   updateObject(state, {
     posts: state.posts.filter(post => post._id !== payloads)
@@ -67,20 +54,22 @@ const dislikePost = (state, payloads) =>
 // ADD COMMENT
 const addComment = (state, payloads) => {
   return updateObject(state, {
-    post: {
-      ...state.post,
-      comments: payloads
-    }
+    posts: state.posts.map(post =>
+      post._id === payloads.id ? { ...post, comments: payloads.comments } : post
+    )
   });
 };
+
+// All Posts
+const posts = (state, payloads) =>
+  updateObject(state, {
+    loading: false,
+    posts: payloads
+  });
 
 // Fetch Post
 const fetchPost = (state, payloads) =>
   updateObject(state, { loading: false, post: payloads });
-
-// FETCH POST BY USER ID
-const postByUserId = (state, payloads) =>
-  updateObject(state, { loading: false, userpost: payloads });
 
 // RETUDER
 const reducer = (state = initState, action) => {
@@ -91,11 +80,9 @@ const reducer = (state = initState, action) => {
     case post.FETCH_SINGLE_POST:
       return fetchPost(state, payloads);
     case post.FETCH_ALL_POSTS:
-      return allPosts(state, payloads);
     case post.FETCH_USER_POSTS:
-      return userPosts(state, payloads);
     case post.FETCH_POST_BY_USER_ID:
-      return postByUserId(state, payloads);
+      return posts(state, payloads);
     case post.POST_ADD:
       return add(state, payloads);
     case post.POST_DELETE:

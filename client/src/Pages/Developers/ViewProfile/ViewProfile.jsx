@@ -14,7 +14,7 @@ const ViewProfile = props => {
   const dispatch = useDispatch();
   const {
     profile: { profiles },
-    posts: { userpost }
+    posts: { posts }
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -54,8 +54,8 @@ const ViewProfile = props => {
         <TabPanel>
           <div className="row">
             <div className="col-sm-8">
-              {userpost &&
-                userpost.map(post => (
+              {posts &&
+                posts.map(post => (
                   <PostInfo
                     key={post._id}
                     status={profile.status}

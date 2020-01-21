@@ -71,7 +71,6 @@ exports.getPostByUserId = async (req, res, next) => {
       .sort({ insertAt: -1 })
       .populate("user", ["name", "avatar", "email", "active"]);
 
-    console.log("userid", posts, userId);
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;

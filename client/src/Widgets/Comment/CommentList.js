@@ -10,7 +10,6 @@ import { deleteComment } from "../../Stores/Actions";
 /////////////
 const Comment = ({ postId, comments }) => {
   const dispatch = useDispatch();
-  const { user } = useAccess();
 
   // Delete Comment
   const deleteCommentHandler = commentId => {
@@ -23,14 +22,12 @@ const Comment = ({ postId, comments }) => {
         <ul>
           {comments.map(comment => (
             <li key={comment._id}>
-              {user.isAuth && user.user._id === comment.user && (
-                <Button
-                  clicked={() => deleteCommentHandler(comment._id)}
-                  btnType="dlt-icon"
-                >
-                  <Icons icon="trash-alt" />
-                </Button>
-              )}
+              <Button
+                clicked={() => deleteCommentHandler(comment._id)}
+                btnType="dlt-icon"
+              >
+                <Icons icon="trash-alt" />
+              </Button>
               <h6>{comment.name}</h6>
               <p>{comment.text}</p>
             </li>

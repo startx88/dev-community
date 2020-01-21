@@ -181,9 +181,12 @@ export const getPost = postId => async dispatch => {
 ////////////////////
 ///// Comments add / delete
 ////////////////////////////////////////////////
-const add_comment = comments => ({
+const add_comment = (postId, comments) => ({
   type: post.ADD_COMMENT,
-  payloads: comments
+  payloads: {
+    id: postId,
+    comments: comments
+  }
 });
 
 const delete_comment = commentId => ({
@@ -194,7 +197,7 @@ export const addComment = (postId, inputdata) => async dispatch => {
   try {
     const response = await axios.post(`/posts/comment/${postId}`, inputdata);
     const { data } = await response;
-    dispatch(add_comment(data.comments));
+    dispatch(add_comment(postId, data.comments));
     dispatch(showAlert(data.message, "success"));
   } catch (err) {
     const { message } = err.response.data.errors;
@@ -209,7 +212,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
       `/posts/comment/${postId}/${commentId}`
     );
     const { data } = await response;
-    dispatch(add_comment(data.comments));
+    dispatch(add_comment(postId, data.comments));
     dispatch(showAlert(data.message, "success"));
   } catch (err) {
     const { message } = err.response.data.errors;
@@ -217,13 +220,15 @@ export const deleteComment = (postId, commentId) => async dispatch => {
   }
 };
 
-// FETCH POST BY USER ID
+/**
+ * FETCH POST BY USER ID
+ * @param {*} userId
+ */
 export const getPostByUserId = userId => async dispatch => {
   dispatch(loading());
   try {
     const responose = await axios.get("/posts/user/" + userId);
     const { data } = await responose.data;
-    console.log("userpost", data);
     dispatch({
       type: post.FETCH_POST_BY_USER_ID,
       payloads: data

@@ -5,7 +5,6 @@ import Links from "../../Widgets/Links/Links";
 import Navigation from "./Navigation";
 
 const Header = ({ admin, auth, ...rest }) => {
-  console.log("auth", auth);
   return admin ? (
     <header className="navbar navbar-expand-lg navbar-admin">
       <div className="container">

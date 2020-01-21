@@ -4,9 +4,9 @@ const Profile = require("../models/profile");
 const { validationResult } = require("express-validator");
 const { resizeImage, deleteFile } = require("../middleware/file");
 
-/////////////////////////////////////////////////
-/////////// Get All Posts
-/////////////////////////////////////////////////
+/**********
+ * Get All Posts
+ ************************/
 exports.getAllPosts = async (req, res, next) => {
   const userId = req.query.userId;
   try {

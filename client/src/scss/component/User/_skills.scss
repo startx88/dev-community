@@ -1,0 +1,25 @@
+.skills {
+  padding: 0;
+
+  li {
+    margin-bottom: 15px;
+
+    label,
+    span {
+      font-size: $base-size - 4;
+      font-weight: 600;
+      color: $base-color;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    span {
+      color: $violet;
+      font-weight: bold;
+      font-family: $primary-secondary;
+    }
+  }
+  .progress {
+    height: 3px;
+    border-radius: 0;
+  }
+}

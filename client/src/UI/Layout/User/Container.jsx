@@ -13,7 +13,7 @@ const Container = props => {
   return auth.isAuth ? (
     <>
       <Header admin />
-      <Main classname="container flex-1">
+      <Main classname="container flex-1 mt-5">
         <div className="row row-user-mod">
           <div className="col-sm-3">
             <Sidebar />

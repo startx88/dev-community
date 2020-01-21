@@ -1,6 +1,9 @@
 import { profile } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
+/**
+ * Initial State
+ */
 const initState = {
   profiles: [],
   profile: null,
@@ -8,10 +11,14 @@ const initState = {
   loading: false
 };
 
+/** Loading */
 const loading = (state, payloads) => updateObject(state, { loading: true });
 
+/** Failed */
 const failed = (state, payloads) =>
   updateObject(state, { loading: false, errors: payloads });
+
+/** Get logged-in user profile */
 
 const fetch = (state, payloads) =>
   updateObject(state, {
@@ -19,7 +26,7 @@ const fetch = (state, payloads) =>
     profile: payloads
   });
 
-// Education
+/** Add/Delete user education */
 const addEducation = (state, payloads) =>
   updateObject(state, {
     ...state,
@@ -28,6 +35,7 @@ const addEducation = (state, payloads) =>
       education: [...state.profile.education, payloads]
     }
   });
+
 const deletEducation = (state, payloads) =>
   updateObject(state, {
     ...state,
@@ -37,7 +45,11 @@ const deletEducation = (state, payloads) =>
     }
   });
 
-// Experience
+/**
+ * Experience methods
+ * @param {*} state
+ * @param {*} payloads
+ */
 const addExperience = (state, payloads) =>
   updateObject(state, {
     ...state,
@@ -56,6 +68,17 @@ const deleteExperience = (state, payloads) =>
     }
   });
 
+/**
+ * Fetch all profiles
+ */
+const allProfiles = (state, payloads) =>
+  updateObject(state, { loading: false, profiles: payloads });
+
+/**
+ * REDUCER
+ * @param {*} state
+ * @param {*} action
+ */
 const reducer = (state = initState, action) => {
   const { type, payloads } = action;
   switch (type) {
@@ -65,6 +88,8 @@ const reducer = (state = initState, action) => {
       return failed(state, payloads);
     case profile.PROFILE_FETCH:
       return fetch(state, payloads);
+    case profile.PROFILE_ALL:
+      return allProfiles(state, payloads);
     case profile.PROFILE_EXP_ADD:
       return addExperience(state, payloads);
     case profile.PROFILE_EXP_DELETE:

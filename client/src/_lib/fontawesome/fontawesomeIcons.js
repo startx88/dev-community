@@ -27,9 +27,15 @@ import {
   faThumbsUp,
   faPencilAlt,
   faCommentAlt,
-  faClock
+  faClock,
+  faNewspaper,
+  faInfoCircle,
+  faImages
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+  faImages,
+  faNewspaper,
+  faInfoCircle,
   faClock,
   faCommentAlt,
   faPencilAlt,

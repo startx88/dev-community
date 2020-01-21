@@ -11,6 +11,7 @@
   h4 {
     small {
       margin-top: 5px;
+      text-transform: none;
       font-size: $base-size - 3;
     }
   }
@@ -18,9 +19,7 @@
 
 .page-title {
   margin-bottom: 20px;
-  margin-top: 25px;
   padding: 0;
-
   .breadcrumb {
     margin: 0;
     padding: 0;

@@ -11,6 +11,9 @@ const Logout = lazy(() => import("../Auth/Logout"));
 const FortgotPassword = lazy(() => import("../Auth/ForgotPassword"));
 const Home = lazy(() => import("../Pages/Home"));
 const Developers = lazy(() => import("../Pages/Developers"));
+const DeveloperProfile = lazy(() =>
+  import("../Pages/Developers/ViewProfile/ViewProfile")
+);
 const Course = lazy(() => import("../Pages/Courses"));
 const Posts = lazy(() => import("../Pages/Posts"));
 const SinglePost = lazy(() => import("../Pages/SinglePost"));
@@ -31,7 +34,13 @@ const Web = props => {
         layout={PublicLayout}
         component={FortgotPassword}
       />
-      <PublicRoute
+
+      <PrivateRoute
+        path="/developers/:id"
+        layout={UserLayout}
+        component={DeveloperProfile}
+      />
+      <PrivateRoute
         path="/developers"
         layout={UserLayout}
         component={Developers}

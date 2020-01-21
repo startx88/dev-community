@@ -1,0 +1,33 @@
+.user-exp-edu {
+  position: relative;
+  &:not(:last-child) {
+    margin-bottom: $m25;
+  }
+  .btn {
+    top: $m5;
+    position: absolute;
+    right: 0;
+  }
+  .date {
+    margin-bottom: $m5;
+  }
+  h6 {
+    text-transform: capitalize;
+    margin-bottom: $m5;
+    small {
+      margin-top: $m5;
+      color: rgba($black, 0.6);
+      font-size: $small;
+    }
+  }
+  span {
+    color: $primary;
+    font-weight: $bold;
+    margin-bottom: $m5;
+    display: block;
+    font-size: $small;
+  }
+  p {
+    line-height: 1.3;
+  }
+}

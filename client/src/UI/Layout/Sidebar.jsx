@@ -17,26 +17,25 @@ const Sidebar = props => {
     >
       <div className="menu">
         <UserControl sidebar />
-        <hr />
         <ul>
+          <hr />
           <Links ismenu classname="nav-link" href="/users">
             <Icons icon="th" />
             Dashboard
           </Links>
 
-          <Links ismenu classname="nav-link" href={"/users/courses"}>
-            <Icons icon="long-arrow-alt-right" />
-            My Courses
-          </Links>
-
           <Links ismenu classname="nav-link" href={"/users/posts"}>
             <Icons icon="long-arrow-alt-right" />
-            My Posts
+            Posts
+          </Links>
+          <Links ismenu classname="nav-link" href={"/users/courses"}>
+            <Icons icon="long-arrow-alt-right" />
+            Projects
           </Links>
 
           <Links ismenu classname="nav-link" href={"/users/profiles"}>
             <Icons icon="long-arrow-alt-right" />
-            My Profiles
+            Profiles
           </Links>
           <hr />
           <Links ismenu classname="nav-link" href={"/users/settings"}>

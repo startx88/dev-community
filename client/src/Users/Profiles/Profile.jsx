@@ -7,6 +7,7 @@ import Date from "../../UI/Date";
 import Button from "../../UI/Button";
 import EducationShow from "./Controls/EducationShow";
 import ExperienceShow from "./Controls/ExperienceShow";
+import Skills from "./Controls/Skills";
 import { Link } from "react-router-dom";
 
 // Profiles
@@ -65,25 +66,7 @@ const Profile = props => {
             <h6>
               <Icons icon="tachometer-alt" /> Skills
             </h6>
-            <ul className="skills-list row">
-              {profile.profile.skills.map(skill => (
-                <li key={skill} className="col-sm-6">
-                  <div className="d-flex justify-content-between">
-                    <h6>{skill}</h6>
-                    <span>100%</span>
-                  </div>
-                  <div className="progress">
-                    <div
-                      className="progress-bar w-100"
-                      role="progressbar"
-                      aria-valuenow="100"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <Skills skills={profile.profile.skills} />
           </div>
           <div className="col-sm-6">
             <h6>

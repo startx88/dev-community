@@ -5,6 +5,7 @@ import Links from "../../Widgets/Links/Links";
 import Navigation from "./Navigation";
 
 const Header = ({ admin, auth, ...rest }) => {
+  console.log("auth", auth);
   return admin ? (
     <header className="navbar navbar-expand-lg navbar-admin">
       <div className="container">
@@ -12,7 +13,7 @@ const Header = ({ admin, auth, ...rest }) => {
         <Navigation />
         <ul className="navbar-nav ml-auto">
           <div className="topbar-divider d-none d-sm-block"></div>
-          {auth && auth.isAuth && <UserControl />}
+          <UserControl />
         </ul>
       </div>
     </header>
@@ -20,7 +21,6 @@ const Header = ({ admin, auth, ...rest }) => {
     <header className="navbar navbar-expand-lg navbar-landing">
       <div className="container">
         <Logo href="/" brandname="DC" />
-        <Navigation />
       </div>
     </header>
   );

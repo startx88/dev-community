@@ -14,67 +14,6 @@
   }
 }
 
-// Skills
-.skills-list {
-  li {
-    margin-bottom: 15px;
-    h6,
-    span {
-      font-size: $base-size - 2;
-    }
-    span {
-      color: $violet;
-      font-weight: bold;
-      font-family: $primary-secondary;
-    }
-  }
-  .progress {
-    height: 3px;
-    border-radius: 0;
-    &-bar {
-      background-color: $violet;
-    }
-  }
-  h6 {
-    text-transform: capitalize;
-    margin-bottom: 6px;
-  }
-}
-
-.edu-info {
-  position: relative;
-  padding: 10px;
-  background-image: linear-gradient(rgba($base-color, 0.03), rgba($white, 0.2));
-  .btn {
-    top: 5px;
-    position: absolute;
-    right: 0;
-  }
-
-  span,
-  p {
-    font-size: $base-size - 2;
-  }
-  h6 {
-    margin: 5px 0;
-    text-transform: capitalize;
-    small {
-      margin-top: 5px;
-      color: rgba($black, 0.6);
-      font-size: $base-size - 4;
-    }
-  }
-  span {
-    color: $primary;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-  }
-  p {
-    line-height: 1.3;
-  }
-}
-
 .in-user {
   margin-top: 50px;
 }

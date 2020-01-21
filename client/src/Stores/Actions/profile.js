@@ -2,8 +2,8 @@ import { profile } from "../Constants";
 import axios from "../../axios_instance";
 import { showAlert } from "./alert";
 
+// Actions
 const loading = () => ({ type: profile.PROFILE_LOADING });
-
 const failed = error => ({ type: profile.PROFILE_FAILED, payloads: error });
 
 const fetchProfile = data => ({
@@ -46,10 +46,33 @@ const deleteExperienceSuccess = id => ({
   payloads: id
 });
 
+/**
+ * Fetch all profiles
+ * @access PUBLIC
+ * @method GET
+ * @param  profiles
+ */
+const allProfile = profiles => ({
+  type: profile.PROFILE_ALL,
+  payloads: profiles
+});
+export const getAllProfiles = () => async dispatch => {
+  dispatch(loading());
+  try {
+    const response = await axios.get("/profile");
+    const { profiles } = await response.data;
+    dispatch(allProfile(profiles));
+  } catch (err) {
+    const error = err.response.data.errors;
+    dispatch(showAlert(error.message, "warning"));
+  }
+};
+
 ///////////////////////////////
 /////// Get current profile
 ///////////////////////////////////
 export const getProfile = () => async dispatch => {
+  dispatch(loading());
   try {
     const user = await axios.get("/profile/me");
     const userData = await user.data;

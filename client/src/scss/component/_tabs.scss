@@ -1,0 +1,28 @@
+.react-tabs {
+  &__tab-list {
+    border: none;
+    margin-bottom: 30px;
+  }
+  &__tab {
+    margin-right: 40px;
+    padding-left: 0;
+    padding-right: 0;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    font-family: $primary-secondary;
+    color: lighten($base-color, 20%);
+    &:focus,
+    &:active,
+    &:hover {
+      box-shadow: none;
+    }
+    span {
+      font-size: $base-size * 1.2;
+      display: block;
+    }
+  }
+  &__tab--selected {
+    color: $info;
+  }
+}

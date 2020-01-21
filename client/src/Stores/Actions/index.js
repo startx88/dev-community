@@ -12,7 +12,8 @@ export {
   addEducation,
   deleteEducation,
   addExperience,
-  deleteExperience
+  deleteExperience,
+  getAllProfiles
 } from "./profile";
 
 export {

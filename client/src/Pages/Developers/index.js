@@ -1,2 +1,20 @@
 import Container from "./Container";
-export default Container;
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { getAllProfiles } from "../../Stores/Actions";
+import { selectUserProfile, selectAlert } from "../../Stores/Selectors";
+
+/**
+ * Connect with redux
+ */
+
+const mapStateToProps = createStructuredSelector({
+  allProfile: selectUserProfile,
+  alert: selectAlert
+});
+
+const mapDispatchToProps = dispatch => ({
+  getAllProfiles: () => dispatch(getAllProfiles())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

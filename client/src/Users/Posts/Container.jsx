@@ -2,9 +2,10 @@ import React, { lazy, useCallback, useEffect } from "react";
 import Title from "../../Widgets/Title/Title";
 import PrivateRoute from "../../Web/PrivateRoute";
 import AlertMessage from "../../UI/Alert";
+import Spinner from "../../UI/Spinner/Spinner";
 import { Link, Switch } from "react-router-dom";
 
-const PostList = lazy(() => import("../../Widgets/PostList"));
+const PostList = lazy(() => import("../widgets/PostList"));
 const EditPost = lazy(() => import("./EditPost/EditPost"));
 const SinglePost = lazy(() => import("../../Pages/SinglePost"));
 
@@ -19,6 +20,10 @@ const Container = props => {
   useEffect(() => {
     loadUserPost();
   }, [loadUserPost]);
+
+  if (!userposts) {
+    return <Spinner />;
+  }
 
   return (
     <>

@@ -15,9 +15,11 @@ const Experience = ({ experience, deleted }) => {
       </Button>
       <Date from={exp.from} to={exp.to} />
       <h6>
-        {exp.title} {exp.current && "( Working )"} <small>{exp.location}</small>
+        {exp.title} {exp.current && "( Working )"}
       </h6>
-      <span>{exp.company}</span>
+      <span>
+        {exp.company} ( {exp.location} )
+      </span>
       <p>{exp.description}</p>
     </div>
   ));

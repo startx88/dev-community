@@ -1,9 +1,9 @@
 import React from "react";
-import Image from "../../UI/Image";
-import Icons from "../../UI/Icons";
-import Date from "../../UI/Date";
-import Button from "../../UI/Button";
-import LikeButton from "../LikeButton/LikeButton";
+import Image from "../../../UI/Image";
+import Icons from "../../../UI/Icons";
+import Date from "../../../UI/Date";
+import Button from "../../../UI/Button";
+import LikeButton from "../../../Widgets/LikeButton/LikeButton";
 import { Link, withRouter } from "react-router-dom";
 
 // Post Component

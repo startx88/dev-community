@@ -6,7 +6,8 @@ import {
   likePost,
   dislikePost,
   deletePost
-} from "../../Stores/Actions";
+} from "../../../Stores/Actions";
+
 const mapDispatchToProps = dispatch => ({
   deletePost: postId => dispatch(deletePost(postId)),
   addPost: (data, id, status) => dispatch(addPost(data, id, status)),

@@ -1,8 +1,8 @@
 import React from "react";
 import Post from "./Post";
-import Spinner from "../../UI/Spinner/Spinner";
+import Spinner from "../../../UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
-import useAccess from "../../_hooks/isAuth";
+import useAccess from "../../../_hooks/isAuth";
 // POST LIST COMPONENT
 const PostList = props => {
   const { postdata, deletePost, likePost, dislikePost } = props;

@@ -11,10 +11,9 @@ const Education = ({ education, deleted }) => {
       </Button>
       <Date from={edu.from} to={edu.to} />
       <h6>
-        {edu.school}
-        <small>{edu.location}</small>
+        {edu.degree} ({edu.fieldofstudy})<small>School: {edu.school}</small>
       </h6>
-      <span>{edu.fieldofstudy}</span>
+      <span></span>
       <p>{edu.description}</p>
     </div>
   ));

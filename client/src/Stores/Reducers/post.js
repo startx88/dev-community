@@ -19,14 +19,14 @@ const failed = (state, payloads) =>
 const add = (state, payloads) =>
   updateObject(state, {
     loading: false,
-    userpost: [...state.userpost, payloads]
+    posts: [...state.posts, payloads]
   });
 
 // UPDATE POST
 const updated = (state, payloads) =>
   updateObject(state, {
     loading: false,
-    userpost: state.userpost.map(item =>
+    posts: state.posts.map(item =>
       item._id === payloads.id ? { ...payloads.post } : item
     )
   });

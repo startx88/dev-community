@@ -4,7 +4,7 @@ import "./Spinner.scss";
 /** Spinner */
 const Spinner = ({
   svgWidthHeight = 40,
-  viewBox = "0 0 40 40",
+  viewBox = `0 0 40 40`,
   cx = 20,
   cy = 20,
   radius = 15,

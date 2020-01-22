@@ -2,8 +2,7 @@ import React from "react";
 import Avatar from "../../../Widgets/Avatar/Avatar";
 import { Link, withRouter } from "react-router-dom";
 
-const Profile = ({ info, match, columns }) => {
-  console.log("info", info);
+const Profile = ({ info, match }) => {
   return (
     <div className="profile">
       <Avatar

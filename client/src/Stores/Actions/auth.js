@@ -1,5 +1,6 @@
 import { auth } from "../Constants";
-import axios, { setAuthToken } from "../../axios_instance";
+import axios from "../../axios_instance";
+import setAuthToken from "../../_helper/setAuthToken";
 import { showAlert } from "./alert";
 
 const loading = () => ({ type: auth.AUTH_START });
@@ -18,7 +19,7 @@ const signup_success = token => ({
 
 const fetch_user = (user, token) => ({
   type: auth.AUTH_FETCH_USER,
-  payloads: { user, token }
+  payloads: { user: user, token: token }
 });
 
 export const logout = () => {
@@ -29,16 +30,14 @@ export const logout = () => {
   };
 };
 
-
 // Check time out
-const checkTimeout = (timeout) => {
-
+const checkTimeout = timeout => {
   return dispatch => {
     setTimeout(() => {
-      logout()
-    }, timeout * 1000)
-  }
-}
+      logout();
+    }, timeout * 1000);
+  };
+};
 
 ///////////////////////////////
 /////// USER REGISTRATION
@@ -67,12 +66,14 @@ export const userLogin = inputdata => async dispatch => {
   try {
     const response = await axios.post("/user", inputdata);
     const responseData = await response.data;
-    const timeout = new Date(new Date().getTime() + responseData.expiresIn * 1000);
+    const timeout = new Date(
+      new Date().getTime() + responseData.expiresIn * 1000
+    );
 
     localStorage.setItem("token", responseData.token);
-    localStorage.setItem('expireDate', timeout)
-    dispatch(login_success(responseData.token));
+    localStorage.setItem("expireDate", timeout);
     dispatch(checkUserIsAuthenticate());
+    dispatch(login_success(responseData.token));
     dispatch(checkTimeout(responseData.expiresIn));
   } catch (err) {
     const error = err.response.data.errors;
@@ -87,21 +88,23 @@ export const userLogin = inputdata => async dispatch => {
 export const checkUserIsAuthenticate = () => async dispatch => {
   const token = localStorage.getItem("token");
   if (!token) {
-    dispatch(logout())
+    dispatch(logout());
   } else {
     setAuthToken(token);
     const timeout = new Date(localStorage.expireDate);
     if (timeout <= new Date()) {
-      dispatch(logout())
+      dispatch(logout());
     } else {
       try {
-        const user = await axios.get("/user", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const user = await axios.get("/user");
         const userData = await user.data;
         dispatch(fetch_user(userData.user, token));
-        dispatch(checkTimeout(new Date(timeout.getTime() - new Date().getTime()) / 1000));
-      } catch (err) { }
+        dispatch(
+          checkTimeout(
+            new Date(timeout.getTime() - new Date().getTime()) / 1000
+          )
+        );
+      } catch (err) {}
     }
   }
 };

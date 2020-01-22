@@ -1,11 +1,14 @@
 import React, { useEffect, useCallback } from "react";
 import Title from "../../Widgets/Title/Title";
 import Spinner from "../../UI/Spinner/Spinner";
-import Section from "../../UI/Layout/Section";
 import Profile from "./Controls/Profile";
 
+/**
+ * Developer Component
+ * @param {*} props
+ */
 const Container = props => {
-  const { alert, getAllProfiles, allProfile } = props;
+  const { getAllProfiles, allProfile } = props;
 
   const loadProfiles = useCallback(() => {
     getAllProfiles();

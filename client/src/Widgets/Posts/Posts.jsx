@@ -61,7 +61,9 @@ const Posts = ({ info, status, deleted, ...rest }) => {
       <div className="posts-comments">
         <CommentList postId={info._id} comments={info.comments} />
       </div>
-      <PostComment postId={info._id} />
+      {user.user && (
+        <PostComment history={rest.history} user={user} postId={info._id} />
+      )}
     </div>
   );
 };

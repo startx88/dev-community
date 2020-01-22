@@ -1,8 +1,13 @@
 import React from "react";
-
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Container = props => {
+  const { auth } = props;
+
+  if (auth.isAuth) {
+    return <Redirect to="/users" />;
+  }
+
   return (
     <div className="landing-content">
       <div className="landing-body">
@@ -11,7 +16,7 @@ const Container = props => {
           Spaces is one of the most advanced Co-working Listing Web Templates we
           ever created. It is built on the popular Bootstrap 4 CSS Framework and
           includes beautiful and practical pages to best showcase co-working
-          spaces for awesome workers.{" "}
+          spaces for awesome workers.
         </p>
         <div className="landing-btn-action">
           <Link to="/login" className="btn btn-info mr-2 btn-auth">

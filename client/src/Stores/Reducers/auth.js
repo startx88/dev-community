@@ -17,6 +17,7 @@ const failed = (state, payloads) =>
 const success = (state, payloads) =>
   updateObject(state, {
     loading: false,
+    isAuth: true,
     token: payloads
   });
 

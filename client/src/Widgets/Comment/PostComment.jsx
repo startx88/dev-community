@@ -3,9 +3,8 @@ import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import Image from "../../UI/Image";
 import Avatar from "../Avatar/Avatar";
-import { useFormik } from "formik";
 import * as yup from "yup";
-import useAccess from "../../_hooks/isAuth";
+import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { addComment } from "../../Stores/Actions";
 
@@ -15,11 +14,8 @@ const commentSchema = yup.object().shape({
 });
 
 // Post Comment
-const PostComment = ({ postId, ...rest }) => {
-  const { user } = useAccess();
-
+const PostComment = ({ postId, user, history, ...rest }) => {
   const dispatch = useDispatch();
-
   const formik = useFormik({
     initialValues: {
       name: user.user.name,
@@ -32,7 +28,7 @@ const PostComment = ({ postId, ...rest }) => {
         dispatch(addComment(postId, values));
         resetForm(initialValues);
       } else {
-        rest.history.push("/login");
+        history.push("/login");
       }
     }
   });

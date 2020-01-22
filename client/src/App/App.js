@@ -5,16 +5,25 @@ import Spinner from "../UI/Spinner/Spinner";
 import { checkUserIsAuthenticate } from "../Stores/Actions";
 import { useDispatch } from "react-redux";
 import ErrorBoundary from "../Widgets/ErrorBoundary/ErrorBoundary";
+import setAuthToken from "../_helper/setAuthToken";
+
 // App Component
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkUserIsAuthenticate());
-  }, [dispatch]);
+  }, []);
 
   return (
-    <Suspense fallback={<Spinner fixed />}>
+    <Suspense
+      fallback={<Spinner svgWidthHeight="100" text="Loading..." fixed />}
+    >
       <ErrorBoundary>
         <Web />
       </ErrorBoundary>

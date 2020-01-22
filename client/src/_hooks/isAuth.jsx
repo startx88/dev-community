@@ -9,6 +9,7 @@ const useAccess = props => {
       user: userSelector
     })
   );
+
   return auth;
 };
 export default useAccess;

@@ -13,15 +13,11 @@ import PostInfo from "../../../Widgets/Posts/Posts";
 const ViewProfile = props => {
   const userId = props.match.params.id;
   const dispatch = useDispatch();
-  console.log(props);
+
   const {
     profile: { profiles },
     posts: { posts },
-    deletePost,
-    likePost,
-    dislikePost,
-    addComment,
-    alert: { show, type, message }
+    alert: { show, type }
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -30,6 +26,7 @@ const ViewProfile = props => {
   }, []);
 
   const profile = profiles.find(profile => profile.user._id === userId);
+
   if (!profile) {
     return <Spinner />;
   }

@@ -15,6 +15,7 @@ import {
   faCalendar,
   faCalendarAlt,
   faBell,
+  faUser,
   faUsers,
   faListAlt,
   faLock,
@@ -35,6 +36,7 @@ import {
   faHeart
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+  faUser,
   faListAlt,
   faHeart,
   faImages,

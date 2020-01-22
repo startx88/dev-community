@@ -9,7 +9,11 @@ exports.auth = (req, res, next) => {
     throw next(error);
   }
   const token = header.split(" ")[1];
-
+  if (!token) {
+    const error = new Error("Unauthorized access");
+    error.statusCode = 401;
+    throw next(error);
+  }
   try {
     const verify = jwt.verify(token, process.env.SECRET_KEY);
     if (!verify) {

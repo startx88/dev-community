@@ -21,7 +21,7 @@ const Post = ({
   const { match } = rest;
   return (
     <article className={classname}>
-      <div className=" panel-white posts">
+      <div className="post">
         {isAuth.isAuth && isAuth.user._id === postinfo.user._id && (
           <div className="post-btn">
             <Button

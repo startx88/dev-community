@@ -61,7 +61,7 @@ const PostList = props => {
               editedPost={editPostHandler}
               likeHandler={likePostHandler}
               dislikeHandler={dislikePostHandler}
-              classname="col-sm-6"
+              classname="col-sm-6 d-flex"
             />
           ))
         ) : (

@@ -6,6 +6,9 @@
 
 .post {
   position: relative;
+  padding: 15px;
+  background-color: $white;
+  margin-bottom: 30px;
   h6 {
     color: $danger-light;
     margin-bottom: 10px;
@@ -23,7 +26,7 @@
   &-btn {
     position: absolute;
     right: 20px;
-    top: 5px;
+    top: 20px;
     .btn {
       padding: 3px 5px;
     }

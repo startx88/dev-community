@@ -41,14 +41,22 @@ const likePost = (state, payloads) =>
   updateObject(state, {
     posts: state.posts.map(post =>
       post._id === payloads.postId ? { ...post, likes: payloads.likes } : post
-    )
+    ),
+    post: {
+      ...state.post,
+      likes: payloads.likes
+    }
   });
 
 const dislikePost = (state, payloads) =>
   updateObject(state, {
     posts: state.posts.map(post =>
       post._id === payloads.postId ? { ...post, likes: payloads.likes } : post
-    )
+    ),
+    post: {
+      ...state.post,
+      likes: payloads.likes
+    }
   });
 
 // ADD COMMENT
@@ -56,7 +64,11 @@ const addComment = (state, payloads) => {
   return updateObject(state, {
     posts: state.posts.map(post =>
       post._id === payloads.id ? { ...post, comments: payloads.comments } : post
-    )
+    ),
+    post: {
+      ...state.post,
+      comments: payloads.comments
+    }
   });
 };
 

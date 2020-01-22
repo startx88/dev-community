@@ -20,43 +20,45 @@ const Post = ({
 }) => {
   const { match } = rest;
   return (
-    <article className={["post", classname].join(" ")}>
-      {isAuth.isAuth && isAuth.user._id === postinfo.user._id && (
-        <div className="post-btn">
-          <Button
-            type="button"
-            clicked={() => editedPost(postinfo._id)}
-            btnType="edit-icon"
-          >
-            <Icons icon="pencil-alt" />
-          </Button>
-          <Button
-            type="button"
-            clicked={() => deletePost(postinfo._id)}
-            btnType="dlt-icon"
-          >
-            <Icons icon="trash-alt" />
-          </Button>
+    <article className={classname}>
+      <div className=" panel-white posts">
+        {isAuth.isAuth && isAuth.user._id === postinfo.user._id && (
+          <div className="post-btn">
+            <Button
+              type="button"
+              clicked={() => editedPost(postinfo._id)}
+              btnType="edit-icon"
+            >
+              <Icons icon="pencil-alt" />
+            </Button>
+            <Button
+              type="button"
+              clicked={() => deletePost(postinfo._id)}
+              btnType="dlt-icon"
+            >
+              <Icons icon="trash-alt" />
+            </Button>
+          </div>
+        )}
+
+        <Link to={`${match.path}/` + postinfo._id}>
+          <Image src={postinfo.avatar} alt={postinfo.title} />
+        </Link>
+
+        <div className="d-flex justify-content-between">
+          <Date from={postinfo.insertAt} />
+          <LikeButton
+            likes={likes}
+            likeHandler={() => likeHandler(postinfo._id)}
+            dislikeHandler={() => dislikeHandler(postinfo._id)}
+          />
         </div>
-      )}
-
-      <Link to={`${match.path}/` + postinfo._id}>
-        <Image src={postinfo.avatar} alt={postinfo.title} />
-      </Link>
-
-      <div className="d-flex justify-content-between">
-        <Date from={postinfo.insertAt} />
-        <LikeButton
-          likes={likes}
-          likeHandler={() => likeHandler(postinfo._id)}
-          dislikeHandler={() => dislikeHandler(postinfo._id)}
-        />
+        <h6>
+          {postinfo.title}
+          <small>{postinfo.users && postinfo.users.name}</small>
+        </h6>
+        <p>{postinfo.description.substr(0, 100)}...</p>
       </div>
-      <h6>
-        {postinfo.title}
-        <small>{postinfo.users && postinfo.users.name}</small>
-      </h6>
-      <p>{postinfo.description.substr(0, 100)}...</p>
     </article>
   );
 };

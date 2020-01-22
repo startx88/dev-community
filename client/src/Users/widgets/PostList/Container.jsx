@@ -49,7 +49,7 @@ const PostList = props => {
 
   return (
     <>
-      <div className={["row", user.isAuth && "in-user"].join(" ")}>
+      <div className="row">
         {postdata ? (
           postdata.map(post => (
             <Post

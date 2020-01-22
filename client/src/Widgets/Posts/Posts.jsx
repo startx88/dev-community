@@ -59,7 +59,9 @@ const Posts = ({ info, status, deleted, ...rest }) => {
         dislikeHandler={() => dislikePostHandler(info._id)}
       />
       <div className="posts-comments">
-        <CommentList postId={info._id} comments={info.comments} />
+        {user.user && (
+          <CommentList postId={info._id} user={user} comments={info.comments} />
+        )}
       </div>
       {user.user && (
         <PostComment history={rest.history} user={user} postId={info._id} />

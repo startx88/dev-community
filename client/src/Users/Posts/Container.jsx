@@ -7,7 +7,7 @@ import { Link, Switch } from "react-router-dom";
 
 const PostList = lazy(() => import("../widgets/PostList"));
 const EditPost = lazy(() => import("./EditPost/EditPost"));
-const SinglePost = lazy(() => import("../../Pages/SinglePost"));
+const SinglePost = lazy(() => import("./SinglePost"));
 
 // Container
 const Container = props => {

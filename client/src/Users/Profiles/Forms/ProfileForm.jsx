@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { ProfileSchema } from "./Schema";
-import AlertMessage from "../../UI/Alert";
-import Input from "../../UI/Input";
-import Button from "../../UI/Button";
-import Title from "../../Widgets/Title/Title";
+import AlertMessage from "../../../UI/Alert";
+import Input from "../../../UI/Input";
+import Button from "../../../UI/Button";
+import Title from "../../../Widgets/Title/Title";
 
-import DynamicSelect from "../../UI/DynamicSelect";
-import Options from "../widgets/Options";
-import { statusData } from "./data";
-import useQuery from "../../_hooks/useQuery";
+import DynamicSelect from "../../../UI/DynamicSelect";
+import Options from "../../widgets/Options";
+import { statusData } from "../data";
+import useQuery from "../../../_hooks/useQuery";
 
 const returToArrayValue = event => {
   return event.map(size => size.value);
@@ -22,7 +22,7 @@ const ProfileForm = props => {
   const { parentProps } = props;
 
   const {
-    profile,
+    profile: { profile },
     alert: { show, type, message }
   } = parentProps;
 

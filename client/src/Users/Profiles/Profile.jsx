@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AlertMessage from "../../UI/Alert";
 import Icons from "../../UI/Icons";
-import { useSelector } from "react-redux";
 import Spinner from "../../UI/Spinner/Spinner";
-import Date from "../../UI/Date";
 import Button from "../../UI/Button";
-import EducationShow from "./Controls/EducationShow";
-import ExperienceShow from "./Controls/ExperienceShow";
-import Skills from "./Controls/Skills";
-import { Link } from "react-router-dom";
+import Education from "../../Widgets/User/Education";
+import Experience from "../../Widgets/User/Experience";
+import Skills from "../../Widgets/User/Skills";
+import userAccess from "../../_hooks/isAuth";
+import UserBio from "./Controls/userbio";
 
 // Profiles
 const Profile = props => {
   const { parentProps } = props;
   const {
-    alert: { show, type },
+    alert: { show, type, message },
     profile,
     deleteEducation,
     deleteExperience
   } = parentProps;
 
-  console.log(profile);
+  const { user } = userAccess();
+
   // DELETE EDUCATION HANDLER
   const educationDeleteHandler = id => {
     parentProps.deleteEducation(id);
@@ -47,6 +47,8 @@ const Profile = props => {
     return <p>There is no profile found</p>;
   }
 
+  const profileUser = profile.profile.user;
+
   return (
     <>
       <AlertMessage show={show} type={type} />
@@ -57,10 +59,11 @@ const Profile = props => {
             <Button clicked={editProfile} classname="btn btn-edit-icon">
               <Icons icon="edit" />
             </Button>
-            <h6>
-              <Icons icon="user" /> About Me
-            </h6>
-            <p>{profile.profile.bio}</p>
+            <UserBio
+              name={profileUser.name}
+              bio={profile.profile.bio}
+              status={profile.profile.status}
+            />
           </div>
           <div className="col-sm-12 mb-3">
             <h6>
@@ -68,11 +71,12 @@ const Profile = props => {
             </h6>
             <Skills skills={profile.profile.skills} />
           </div>
+
           <div className="col-sm-6">
             <h6>
               <Icons icon="book-reader" /> Education
             </h6>
-            <EducationShow
+            <Education
               education={profile.profile.education}
               deleted={educationDeleteHandler}
             />
@@ -81,7 +85,7 @@ const Profile = props => {
             <h6>
               <Icons icon="briefcase" /> Experience
             </h6>
-            <ExperienceShow
+            <Experience
               experience={profile.profile.experience}
               deleted={experienceDeleteHandler}
             />

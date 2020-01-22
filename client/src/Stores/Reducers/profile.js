@@ -87,6 +87,7 @@ const reducer = (state = initState, action) => {
     case profile.PROFILE_FAILED:
       return failed(state, payloads);
     case profile.PROFILE_FETCH:
+    case profile.PROFILE_ADD:
       return fetch(state, payloads);
     case profile.PROFILE_ALL:
       return allProfiles(state, payloads);

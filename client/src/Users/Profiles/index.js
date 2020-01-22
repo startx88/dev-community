@@ -1,10 +1,6 @@
 import Container from "./Container";
 import { connect } from "react-redux";
-import {
-  userSelector,
-  selectAlert,
-  selectUserProfile
-} from "../../Stores/Selectors";
+import { selectAlert, selectUserProfile } from "../../Stores/Selectors";
 import { createStructuredSelector } from "reselect";
 
 import {
@@ -16,7 +12,6 @@ import {
 } from "../../Stores/Actions";
 
 const mapStateToProps = createStructuredSelector({
-  userinfo: userSelector,
   profile: selectUserProfile,
   alert: selectAlert
 });

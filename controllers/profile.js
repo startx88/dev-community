@@ -33,7 +33,12 @@ exports.getProfile = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const profile = await Profile.findOne({ user: userId });
+    const profile = await Profile.findOne({ user: userId }).populate("user", [
+      "name",
+      "avatar",
+      "active",
+      "email"
+    ]);
 
     if (!profile) {
       const error = new Error("There is no profile for this user");
@@ -96,7 +101,9 @@ exports.addProfile = async (req, res, next) => {
   userprofile.social.instagram = instagram;
 
   try {
-    const profileExist = await Profile.findOne({ user: userId });
+    const profileExist = await Profile.findOne({
+      user: userId
+    }).populate("user", ["name", "avatar", "active", "email"]);
 
     // update profile
     if (profileExist) {
@@ -109,7 +116,8 @@ exports.addProfile = async (req, res, next) => {
       return res.status(200).json({
         success: true,
         message: "Profile updated successfully",
-        profileId: profile._id
+        profileId: profile._id,
+        profile: profileExist
       });
     }
 
@@ -120,7 +128,8 @@ exports.addProfile = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Profile added successfully",
-      profileId: result._id
+      profileId: result._id,
+      profile
     });
   } catch (error) {
     next(error);

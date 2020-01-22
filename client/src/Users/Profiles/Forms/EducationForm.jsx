@@ -2,11 +2,11 @@ import React, { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { EducationSchema } from "./Schema";
 import { Redirect } from "react-router-dom";
-import AlertMessage from "../../UI/Alert";
-import Input from "../../UI/Input";
-import Button from "../../UI/Button";
-import Title from "../../Widgets/Title/Title";
-import Checkbox from "../../UI/Checkbox";
+import AlertMessage from "../../../UI/Alert";
+import Input from "../../../UI/Input";
+import Button from "../../../UI/Button";
+import Title from "../../../Widgets/Title/Title";
+import Checkbox from "../../../UI/Checkbox";
 
 const EducationForm = props => {
   const refFocus = useRef(null);

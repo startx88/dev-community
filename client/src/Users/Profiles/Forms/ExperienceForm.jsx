@@ -2,11 +2,12 @@ import React from "react";
 import { useFormik } from "formik";
 import { ExperienceSchema } from "./Schema";
 import { Redirect } from "react-router-dom";
-import AlertMessage from "../../UI/Alert";
-import Input from "../../UI/Input";
-import Button from "../../UI/Button";
-import Title from "../../Widgets/Title/Title";
-import Checkbox from "../../UI/Checkbox";
+import AlertMessage from "../../../UI/Alert";
+import Input from "../../../UI/Input";
+import Button from "../../../UI/Button";
+import Title from "../../../Widgets/Title/Title";
+import Checkbox from "../../../UI/Checkbox";
+
 const ExperienceForm = props => {
   const {
     alert: { show, type, message },

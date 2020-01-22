@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllProfiles, getPostByUserId } from "../../../Stores/Actions";
 import Spinner from "../../../UI/Spinner/Spinner";
 import AlertMessage from "../../../UI/Alert";
-import Skills from "../../../Users/Profiles/Controls/Skills";
+import Skills from "../../../Widgets/User/Skills";
 import Experience from "../../../Widgets/User/Experience";
 import Education from "../../../Widgets/User/Education";
 import PostInfo from "../../../Widgets/Posts/Posts";

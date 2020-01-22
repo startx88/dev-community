@@ -1,12 +1,13 @@
 import React from "react";
 import Title from "../../Widgets/Title/Title";
-import { useSelector } from "react-redux";
+
 import PrivateRoute from "../../Web/PrivateRoute";
 import Profile from "./Profile";
-import EducationForm from "./EducationForm";
-import ExperienceForm from "./ExperienceForm";
-import ProfileForm from "./ProfileForm";
+import EducationForm from "./Forms/EducationForm";
+import ExperienceForm from "./Forms/ExperienceForm";
+import ProfileForm from "./Forms/ProfileForm";
 import { Link } from "react-router-dom";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const Container = props => {
   const { match } = props;

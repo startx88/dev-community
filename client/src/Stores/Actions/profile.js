@@ -11,11 +11,6 @@ const fetchProfile = data => ({
   payloads: data
 });
 
-const ADD_PROFILE = data => ({
-  type: profile.PROFILE_ADD,
-  payloads: data
-});
-
 const UPDATE_PROFILE = (id, data) => ({
   type: profile.PROFILE_UPDATE,
   payloads: { id, data }
@@ -71,6 +66,7 @@ export const getAllProfiles = () => async dispatch => {
 ///////////////////////////////
 /////// Get current profile
 ///////////////////////////////////
+
 export const getProfile = () => async dispatch => {
   dispatch(loading());
   try {
@@ -79,6 +75,7 @@ export const getProfile = () => async dispatch => {
     dispatch(fetchProfile(userData.profile));
   } catch (err) {
     const error = err.response.data.errors;
+    dispatch(failed(error.message));
     dispatch(showAlert(error.message, "warning"));
   }
 };
@@ -86,6 +83,11 @@ export const getProfile = () => async dispatch => {
 ///////////////////////////////
 /////// add / update profile
 ///////////////////////////////////
+const ADD_PROFILE = data => ({
+  type: profile.PROFILE_ADD,
+  payloads: data
+});
+
 export const addProfile = inputData => async dispatch => {
   let postData = null;
   if (typeof inputData.status === "object") {
@@ -102,22 +104,7 @@ export const addProfile = inputData => async dispatch => {
   try {
     const response = await axios.post("/profile", postData);
     const responseData = await response.data;
-    dispatch(
-      ADD_PROFILE({
-        company: inputData.company,
-        website: inputData.website,
-        location: inputData.location,
-        status: inputData.status,
-        skills: inputData.skills,
-        bio: inputData.bio,
-        gitusername: inputData.gitusername,
-        youtube: inputData.youtube,
-        twitter: inputData.twitter,
-        facebook: inputData.facebook,
-        linkedin: inputData.linkedin,
-        instagram: inputData.instagram
-      })
-    );
+    dispatch(ADD_PROFILE(responseData.profile));
     dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
     console.log(err);

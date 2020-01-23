@@ -21,7 +21,6 @@ const Container = props => {
   return (
     <div className="row">
       <div className="col-sm-8">
-        <UserStatus />
         {!allposts ? (
           <img alt="" src={process.env.PUBLIC_URL + "/loader.gif"} />
         ) : (

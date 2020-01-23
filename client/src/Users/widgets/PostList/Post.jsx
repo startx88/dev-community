@@ -4,7 +4,8 @@ import Icons from "../../../UI/Icons";
 import Date from "../../../UI/Date";
 import Button from "../../../UI/Button";
 import LikeButton from "../../../Widgets/LikeButton/LikeButton";
-import { Link, withRouter } from "react-router-dom";
+import Links from "../../../Widgets/Links/Links";
+import { withRouter } from "react-router-dom";
 
 // Post Component
 const Post = ({
@@ -41,9 +42,9 @@ const Post = ({
           </div>
         )}
 
-        <Link to={`${match.path}/` + postinfo._id}>
+        <Links classname="post-image" to={`${match.path}/` + postinfo._id}>
           <Image src={postinfo.avatar} alt={postinfo.title} />
-        </Link>
+        </Links>
 
         <div className="d-flex justify-content-between">
           <Date from={postinfo.insertAt} />

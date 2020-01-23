@@ -83,14 +83,26 @@ const PostForm = props => {
             touched={touched}
             blur={handleBlur}
           />
-          <InputFile
+          <Input
+            parentclass="col-sm-12"
+            label="Upload image"
+            inputtype="input"
+            type="text"
+            name="avatar"
+            value={values.avatar}
+            setFieldValue={setFieldValue}
+            errors={errors}
+            touched={touched}
+            blur={handleBlur}
+          />
+          {/* <InputFile
             parentclass="col-sm-12"
             label="Upload image"
             type="file"
             name="avatar"
             value={values.avatar}
             setFieldValue={setFieldValue}
-          />
+          /> */}
           <Input
             parentclass="col-sm-12"
             inputtype="textarea"

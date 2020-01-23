@@ -9,6 +9,12 @@
   padding: 15px;
   background-color: $white;
   margin-bottom: 30px;
+  &-image {
+    max-height: 200px;
+    overflow: hidden;
+    display: block;
+    margin-bottom: 10px;
+  }
   h6 {
     color: $danger-light;
     margin-bottom: 10px;

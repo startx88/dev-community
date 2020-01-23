@@ -97,20 +97,20 @@ const update_post = (id, postdata) => ({
 export const addPost = (inputdata, id, status) => async dispatch => {
   dispatch(loading());
   // Form Data
-  const formdata = new FormData();
-  formdata.append("title", inputdata.title);
-  formdata.append("description", inputdata.description);
-  formdata.append("avatar", inputdata.avatar);
+  // const formdata = new FormData();
+  // formdata.append("title", inputdata.title);
+  // formdata.append("description", inputdata.description);
+  // formdata.append("avatar", inputdata.avatar);
 
   try {
     if (status === "UPDATE") {
-      const response = await axios.put(`/posts/${id}`, formdata);
+      const response = await axios.put(`/posts/${id}`, inputdata);
       const responseData = await response.data;
       console.log(responseData);
       dispatch(update_post(responseData.postId, responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     } else {
-      const response = await axios.post("/posts", formdata);
+      const response = await axios.post("/posts", inputdata);
       const responseData = await response.data;
       dispatch(add_post(responseData.post));
       dispatch(showAlert(responseData.message, "success"));

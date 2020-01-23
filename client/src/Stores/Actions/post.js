@@ -69,6 +69,7 @@ export const getAllPosts = () => async dispatch => {
   try {
     const response = await axios.get("/posts");
     const { posts } = await response.data;
+
     const transformpostdata = await postWithProfile(posts);
     dispatch(all_posts(transformpostdata));
   } catch (err) {
@@ -109,6 +110,7 @@ export const getPostByUserId = userId => async dispatch => {
     });
   } catch (err) {
     const { message } = err.response.data.errors;
+    dispatch(failed(message));
     dispatch(showAlert(message, "warning"));
   }
 };

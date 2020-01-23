@@ -9,7 +9,7 @@ const Settings = lazy(() => import("./Settings"));
 const Posts = lazy(() => import("./Posts"));
 const EditPost = lazy(() => import("./Posts/EditPost/EditPost"));
 const SinglePost = lazy(() => import("./Posts/SinglePost"));
-
+const PageNotFound = lazy(() => import("../Pages/PageNotFound"));
 const Container = props => {
   const { getProfile, match } = props;
 
@@ -29,6 +29,7 @@ const Container = props => {
       />
       <PrivateRoute path={match.url + "/posts/:id"} component={SinglePost} />
       <PrivateRoute path={match.url + "/posts"} component={Posts} />
+      <PrivateRoute component={PageNotFound} />
     </Switch>
   );
 };

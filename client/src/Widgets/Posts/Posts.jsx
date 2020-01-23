@@ -41,14 +41,16 @@ const Posts = ({ info, ...rest }) => {
     }
   };
 
-  return (
+  console.log("info", info, user);
+
+  return info ? (
     <div className="panel panel-white posts">
-      {info.user._id === user.user._id && (
+      {info.user === user.user._id && (
         <PostAction deleted={() => deletePostHandler(info._id)} />
       )}
       <PostAvatar
         href={{
-          pathname: `/developers/${info.user._id}`,
+          pathname: `/developers/${info.user}`,
           hash: "#info"
         }}
         name={info.user.name}
@@ -74,6 +76,8 @@ const Posts = ({ info, ...rest }) => {
         <PostComment history={rest.history} user={user} postId={info._id} />
       )}
     </div>
+  ) : (
+    <p>There is no posts</p>
   );
 };
 

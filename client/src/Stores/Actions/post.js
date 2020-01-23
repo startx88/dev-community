@@ -43,25 +43,29 @@ const user_posts = posts => ({
 // FETCH USER POSTS
 export const getAllPosts = () => async dispatch => {
   dispatch(loading());
+
   try {
     const response = await axios.get("/posts");
+    const { posts } = await response.data;
+
     const responseProfile = await axios.get("/profile");
-    const { data } = await response.data;
     const { profiles } = await responseProfile.data;
-    const newData = data.map(item => {
+
+    const transformpostdata = posts.map(item => {
       for (let index in profiles) {
         if (item.user._id === profiles[index].user._id) {
           return {
             ...item,
-            status: profiles[index].status
+            status: profiles[index].status,
+            user: profiles[index].user
           };
         }
       }
       return item;
     });
-    dispatch(all_posts(newData));
+    console.log(transformpostdata);
+    dispatch(all_posts(transformpostdata));
   } catch (err) {
-    console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
     dispatch(failed(message));
@@ -73,13 +77,33 @@ export const getUserPosts = () => async dispatch => {
   dispatch(loading());
   try {
     const response = await axios.get("/posts/user");
-    const { data } = await response.data;
-    dispatch(user_posts(data));
+    const { posts } = await response.data;
+
+    dispatch(user_posts(posts));
   } catch (err) {
     console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
     dispatch(failed(message));
+  }
+};
+
+/*******
+ * Get single post
+ **********************/
+const get_single_post = postdata => ({
+  type: post.FETCH_SINGLE_POST,
+  payloads: postdata
+});
+
+export const getPost = postId => async dispatch => {
+  try {
+    const responose = await axios.get("/posts/" + postId);
+    const { post } = await responose.data;
+    dispatch(get_single_post(post));
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
   }
 };
 
@@ -94,29 +118,22 @@ const update_post = (id, postdata) => ({
     post: postdata
   }
 });
+
 export const addPost = (inputdata, id, status) => async dispatch => {
   dispatch(loading());
-  // Form Data
-  // const formdata = new FormData();
-  // formdata.append("title", inputdata.title);
-  // formdata.append("description", inputdata.description);
-  // formdata.append("avatar", inputdata.avatar);
-
   try {
     if (status === "UPDATE") {
       const response = await axios.put(`/posts/${id}`, inputdata);
-      const responseData = await response.data;
-      console.log(responseData);
-      dispatch(update_post(responseData.postId, responseData.post));
-      dispatch(showAlert(responseData.message, "success"));
+      const { post, postId, message } = await response.data;
+      dispatch(update_post(postId, post));
+      dispatch(showAlert(message, "success"));
     } else {
       const response = await axios.post("/posts", inputdata);
-      const responseData = await response.data;
-      dispatch(add_post(responseData.post));
-      dispatch(showAlert(responseData.message, "success"));
+      const { post, message } = await response.data;
+      dispatch(add_post(post));
+      dispatch(showAlert(message, "success"));
     }
   } catch (err) {
-    console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
     dispatch(failed(message));
@@ -171,27 +188,6 @@ export const dislikePost = postId => async dispatch => {
   }
 };
 
-//////////////////////
-////// Get Single Post
-//////////////////////////////////////////////
-const get_single_post = postdata => ({
-  type: post.FETCH_SINGLE_POST,
-  payloads: postdata
-});
-
-export const getPost = postId => async dispatch => {
-  console.log("hello", postId);
-  dispatch(loading());
-  try {
-    const responose = await axios.get("/posts/" + postId);
-    const { data } = await responose.data;
-    dispatch(get_single_post(data));
-  } catch (err) {
-    const { message } = err.response.data.errors;
-    dispatch(showAlert(message, "warning"));
-  }
-};
-
 ////////////////////
 ///// Comments add / delete
 ////////////////////////////////////////////////
@@ -238,10 +234,11 @@ export const getPostByUserId = userId => async dispatch => {
   dispatch(loading());
   try {
     const responose = await axios.get("/posts/user/" + userId);
-    const { data } = await responose.data;
+    const { posts } = await responose.data;
+    console.log("op", posts);
     dispatch({
       type: post.FETCH_POST_BY_USER_ID,
-      payloads: data
+      payloads: posts
     });
   } catch (err) {
     const { message } = err.response.data.errors;

@@ -10,7 +10,7 @@ import Checkbox from "../../../UI/Checkbox";
 
 const ExperienceForm = props => {
   const {
-    alert: { show, type, message },
+    alert: { show, type },
     addExperience
   } = props.parentProps;
   const formik = useFormik({

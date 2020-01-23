@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../UI/Button";
 import Icons from "../../UI/Icons";
-import useAccess from "../../_hooks/isAuth";
+
 import { useDispatch } from "react-redux";
 import { deleteComment } from "../../Stores/Actions";
 

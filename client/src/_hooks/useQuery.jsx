@@ -1,5 +1,4 @@
-import React from "react";
-import { useLocation, Redirect } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const useQuery = props => {
   return new URLSearchParams(useLocation().search);
 };

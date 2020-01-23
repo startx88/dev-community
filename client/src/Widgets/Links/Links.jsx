@@ -27,6 +27,7 @@ const Links = ({ type, href, ismenu, children, classname, ...rest }) => {
           {children}
         </Link>
       );
+      break;
     default:
       element = (
         <Link className={classname} to={href} {...rest}>

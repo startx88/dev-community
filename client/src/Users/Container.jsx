@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, Suspense } from "react";
+import React, { lazy, useEffect } from "react";
 import PrivateRoute from "../Web/PrivateRoute";
 import { Switch } from "react-router-dom";
 const Dashboard = lazy(() => import("./Dashboard"));

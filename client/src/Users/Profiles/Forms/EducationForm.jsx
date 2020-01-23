@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
 import { EducationSchema } from "./Schema";
 import { Redirect } from "react-router-dom";

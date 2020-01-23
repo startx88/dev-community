@@ -7,7 +7,6 @@ import EducationForm from "./Forms/EducationForm";
 import ExperienceForm from "./Forms/ExperienceForm";
 import ProfileForm from "./Forms/ProfileForm";
 import { Link } from "react-router-dom";
-import Spinner from "../../UI/Spinner/Spinner";
 
 const Container = props => {
   const { match } = props;

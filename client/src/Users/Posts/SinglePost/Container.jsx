@@ -33,7 +33,7 @@ const Container = props => {
 
   useEffect(() => {
     loadPost(postId);
-  }, [loadPost]);
+  }, [loadPost, postId]);
 
   // LOGIN REDIRECT
   const backToLogin = () => {

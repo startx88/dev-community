@@ -12,8 +12,9 @@ exports.getAllPosts = async (req, res, next) => {
   try {
     const posts = await Post.find()
       .sort({ insertAt: -1 })
-      .populate("user")
+      .populate("user", ["name", "email", "avatar", "active"])
       .exec();
+
     if (!posts) {
       const error = new Error("No post found");
       error.statusCode = 404;

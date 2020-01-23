@@ -1,11 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
 import { PostSchema } from "../schema";
 import { Redirect, Link } from "react-router-dom";
 import InputFile from "../../../UI/InputFile";
 import Input from "../../../UI/Input";
 import Button from "../../../UI/Button";
-import Title from "../../../Widgets/Title/Title";
 import useQuery from "../../../_hooks/useQuery";
 
 // Add/Update post form

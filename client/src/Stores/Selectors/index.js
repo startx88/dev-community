@@ -36,3 +36,8 @@ export const userSelector = createSelector([userState], state => state);
 ///////////////////////////////////
 const profileState = state => state.profile;
 export const selectUserProfile = createSelector([profileState], state => state);
+
+export const userSelecotrWithProfile = createSelector(
+  [userState, profileState],
+  (user, profile) => ({ user: user, profile: profile })
+);

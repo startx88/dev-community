@@ -7,9 +7,10 @@ import PostComment from "../Comment/PostComment";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useAccess from "../../_hooks/isAuth";
+import PostAction from "./PostAction";
 import { likePost, dislikePost, deletePost } from "../../Stores/Actions";
 
-const Posts = ({ info, status, deleted, ...rest }) => {
+const Posts = ({ info, ...rest }) => {
   const dispatch = useDispatch();
   const { user } = useAccess();
 
@@ -42,10 +43,13 @@ const Posts = ({ info, status, deleted, ...rest }) => {
 
   return (
     <div className="panel panel-white posts">
+      {info.user._id === user.user._id && (
+        <PostAction deleted={() => deletePostHandler(info._id)} />
+      )}
       <PostAvatar
         href={rest.match.url}
         name={info.user.name}
-        status={status}
+        status={info.status}
         avatar={info.user.avatar}
         date={info.insertAt}
       />

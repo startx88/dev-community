@@ -5,7 +5,7 @@ import UserControl from "../Widgets/UserControl";
 
 /** Sidebar */
 const Sidebar = props => {
-  const { match, status } = props;
+  const { status } = props;
 
   return (
     <aside

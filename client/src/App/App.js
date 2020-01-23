@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserIsAuthenticate());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Suspense

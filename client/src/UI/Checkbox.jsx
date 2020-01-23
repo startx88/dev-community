@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 /**
  *
@@ -16,8 +16,7 @@ const InputCheckbox = ({
   left
 }) => {
   const changeHandler = event => {
-    const { name, value, checked } = event.target;
-    const item = event.target.name;
+    const { name, checked } = event.target;
     setFieldValue(name, checked);
     // const isChecked = e.target.checked;
     // setState(prevState => ({

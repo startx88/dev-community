@@ -1,5 +1,4 @@
-import React, { Suspense, useCallback, useEffect } from "react";
-
+import React, { useCallback, useEffect } from "react";
 import Posts from "../../Widgets/Posts/Posts";
 import UserStatus from "../widgets/UserStatus/UserStatus";
 
@@ -7,12 +6,14 @@ import UserStatus from "../widgets/UserStatus/UserStatus";
 //// Dashboard components
 /////////////////////////
 const Container = props => {
-  const { match, getAllPosts, user, allposts } = props;
+  const { getAllPosts, allposts, profile } = props;
 
+  // LAOD POST
   const loadUserPost = useCallback(() => {
     getAllPosts();
   }, [getAllPosts]);
 
+  // LOAD POST AFTER RENDER
   useEffect(() => {
     loadUserPost();
   }, [loadUserPost]);
@@ -22,7 +23,7 @@ const Container = props => {
       <div className="col-sm-8">
         <UserStatus />
         {!allposts ? (
-          <img src={process.env.PUBLIC_URL + "/loader.gif"} />
+          <img alt="" src={process.env.PUBLIC_URL + "/loader.gif"} />
         ) : (
           allposts.map(post => <Posts key={post._id} info={post} />)
         )}

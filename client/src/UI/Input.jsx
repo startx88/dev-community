@@ -33,7 +33,7 @@ const Input = ({
 
   useEffect(() => {
     if (refs) refs.current.focus();
-  }, []);
+  }, [refs]);
 
   switch (inputtype) {
     case "input":

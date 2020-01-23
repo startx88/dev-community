@@ -2,7 +2,6 @@ import React from "react";
 import Image from "../../UI/Image";
 import AvatarImage from "./avatar.png";
 import { Link } from "react-router-dom";
-import Links from "../Links/Links";
 import PropTypes from "prop-types";
 
 // Avatar Component

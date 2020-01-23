@@ -6,29 +6,26 @@ import Button from "../../UI/Button";
 import Education from "../../Widgets/User/Education";
 import Experience from "../../Widgets/User/Experience";
 import Skills from "../../Widgets/User/Skills";
-import userAccess from "../../_hooks/isAuth";
 import UserBio from "./Controls/userbio";
 
 // Profiles
 const Profile = props => {
   const { parentProps } = props;
   const {
-    alert: { show, type, message },
+    alert: { show, type },
     profile,
     deleteEducation,
     deleteExperience
   } = parentProps;
 
-  const { user } = userAccess();
-
   // DELETE EDUCATION HANDLER
   const educationDeleteHandler = id => {
-    parentProps.deleteEducation(id);
+    deleteEducation(id);
   };
 
   // DELETE EXPERIENCE HANDLER
   const experienceDeleteHandler = id => {
-    parentProps.deleteExperience(id);
+    deleteExperience(id);
   };
 
   // EDIT PROFILE HANDLER

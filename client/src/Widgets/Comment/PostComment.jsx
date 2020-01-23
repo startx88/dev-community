@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
-import Image from "../../UI/Image";
+
 import Avatar from "../Avatar/Avatar";
 import * as yup from "yup";
 import { useFormik } from "formik";

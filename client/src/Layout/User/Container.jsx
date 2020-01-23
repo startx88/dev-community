@@ -3,20 +3,23 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Sidebar from "../Sidebar";
 import Main from "../../UI/Main";
-import { useSelector } from "react-redux";
 
+/*********
+ * User layout container
+ ********************/
 const Container = props => {
   const {
-    auth,
+    user,
     profile: { profile }
-  } = useSelector(state => state);
-  return auth.isAuth ? (
+  } = props.state;
+
+  return user.isAuth ? (
     <>
       <Header admin />
       <Main classname="container flex-1 mt-5">
         <div className="row row-user-mod">
           <div className="col-sm-3">
-            {profile && <Sidebar status={profile.status} />}
+            <Sidebar status={profile && profile.status} />
           </div>
           <div className="col-sm-9">{props.children}</div>
         </div>
@@ -25,7 +28,7 @@ const Container = props => {
     </>
   ) : (
     <>
-      <Header auth={auth} admin />
+      <Header auth={user} admin />
       <Main classname="container flex-1">{props.children}</Main>
       <Footer admin />
     </>

@@ -1,6 +1,4 @@
 import React from "react";
-
-import Image from "../../UI/Image";
 import Spinner from "../../UI/Spinner/Spinner";
 import UserSidebarControl from "./userSidebar";
 import UserHeaderControl from "./userHeader";

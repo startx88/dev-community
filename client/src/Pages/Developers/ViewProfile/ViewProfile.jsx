@@ -23,7 +23,7 @@ const ViewProfile = props => {
   useEffect(() => {
     dispatch(getAllProfiles());
     dispatch(getPostByUserId(userId));
-  }, []);
+  }, [dispatch, userId]);
 
   const profile = profiles.find(profile => profile.user._id === userId);
 

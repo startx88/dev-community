@@ -57,8 +57,21 @@ export const getAllPosts = () => async dispatch => {
   dispatch(loading());
   try {
     const response = await axios.get("/posts");
+    const responseProfile = await axios.get("/profile");
     const { data } = await response.data;
-    dispatch(all_posts(data));
+    const { profiles } = await responseProfile.data;
+    const newData = data.map(item => {
+      for (let index in profiles) {
+        if (item.user._id === profiles[index].user._id) {
+          return {
+            ...item,
+            status: profiles[index].status
+          };
+        }
+      }
+      return item;
+    });
+    dispatch(all_posts(newData));
   } catch (err) {
     console.log("error on add and update post", err);
     const { message } = err.response.data.errors;

@@ -40,6 +40,28 @@ const user_posts = posts => ({
   payloads: posts
 });
 
+// Common function
+const postWithProfile = async posts => {
+  try {
+    const responseProfile = await axios.get("/profile");
+    const { profiles } = await responseProfile.data;
+    return posts.map(post => {
+      for (let index in profiles) {
+        if (post.user === profiles[index].user._id) {
+          return {
+            ...post,
+            status: profiles[index].status,
+            user: profiles[index].user
+          };
+        }
+      }
+      return post;
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // FETCH USER POSTS
 export const getAllPosts = () => async dispatch => {
   dispatch(loading());
@@ -47,23 +69,7 @@ export const getAllPosts = () => async dispatch => {
   try {
     const response = await axios.get("/posts");
     const { posts } = await response.data;
-
-    const responseProfile = await axios.get("/profile");
-    const { profiles } = await responseProfile.data;
-
-    const transformpostdata = posts.map(item => {
-      for (let index in profiles) {
-        if (item.user._id === profiles[index].user._id) {
-          return {
-            ...item,
-            status: profiles[index].status,
-            user: profiles[index].user
-          };
-        }
-      }
-      return item;
-    });
-    console.log(transformpostdata);
+    const transformpostdata = await postWithProfile(posts);
     dispatch(all_posts(transformpostdata));
   } catch (err) {
     const { message } = err.response.data.errors;
@@ -78,11 +84,32 @@ export const getUserPosts = () => async dispatch => {
   try {
     const response = await axios.get("/posts/user");
     const { posts, message } = await response.data;
-    dispatch(user_posts(posts));
+    const transformpostdata = await postWithProfile(posts);
+    dispatch(user_posts(transformpostdata));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
     dispatch(failed(message));
+  }
+};
+
+/**
+ * FETCH POST BY USER ID
+ * @param {*} userId
+ */
+export const getPostByUserId = userId => async dispatch => {
+  dispatch(loading());
+  try {
+    const responose = await axios.get("/posts/user/" + userId);
+    const { posts } = await responose.data;
+    const transformpostdata = await postWithProfile(posts);
+    dispatch({
+      type: post.FETCH_POST_BY_USER_ID,
+      payloads: transformpostdata
+    });
+  } catch (err) {
+    const { message } = err.response.data.errors;
+    dispatch(showAlert(message, "warning"));
   }
 };
 
@@ -218,26 +245,6 @@ export const deleteComment = (postId, commentId) => async dispatch => {
     const { data } = await response;
     dispatch(add_comment(postId, data.comments));
     dispatch(showAlert(data.message, "success"));
-  } catch (err) {
-    const { message } = err.response.data.errors;
-    dispatch(showAlert(message, "warning"));
-  }
-};
-
-/**
- * FETCH POST BY USER ID
- * @param {*} userId
- */
-export const getPostByUserId = userId => async dispatch => {
-  dispatch(loading());
-  try {
-    const responose = await axios.get("/posts/user/" + userId);
-    const { posts } = await responose.data;
-    console.log("op", posts);
-    dispatch({
-      type: post.FETCH_POST_BY_USER_ID,
-      payloads: posts
-    });
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

@@ -8,7 +8,7 @@ import { Link, Switch } from "react-router-dom";
 
 // Container
 const Container = props => {
-  const { match, getUserPosts, userposts, addPost, alert } = props;
+  const { match, getUserPosts, posts, addPost, alert } = props;
 
   const loadUserPost = useCallback(() => {
     getUserPosts();
@@ -18,7 +18,7 @@ const Container = props => {
     loadUserPost();
   }, [loadUserPost]);
 
-  if (!userposts) {
+  if (posts.loading) {
     return <Spinner />;
   }
 
@@ -31,7 +31,11 @@ const Container = props => {
       </Title>
       <hr />
       <AlertMessage type={alert.type} show={alert.show} />
-      <PostList postdata={userposts} />
+      {posts.posts && posts.posts.length === 0 ? (
+        <div className="no-post" />
+      ) : (
+        <PostList postdata={posts.posts} />
+      )}
     </>
   );
 };

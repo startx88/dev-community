@@ -13,6 +13,9 @@ export const selectPost = createSelector(
   state => state.post !== null && state.post
 );
 
+// select posts
+export const selectPosts = createSelector([postState], state => state);
+
 // get all posts
 export const selectAllPost = createSelector(
   [postState],

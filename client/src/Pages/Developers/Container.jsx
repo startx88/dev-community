@@ -22,7 +22,9 @@ const Container = props => {
     return <Spinner />;
   }
 
-  return (
+  return allProfile.profiles.length === 0 ? (
+    <div className="no-post" />
+  ) : (
     <div className="user-section">
       <Title type="page" tagline="Welcome to the depelopers page." />
       <div className="row">

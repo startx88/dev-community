@@ -41,7 +41,7 @@ const Profile = props => {
   }
 
   if (!profile.profile) {
-    return <p>There is no profile found</p>;
+    return <div className="no-post" />;
   }
 
   const profileUser = profile.profile.user;

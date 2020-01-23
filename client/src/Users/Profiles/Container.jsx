@@ -16,9 +16,7 @@ const Container = props => {
     return <Spinner />;
   }
 
-  return profile === null ? (
-    <div className="no-post" />
-  ) : (
+  return (
     <>
       <Title type="admin">
         <div>

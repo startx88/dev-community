@@ -77,11 +77,9 @@ export const getUserPosts = () => async dispatch => {
   dispatch(loading());
   try {
     const response = await axios.get("/posts/user");
-    const { posts } = await response.data;
-
+    const { posts, message } = await response.data;
     dispatch(user_posts(posts));
   } catch (err) {
-    console.log("error on add and update post", err);
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
     dispatch(failed(message));

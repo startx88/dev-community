@@ -1,4 +1,13 @@
 .navbar-user-control {
+  padding-left: 15px;
+  &:before {
+    content: "|";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+    color: $white;
+  }
   a {
     display: flex;
     font-family: $primary-secondary;
@@ -14,6 +23,30 @@
       img {
         max-width: 100%;
       }
+    }
+  }
+  .dropdown-menu {
+    border-radius: 0;
+    padding-top: 10px;
+    margin-top: 1px;
+    border: none;
+    min-width: 200px;
+    a {
+      padding: 8px 15px;
+      color: $base-dark;
+      font-weight: normal;
+      &:not(:last-child) {
+        border-bottom: 1px solid lighten($border-color, 20%);
+      }
+    }
+    &:before {
+      border-bottom: 10px solid $white;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      position: absolute;
+      content: "";
+      right: 32px;
+      top: -10px;
     }
   }
 }

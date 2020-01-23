@@ -15,11 +15,10 @@ const UserHeaderControl = ({ name, avatar }) => {
           <Icons icon="user" classname="mr-2" />
           Profile
         </Links>
-        <Links classname="dropdown-item" href="#">
+        <Links classname="dropdown-item" href="/users/settings/forgot-password">
           <Icons icon="key" classname="mr-2" />
           Forgot password
         </Links>
-        <div className="dropdown-divider"></div>
         <Links classname="dropdown-item" href="/logout">
           <Icons icon="lock" classname="mr-2" />
           Logout

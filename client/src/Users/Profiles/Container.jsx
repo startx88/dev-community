@@ -10,13 +10,15 @@ import { Link, Redirect } from "react-router-dom";
 
 const Container = props => {
   const { match } = props;
-  const { profile } = props.profile;
+  const { profile, loading } = props.profile;
 
-  if (!profile) {
+  if (loading) {
     return <Spinner />;
   }
 
-  return (
+  return profile === null ? (
+    <div className="no-post" />
+  ) : (
     <>
       <Title type="admin">
         <div>

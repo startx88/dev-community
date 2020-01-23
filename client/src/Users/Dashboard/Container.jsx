@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import Posts from "../../Widgets/Posts/Posts";
 import UserStatus from "../widgets/UserStatus/UserStatus";
-
+import Spinner from "../../UI/Spinner/Spinner";
 /////////////
 //// Dashboard components
 /////////////////////////
@@ -18,16 +18,19 @@ const Container = props => {
     loadUserPost();
   }, [loadUserPost]);
 
-  return (
+  return allposts && allposts.length === 0 ? (
+    <div className="no-post" />
+  ) : !allposts ? (
+    <Spinner />
+  ) : (
     <div className="row">
       <div className="col-sm-8">
-        {!allposts ? (
-          <img alt="" src={process.env.PUBLIC_URL + "/loader.gif"} />
-        ) : (
-          allposts.map(post => <Posts key={post._id} info={post} />)
-        )}
+        {allposts.map(post => (
+          <Posts key={post._id} info={post} />
+        ))}
       </div>
     </div>
   );
 };
+
 export default Container;

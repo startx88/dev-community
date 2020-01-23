@@ -53,9 +53,11 @@ const Profile = props => {
         <div className="row">
           {/* User Info */}
           <div className="col-sm-12 mb-3 ">
-            <Button clicked={editProfile} classname="btn btn-edit-icon">
-              <Icons icon="edit" />
-            </Button>
+            {!profile.profile && (
+              <Button clicked={editProfile} classname="btn btn-edit-icon">
+                <Icons icon="edit" />
+              </Button>
+            )}
             <UserBio
               name={profileUser.name}
               bio={profile.profile.bio}

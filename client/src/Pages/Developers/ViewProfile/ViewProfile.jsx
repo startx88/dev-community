@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Icons from "../../../UI/Icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,10 +9,13 @@ import Skills from "../../../Widgets/User/Skills";
 import Experience from "../../../Widgets/User/Experience";
 import Education from "../../../Widgets/User/Education";
 import PostInfo from "../../../Widgets/Posts/Posts";
+import { useLocation } from "react-router-dom";
 
 const ViewProfile = props => {
+  const [tabIndex, setTabIndex] = useState({ tabIndex: 0 });
   const userId = props.match.params.id;
   const dispatch = useDispatch();
+  const hash = useLocation().hash;
 
   const {
     profile: { profiles },
@@ -23,6 +26,9 @@ const ViewProfile = props => {
   useEffect(() => {
     dispatch(getAllProfiles());
     dispatch(getPostByUserId(userId));
+    if (hash == "#info") {
+      setTabIndex({ tabIndex: 1 });
+    }
   }, [dispatch, userId]);
 
   const profile = profiles.find(profile => profile.user._id === userId);
@@ -35,17 +41,20 @@ const ViewProfile = props => {
     <div className="view-profile">
       <div className="page-title">
         <h4>
-          Pradeep Kumar
-          <small>Graphic Designer at Self Employed</small>
+          {profile.user.name}
+          <small>{profile.status}</small>
         </h4>
       </div>
-      <Tabs>
+      <Tabs
+        selectedIndex={tabIndex.tabIndex}
+        onSelect={tabIndex => setTabIndex({ tabIndex })}
+      >
         <TabList>
-          <Tab>
+          <Tab id="#post">
             <Icons icon="newspaper" />
             Post
           </Tab>
-          <Tab>
+          <Tab id="#info">
             <Icons icon="info-circle" />
             Info
           </Tab>

@@ -47,7 +47,10 @@ const Posts = ({ info, ...rest }) => {
         <PostAction deleted={() => deletePostHandler(info._id)} />
       )}
       <PostAvatar
-        href={rest.match.url}
+        href={{
+          pathname: `/developers/${info.user._id}`,
+          hash: "#info"
+        }}
         name={info.user.name}
         status={info.status}
         avatar={info.user.avatar}

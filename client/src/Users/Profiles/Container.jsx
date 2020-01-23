@@ -1,23 +1,34 @@
 import React from "react";
 import Title from "../../Widgets/Title/Title";
-
+import Spinner from "../../UI/Spinner/Spinner";
 import PrivateRoute from "../../Web/PrivateRoute";
 import Profile from "./Profile";
 import EducationForm from "./Forms/EducationForm";
 import ExperienceForm from "./Forms/ExperienceForm";
 import ProfileForm from "./Forms/ProfileForm";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Container = props => {
   const { match } = props;
+  const { profile } = props.profile;
+
+  if (!profile) {
+    return <Spinner />;
+  }
 
   return (
     <>
       <Title type="admin">
         <div>
-          <Link to={match.url + "/add-profile"} className="btn btn-info btn-sm">
-            Add Profile
-          </Link>
+          {!profile && (
+            <Link
+              to={match.url + "/add-profile"}
+              className="btn btn-info btn-sm"
+            >
+              Add Profile
+            </Link>
+          )}
+
           <Link
             to={match.url + "/add-experience"}
             className="btn btn-info ml-2 mr-2 btn-sm"
@@ -41,12 +52,17 @@ const Container = props => {
         )}
       />
 
-      <PrivateRoute
-        path={match.url + "/add-profile"}
-        component={childProps => (
-          <ProfileForm parentProps={props} {...childProps} />
-        )}
-      />
+      {!profile ? (
+        <PrivateRoute
+          path={match.url + "/add-profile"}
+          component={childProps => (
+            <ProfileForm parentProps={props} {...childProps} />
+          )}
+        />
+      ) : (
+        <Redirect to="/users/profiles" />
+      )}
+
       <PrivateRoute
         path={match.url + "/add-education"}
         component={childProps => (

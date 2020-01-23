@@ -1,21 +1,36 @@
-import React, { useRef } from "react";
-import { useFormik } from "formik";
-import { PostSchema } from "../schema";
-import { Redirect, Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import InputFile from "../../../UI/InputFile";
 import Input from "../../../UI/Input";
 import Button from "../../../UI/Button";
 import useQuery from "../../../_hooks/useQuery";
+import { useFormik } from "formik";
+import { PostSchema } from "../schema";
+import { Redirect, Link } from "react-router-dom";
+import { addPost, getPost } from "../../../Stores/Actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectPost, selectAlert } from "../../../Stores/Selectors";
 
 // Add/Update post form
 const PostForm = props => {
-  const postId = props.match.params.id;
-  const refFocus = useRef(null);
-  const { addPost, alert, getPost, userposts } = props.parentProps;
+  const dispatch = useDispatch();
 
+  const refFocus = useRef(null);
+  const { alert, post } = useSelector(
+    createStructuredSelector({ alert: selectAlert, post: selectPost })
+  );
+
+  // Query and params
+  const postId = props.match.params.id;
   const query = useQuery();
-  const post = userposts && userposts.find(post => post._id === postId);
   const isEdit = query.get("edit") && post;
+
+  // Fetch post after render
+  useEffect(() => {
+    if (postId) {
+      dispatch(getPost(postId));
+    }
+  }, [getPost, postId]);
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +41,9 @@ const PostForm = props => {
     enableReinitialize: true,
     validationSchema: PostSchema,
     onSubmit: (values, { resetForm }) => {
-      isEdit ? addPost(values, postId, "UPDATE") : addPost(values);
+      isEdit
+        ? dispatch(addPost(values, postId, "UPDATE"))
+        : dispatch(addPost(values));
     }
   });
 

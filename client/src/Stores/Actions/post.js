@@ -8,20 +8,8 @@ const loading = () => ({ type: post.POST_LOADING });
 // FAILED
 const failed = error => ({ type: post.POST_FAILED, payloads: error });
 
-// ADD POST
-const add_post = postdata => ({ type: post.POST_ADD, payloads: postdata });
-
 // DELETE POST
 const delete_post = id => ({ type: post.POST_DELETE, payloads: id });
-
-// UPDATE POST
-const update_post = (id, postdata) => ({
-  type: post.POST_UPDATE,
-  payloads: {
-    id: id,
-    post: postdata
-  }
-});
 
 // LIKE POST
 const like_post = (postId, likes) => ({
@@ -95,7 +83,17 @@ export const getUserPosts = () => async dispatch => {
   }
 };
 
-// add post
+/*********
+ * Add / Update post
+ **************************/
+const add_post = postdata => ({ type: post.POST_ADD, payloads: postdata });
+const update_post = (id, postdata) => ({
+  type: post.POST_UPDATE,
+  payloads: {
+    id: id,
+    post: postdata
+  }
+});
 export const addPost = (inputdata, id, status) => async dispatch => {
   dispatch(loading());
   // Form Data
@@ -108,13 +106,12 @@ export const addPost = (inputdata, id, status) => async dispatch => {
     if (status === "UPDATE") {
       const response = await axios.put(`/posts/${id}`, formdata);
       const responseData = await response.data;
-      //console.log(responseData);
+      console.log(responseData);
       dispatch(update_post(responseData.postId, responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     } else {
       const response = await axios.post("/posts", formdata);
       const responseData = await response.data;
-      // console.log("hello", responseData);
       dispatch(add_post(responseData.post));
       dispatch(showAlert(responseData.message, "success"));
     }
@@ -183,6 +180,7 @@ const get_single_post = postdata => ({
 });
 
 export const getPost = postId => async dispatch => {
+  console.log("hello", postId);
   dispatch(loading());
   try {
     const responose = await axios.get("/posts/" + postId);

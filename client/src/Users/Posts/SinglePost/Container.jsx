@@ -17,6 +17,9 @@ const Container = props => {
   const {
     postinfo,
     getPost,
+    likePost,
+    dislikePost,
+    getUserPosts,
     match: { params }
   } = props;
 
@@ -27,6 +30,7 @@ const Container = props => {
   const loadPost = useCallback(
     postId => {
       getPost(postId);
+      getUserPosts();
     },
     [getPost]
   );
@@ -49,7 +53,7 @@ const Container = props => {
 
   return (
     <div className="row">
-      <div className="col-sm-8">
+      <div className="col-sm-9">
         <div className={"single-post  panel panel-white"}>
           <div className="post-user-info d-flex justify-content-between">
             <div className="post-user">
@@ -66,8 +70,8 @@ const Container = props => {
             <Avatar classname="avatar" avatar={postinfo.user.avatar} />
             <Image classname="full" src={postinfo.avatar} />
             <LikeButton
-              likeHandler={backToLogin}
-              dislikeHandler={backToLogin}
+              likeHandler={() => likePost(postinfo._id)}
+              dislikeHandler={() => dislikePost(postinfo._id)}
               likes={postinfo.likes}
             />
           </div>

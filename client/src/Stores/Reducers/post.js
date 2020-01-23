@@ -27,7 +27,7 @@ const updated = (state, payloads) =>
   updateObject(state, {
     loading: false,
     posts: state.posts.map(item =>
-      item._id === payloads.id ? { ...payloads.post } : item
+      item._id === payloads.id ? { ...item, ...payloads.post } : item
     )
   });
 

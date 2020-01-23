@@ -3,11 +3,8 @@ import Title from "../../Widgets/Title/Title";
 import PrivateRoute from "../../Web/PrivateRoute";
 import AlertMessage from "../../UI/Alert";
 import Spinner from "../../UI/Spinner/Spinner";
+import PostList from "../widgets/PostList";
 import { Link, Switch } from "react-router-dom";
-
-const PostList = lazy(() => import("../widgets/PostList"));
-const EditPost = lazy(() => import("./EditPost/EditPost"));
-const SinglePost = lazy(() => import("./SinglePost"));
 
 // Container
 const Container = props => {
@@ -27,31 +24,14 @@ const Container = props => {
 
   return (
     <>
-      <Title type="admin">
+      <Title type="page" tagline="Welcome to the depelopers page.">
         <Link to={match.url + "/add-post"} className="btn btn-info btn-sm">
           Add Post
         </Link>
       </Title>
       <hr />
-      <AlertMessage type={alert.type} show={alert.show}>
-        {alert.message}
-      </AlertMessage>
-      <Switch>
-        <PrivateRoute
-          path={match.url + "/add-post/:id?"}
-          component={childprops => (
-            <EditPost parentProps={props} {...childprops} />
-          )}
-        />
-        <PrivateRoute path={match.url + "/:id"} component={SinglePost} />
-        <PrivateRoute
-          exact
-          path={match.url}
-          component={childprops => (
-            <PostList postdata={userposts} {...childprops} />
-          )}
-        />
-      </Switch>
+      <AlertMessage type={alert.type} show={alert.show} />
+      <PostList postdata={userposts} />
     </>
   );
 };

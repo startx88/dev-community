@@ -2,8 +2,9 @@ import React, { lazy } from "react";
 import { Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import UserLayout from "../UI/Layout/User";
-import PublicLayout from "../UI/Layout/Public";
+
+import UserLayout from "../Layout/User";
+import PublicLayout from "../Layout/Public";
 
 const Login = lazy(() => import("../Auth/Login"));
 const Register = lazy(() => import("../Auth/Register"));
@@ -15,7 +16,6 @@ const Developers = lazy(() => import("../Pages/Developers"));
 const DeveloperProfile = lazy(() =>
   import("../Pages/Developers/ViewProfile/ViewProfile")
 );
-const Course = lazy(() => import("../Pages/Courses"));
 const User = lazy(() => import("../Users"));
 
 const Web = props => {
@@ -45,7 +45,6 @@ const Web = props => {
         layout={UserLayout}
         component={Developers}
       />
-      <PrivateRoute path="/projects" layout={UserLayout} component={Course} />
       <PrivateRoute path="/users" layout={UserLayout} component={User} />
       <PublicRoute layout={PublicLayout} component={NotFound} />
     </Switch>

@@ -1,16 +1,15 @@
 import React, { useEffect, useCallback } from "react";
-import axios from "../../../axios_instance";
 import Spinner from "../../../UI/Spinner/Spinner";
 import Image from "../../../UI/Image";
 import Icons from "../../../UI/Icons";
 import Date from "../../../UI/Date";
 import Button from "../../../UI/Button";
 import LikeButton from "../../../Widgets/LikeButton/LikeButton";
-import Section from "../../../UI/Layout/Section";
 import CommentList from "../../../Widgets/Comment/CommentList";
 import CommentForm from "../../../Widgets/Comment/PostComment";
 import useAccess from "../../../_hooks/isAuth";
 import Avatar from "../../../Widgets/Avatar/Avatar";
+
 ////////
 // Single Post Compoent
 ///////////////////////

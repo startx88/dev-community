@@ -1,0 +1,19 @@
+.navbar-user-control {
+  a {
+    display: flex;
+    font-family: $primary-secondary;
+    align-items: center;
+    font-weight: bold;
+    font-size: $base-size - 2;
+    .img-profile {
+      margin-left: 5px;
+      margin-right: 5px;
+      width: 35px;
+      height: 35px;
+      overflow: hidden;
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

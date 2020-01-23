@@ -1,22 +1,22 @@
 import React from "react";
 import Header from "../Header";
 import Footer from "../Footer";
-import Main from "../../Main";
 import Sidebar from "../Sidebar";
+import Main from "../../UI/Main";
 import { useSelector } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { userSelector } from "../../../Stores/Selectors";
 
 const Container = props => {
-  const { auth } = useSelector(state => state);
-
+  const {
+    auth,
+    profile: { profile }
+  } = useSelector(state => state);
   return auth.isAuth ? (
     <>
       <Header admin />
       <Main classname="container flex-1 mt-5">
         <div className="row row-user-mod">
           <div className="col-sm-3">
-            <Sidebar />
+            {profile && <Sidebar status={profile.status} />}
           </div>
           <div className="col-sm-9">{props.children}</div>
         </div>

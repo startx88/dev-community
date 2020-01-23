@@ -1,10 +1,7 @@
 import React, { Suspense, useCallback, useEffect } from "react";
-import Title from "../../Widgets/Title/Title";
-import Section from "../../UI/Layout/Section";
+
 import Posts from "../../Widgets/Posts/Posts";
 import UserStatus from "../widgets/UserStatus/UserStatus";
-import Panel from "../../UI/Panel";
-import Spinner from "../../UI/Spinner/Spinner";
 
 /////////////
 //// Dashboard components

@@ -1,6 +1,6 @@
 import React from "react";
-import Links from "../../Widgets/Links/Links";
-import Icons from "../../UI/Icons";
+import Links from "../Widgets/Links/Links";
+import Icons from "../UI/Icons";
 
 import { withRouter } from "react-router-dom";
 

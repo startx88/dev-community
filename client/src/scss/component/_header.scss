@@ -1,39 +1,29 @@
 .navbar {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  border-radius: 0;
   border: none;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  width: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
-
+  border-radius: 0;
+  z-index: $z-index;
   &-brand {
+    margin-right: 0;
     display: flex;
     align-items: center;
-    padding-left: 10px;
     color: $white;
+    padding: 0;
     &:hover {
       color: $white;
     }
   }
-
+  // user header
   &-admin {
+    padding: 0;
     background: linear-gradient(45deg, #49cdd0, #00bcd4);
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
-    min-height: 60px;
+    min-height: 54px;
     .navbar-brand {
-      display: flex;
       justify-content: center;
       background-color: $white;
-      width: 240px;
-      height: 60px;
-      padding-left: 0;
-      padding-right: 5px;
+      width: $brandWidth;
       color: $info;
+      height: 54px;
       &:hover {
         color: $info;
       }
@@ -44,37 +34,14 @@
       }
     }
     .nav-link {
-      color: #fff;
-      font-family: $primary-secondary;
+      color: $white;
       font-size: $medium;
     }
   }
 
+  // Public layout
   &-landing {
-    padding: 10px 0;
-    .nav-link {
-      font-size: $base-size - 2;
-      font-family: $base-family;
-    }
-  }
-
-  &-user-control {
-    a {
-      display: flex;
-      font-family: $primary-secondary;
-      align-items: center;
-      font-weight: bold;
-      font-size: $base-size - 2;
-      .img-profile {
-        margin-left: 5px;
-        margin-right: 5px;
-        width: 35px;
-        height: 35px;
-        overflow: hidden;
-        img {
-          max-width: 100%;
-        }
-      }
-    }
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }

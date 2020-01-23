@@ -4,9 +4,12 @@
   text-align: center;
   p {
     margin-bottom: 0;
-    font-size: $base-size - 4;
+    font-size: $small;
   }
-  span {
-    font-size: $base-size * 0.8;
+  a {
+    color: $base-color;
+    &:hover {
+      color: $info;
+    }
   }
 }

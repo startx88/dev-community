@@ -1,14 +1,11 @@
 import React from "react";
-import Links from "../../Widgets/Links/Links";
-import Icons from "../../UI/Icons";
-import { Scrollbars } from "react-custom-scrollbars";
-import { withRouter } from "react-router-dom";
-import UserControl from "../../Widgets/UserControl";
-import { useSelector } from "react-redux";
+import Links from "../Widgets/Links/Links";
+import Icons from "../UI/Icons";
+import UserControl from "../Widgets/UserControl";
 
 /** Sidebar */
 const Sidebar = props => {
-  const { match } = props;
+  const { match, status } = props;
 
   return (
     <aside
@@ -16,7 +13,7 @@ const Sidebar = props => {
       id="accordionSidebar"
     >
       <div className="menu">
-        <UserControl sidebar />
+        <UserControl sidebar status={status} />
         <ul>
           <hr />
           <Links ismenu classname="nav-link" href="/users">
@@ -48,4 +45,4 @@ const Sidebar = props => {
   );
 };
 
-export default withRouter(Sidebar);
+export default Sidebar;

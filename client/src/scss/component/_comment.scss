@@ -1,5 +1,36 @@
+.leave-comment {
+  margin-top: 60px;
+  padding-top: 40px;
+  position: relative;
+  label {
+    margin-left: 10px;
+  }
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+  }
+  &:before {
+    top: 0;
+    height: 1px;
+    background-color: #eee;
+    width: 100%;
+  }
+  &:after {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: $violet;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -8px;
+  }
+  h4 {
+    margin-bottom: 15px;
+  }
+}
 .comments {
-  margin-top: 20px;
   h4 {
     margin-bottom: 20px;
   }

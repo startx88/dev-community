@@ -127,7 +127,10 @@ export const getPost = postId => async dispatch => {
   try {
     const responose = await axios.get("/posts/" + postId);
     const { post } = await responose.data;
-    dispatch(get_single_post(post));
+    const responseProfile = await axios.get("/profile");
+    const { profiles } = await responseProfile.data;
+    const newpost = profiles.find(profile => profile.user._id === post.user);
+    dispatch(get_single_post({ ...post, status: newpost.status }));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));

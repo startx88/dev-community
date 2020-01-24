@@ -43,7 +43,7 @@ const PostComment = ({ postId, user, history, ...rest }) => {
   } = formik;
 
   return (
-    <div className="posts-add-comment">
+    <div className="post-add-comment">
       <Avatar
         classname="avatar circle"
         avatar={user.user.avatar}

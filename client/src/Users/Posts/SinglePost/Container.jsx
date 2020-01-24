@@ -8,29 +8,25 @@ import LikeButton from "../../../Widgets/LikeButton/LikeButton";
 import CommentList from "../../../Widgets/Comment/CommentList";
 import CommentForm from "../../../Widgets/Comment/PostComment";
 import useAccess from "../../../_hooks/isAuth";
-import Avatar from "../../../Widgets/Avatar/Avatar";
+import PostAvatar from "../../../Widgets/Avatar/PostAvatar";
+import PostAction from "../../../Widgets/Posts/PostAction";
 
-////////
-// Single Post Compoent
-///////////////////////
+/******
+ *  User single post
+ **********************/
 const Container = props => {
   const {
     postinfo,
     getPost,
-    likePost,
-    dislikePost,
-    getUserPosts,
     match: { params }
   } = props;
 
   const postId = params.id;
-
   const { user } = useAccess();
 
   const loadPost = useCallback(
     postId => {
       getPost(postId);
-      getUserPosts();
     },
     [getPost]
   );
@@ -39,55 +35,46 @@ const Container = props => {
     loadPost(postId);
   }, [loadPost, postId]);
 
-  // LOGIN REDIRECT
-  const backToLogin = () => {
-    if (user.isAuth) {
-    } else {
-      props.history.push("/login");
-    }
-  };
-
   if (!postinfo) {
     return <Spinner />;
   }
 
   return (
-    <div className="row">
-      <div className="col-sm-9">
-        <div className={"single-post  panel panel-white"}>
-          <div className="post-user-info d-flex justify-content-between">
-            <div className="post-user">
-              by <small>{postinfo.user.name}</small>
+    <div className="single-posts">
+      <div className="row">
+        <div className="col-sm-9">
+          <div className="panel panel-white">
+            <div className="posts-image">
+              <PostAction postId={postinfo._id} />
+              <PostAvatar
+                name={postinfo.name}
+                status={postinfo.status}
+                avatar={postinfo.user.avatar}
+              />
+              <Image src={postinfo.avatar} />
+              <LikeButton
+                classname="bottom"
+                postId={postinfo._id}
+                likes={postinfo.likes}
+              />
             </div>
-            <div className="post-date-comment">
-              <Date icon from={postinfo.insertAt} />
-              <Button>
-                <Icons icon="comment-alt" /> 0
-              </Button>
+            <div className="post-title d-flex justify-content-between">
+              <h6>{postinfo.title}</h6>
+              <Date from={postinfo.insertAt} />
             </div>
-          </div>
-          <div className="single-post-image">
-            <Avatar classname="avatar" avatar={postinfo.user.avatar} />
-            <Image classname="full" src={postinfo.avatar} />
-            <LikeButton
-              likeHandler={() => likePost(postinfo._id)}
-              dislikeHandler={() => dislikePost(postinfo._id)}
-              likes={postinfo.likes}
-            />
-          </div>
-          <h6>{postinfo.title}</h6>
-          <p>{postinfo.description}</p>
-          <div className="leave-comment">
-            <CommentList
-              user={user}
-              postId={postinfo._id}
-              comments={postinfo.comments}
-            />
-            <CommentForm
-              user={user}
-              history={props.history}
-              postId={postinfo._id}
-            />
+            <p>{postinfo.description}</p>
+            <div className="leave-comment">
+              <CommentList
+                user={user}
+                postId={postinfo._id}
+                comments={postinfo.comments}
+              />
+              <CommentForm
+                user={user}
+                history={props.history}
+                postId={postinfo._id}
+              />
+            </div>
           </div>
         </div>
       </div>

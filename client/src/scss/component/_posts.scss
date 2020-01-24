@@ -1,33 +1,32 @@
-.add-post-title {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid lighten($base-color, 50%);
+.post,
+.single-posts {
+  position: relative;
+  z-index: 1;
+  h6 {
+    margin-bottom: 10px;
+    color: $info;
+    font-weight: 500;
+  }
 }
 
+// Post style
 .post {
-  position: relative;
-  padding: 15px;
-  background-color: $white;
+  border-radius: 5px;
   margin-bottom: 30px;
+  p {
+    margin-bottom: 0;
+  }
+
   &-image {
+    position: relative;
     max-height: 200px;
     overflow: hidden;
     display: block;
+    border-radius: 5px;
     margin-bottom: 10px;
-  }
-  h6 {
-    color: $danger-light;
-    margin-bottom: 10px;
-    font-weight: bold;
-    small {
-      font-size: $base-size - 5;
-      color: lighten($base-dark, 40%);
-      font-weight: bold;
-      margin-top: 3px;
+    img {
+      width: 100%;
     }
-  }
-  p {
-    font-size: $base-size - 2;
   }
   &-btn {
     position: absolute;
@@ -37,53 +36,35 @@
       padding: 3px 5px;
     }
   }
-  img {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
-.posts {
-  position: relative;
-  .like-buttons {
-    padding: 10px;
-    margin-left: -20px;
-    margin-right: -20px;
-    display: block;
-    border-top: 1px solid lighten($border-color, 20%);
-    border-bottom: 1px solid lighten($border-color, 20%);
-  }
-  &-image {
-    margin-top: 15px;
-    position: relative;
-    max-height: 150px;
-    overflow: hidden;
-  }
-  &-body {
-    margin: 15px 0 20px;
-  }
-  &-user {
-    display: inline-flex;
-
-    &-avatar {
-      display: flex;
-      align-items: center;
-      h6 {
-        small {
-          font-size: $small;
-          margin-top: 2px;
-          color: lighten($base-color, 10%);
-        }
-      }
-      a {
-        margin-right: 10px;
+  &-avatar {
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+    h6 {
+      color: $white;
+      margin-bottom: 0;
+      small {
+        font-size: $small;
+        margin-top: 2px;
       }
     }
+    a {
+      margin-right: 10px;
+    }
   }
+  .leave-comment {
+    margin-top: 40px;
+    padding-top: 20px;
+  }
+
+  // post comment css
   &-add-comment {
     display: flex;
-    margin-top: 40px;
     align-items: center;
+    margin-top: 40px;
     form {
       margin-left: 15px;
       flex: 1;
@@ -103,12 +84,36 @@
   }
 }
 
+// single posts
+.single-posts {
+  .posts-image {
+    position: relative;
+    overflow: hidden;
+    max-height: 300px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    img {
+      width: 100%;
+    }
+  }
+  .posts-title {
+    h6 {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+  }
+}
+
+// post action
 .post-action {
+  z-index: 10;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 30px;
+  top: 30px;
+  a {
+    color: $white;
+  }
   .dropdown-menu {
-    border-radius: 0;
     border: none;
     box-shadow: 0 0 10px lighten($base-color, 40%);
     overflow: hidden;

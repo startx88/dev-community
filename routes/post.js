@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
+
 const upload = multer({ storage: storage, filterFile: fileFilter });
 
 // @route       POST api/posts
@@ -42,7 +43,6 @@ router.get("/:postId", postController.getPost);
 router.post(
   "/",
   auth,
-  upload.single("avatar"),
   [
     body("title", "Title is required!")
       .not()
@@ -61,14 +61,15 @@ router.post(
 router.put(
   "/:postId",
   auth,
-  upload.single("avatar"),
+  //upload.single("avatar"),
   [
     body("title", "Title is required!")
       .not()
       .isEmpty(),
     body("description", "Description is required!")
       .not()
-      .isEmpty()
+      .isEmpty(),
+    body("avatar", "Image url is required").isURL()
   ],
   postController.updatePost
 );

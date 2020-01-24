@@ -6,6 +6,7 @@ import Button from "../../../UI/Button";
 import LikeButton from "../../../Widgets/LikeButton/LikeButton";
 import Links from "../../../Widgets/Links/Links";
 import { withRouter } from "react-router-dom";
+import PostAction from "../../../Widgets/Posts/PostAction";
 
 // Post Component
 const Post = ({
@@ -22,37 +23,16 @@ const Post = ({
   const { match } = rest;
   return (
     <article className={classname}>
-      <div className="post">
+      <div className="post panel panel-white">
         {isAuth.isAuth && isAuth.user._id === postinfo.user._id && (
-          <div className="post-btn">
-            <Button
-              type="button"
-              clicked={() => editedPost(postinfo._id)}
-              btnType="edit-icon"
-            >
-              <Icons icon="pencil-alt" />
-            </Button>
-            <Button
-              type="button"
-              clicked={() => deletePost(postinfo._id)}
-              btnType="dlt-icon"
-            >
-              <Icons icon="trash-alt" />
-            </Button>
-          </div>
+          <PostAction postId={postinfo._id} />
         )}
-
         <Links classname="post-image" to={`${match.path}/` + postinfo._id}>
           <Image src={postinfo.avatar} alt={postinfo.title} />
         </Links>
-
         <div className="d-flex justify-content-between">
           <Date from={postinfo.insertAt} />
-          <LikeButton
-            likes={likes}
-            likeHandler={() => likeHandler(postinfo._id)}
-            dislikeHandler={() => dislikeHandler(postinfo._id)}
-          />
+          <LikeButton likes={likes} postId={postinfo._id} />
         </div>
         <h6>
           {postinfo.title}

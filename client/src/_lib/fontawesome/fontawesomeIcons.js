@@ -35,9 +35,11 @@ import {
   faImages,
   faHeart,
   faEllipsisV,
-  faEye
+  faEye,
+  faHeartBroken
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
+  faHeartBroken,
   faEye,
   faEllipsisV,
   faUser,

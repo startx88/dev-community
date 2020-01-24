@@ -10,22 +10,18 @@ const { resizeImage, deleteFile } = require("../middleware/file");
 exports.getAllPosts = async (req, res, next) => {
   const userId = req.query.userId;
   try {
-    const posts = await Post.find()
-      .sort({ insertAt: -1 })
-      .populate("user", ["name", "email", "avatar", "active"])
-      .exec();
+    const posts = await Post.find({ active: 1 }).sort({ insertAt: -1 });
 
     if (!posts) {
-      const error = new Error("No post found");
+      const error = new Error("There is no post");
       error.statusCode = 404;
       throw next(error);
     }
+
     res.status(200).json({
       success: true,
-      data: posts.map(post => ({
-        ...post._doc,
-        avatar: "http://localhost:4200/" + post.avatar
-      }))
+      message: "Posts successfully fetched.",
+      posts
     });
   } catch (err) {
     console.log("error", err);
@@ -40,9 +36,9 @@ exports.getLoggedInUserPost = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const posts = await Post.find({ user: userId })
-      .sort({ insertAt: -1 })
-      .populate("user");
+    const posts = await Post.find({ user: userId, active: 1 }).sort({
+      insertAt: -1
+    });
 
     if (!posts) {
       const error = new Error("No post found");
@@ -51,10 +47,8 @@ exports.getLoggedInUserPost = async (req, res, next) => {
     }
     res.status(200).json({
       success: true,
-      data: posts.map(post => ({
-        ...post._doc,
-        avatar: "http://localhost:4200/" + post.avatar
-      }))
+      message: "Post successfully fetched.",
+      posts
     });
   } catch (err) {
     console.log("error", err);
@@ -68,9 +62,9 @@ exports.getLoggedInUserPost = async (req, res, next) => {
 exports.getPostByUserId = async (req, res, next) => {
   const userId = req.params.userId;
   try {
-    const posts = await Post.find({ user: userId })
-      .sort({ insertAt: -1 })
-      .populate("user", ["name", "avatar", "email", "active"]);
+    const posts = await Post.find({ user: userId, active: 1 }).sort({
+      insertAt: -1
+    });
 
     if (!posts) {
       const error = new Error("No post found");
@@ -79,13 +73,14 @@ exports.getPostByUserId = async (req, res, next) => {
     }
     res.status(200).json({
       success: true,
-      data: posts.map(post => ({
-        ...post._doc,
-        avatar: "http://localhost:4200/" + post.avatar
-      }))
+      message: "User posts successfully fetched.",
+      posts
     });
   } catch (err) {
-    console.log("error", err);
+    if (err.kind === "ObjectId") {
+      const error = new Error("Profile not found, invalid user id");
+      next(error);
+    }
     next(err);
   }
 };
@@ -95,9 +90,8 @@ exports.getPostByUserId = async (req, res, next) => {
 /////////////////////////////////////////////////
 exports.getPost = async (req, res, next) => {
   const postId = req.params.postId;
-
   try {
-    const post = await Post.findById(postId).populate("user");
+    const post = await Post.findById(postId);
 
     if (!post) {
       const error = new Error("No post found");
@@ -107,10 +101,7 @@ exports.getPost = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: {
-        ...post._doc,
-        avatar: "http://localhost:4200/" + post.avatar
-      }
+      post
     });
   } catch (err) {
     console.log("error", err);
@@ -118,9 +109,9 @@ exports.getPost = async (req, res, next) => {
   }
 };
 
-/////////////////////////////////////////////////
-/////////// Add Post
-/////////////////////////////////////////////////
+/************
+ * Add Post
+ ***********************/
 exports.addPost = async (req, res, next) => {
   const userId = req.user.userId;
 
@@ -131,46 +122,31 @@ exports.addPost = async (req, res, next) => {
     throw next(error);
   }
 
-  const { title, description } = req.body;
-  const avatar = req.file;
-
-  // check if image is selected or not
-  if (!avatar) {
-    const error = new Error("Please select image");
-    error.statusCode = 422;
-    throw next(error);
-  }
+  const { title, description, avatar } = req.body;
 
   try {
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId);
     if (!user) {
       const error = new Error("Unauthorized access");
       error.statusCode = 401;
-      deleteFile(avatar.path);
       throw next(error);
     }
 
     const newPost = new Post({
-      user: user._id,
+      user: userId,
       title: title,
       description: description,
-      avatar: avatar.path,
+      avatar: avatar,
       name: user.name
     });
 
     const post = await newPost.save();
     if (post) {
-      resizeImage(1024, 600, avatar.path);
       res.status(201).json({
         success: true,
-        message: "Post added successfully",
-        post: {
-          ...post._doc,
-          user: {
-            _id: post.user
-          },
-          avatar: "http://localhost:4200/" + post.avatar
-        }
+        message: "You have added post successfully!",
+        postId: post._id,
+        post
       });
     }
   } catch (err) {
@@ -179,9 +155,9 @@ exports.addPost = async (req, res, next) => {
   }
 };
 
-/////////////////////////////////////////////////
-/////////// Update Post
-/////////////////////////////////////////////////
+/************
+ * Update Post
+ ***********************/
 exports.updatePost = async (req, res, next) => {
   const postId = req.params.postId;
 
@@ -191,8 +167,7 @@ exports.updatePost = async (req, res, next) => {
     error.statusCode = 422;
     throw next(error);
   }
-  const { title, description } = req.body;
-  const avatar = req.file;
+  const { title, description, avatar } = req.body;
 
   try {
     const post = await Post.findById(postId);
@@ -204,24 +179,14 @@ exports.updatePost = async (req, res, next) => {
 
     post.title = title;
     post.description = description;
-    if (avatar) {
-      deleteFile(post.avatar);
-      post.avatar = avatar.path;
-      resizeImage(1024, 600, avatar.path);
-    }
+    post.avatar = avatar;
     const result = await post.save();
 
     res.status(201).json({
       success: true,
-      message: "Post added successfully",
+      message: "You have added post successfully!",
       postId: result._id,
-      post: {
-        ...post._doc,
-        user: {
-          _id: post.user
-        },
-        avatar: "http://localhost:4200/" + post.avatar
-      }
+      post
     });
   } catch (err) {
     console.log("error", err);
@@ -229,9 +194,9 @@ exports.updatePost = async (req, res, next) => {
   }
 };
 
-/////////////////////////////////////////////////
-/////////// Delete Post
-/////////////////////////////////////////////////
+/************
+ * Delete Post
+ ***********************/
 exports.deletePost = async (req, res, next) => {
   const postId = req.params.postId;
   const userId = req.user.userId;
@@ -253,7 +218,6 @@ exports.deletePost = async (req, res, next) => {
     const result = await post.remove();
 
     if (result) {
-      deleteFile(post.avatar);
       res.status(200).json({
         success: true,
         message: "Post deleted successfully",
@@ -265,9 +229,9 @@ exports.deletePost = async (req, res, next) => {
   }
 };
 
-/////////////////////////////////////////////////
-/////////// Add Comment
-/////////////////////////////////////////////////
+/************
+ * Add Comment
+ ***********************/
 exports.addComment = async (req, res, next) => {
   const userId = req.user.userId;
   const postId = req.params.postId;
@@ -294,8 +258,8 @@ exports.addComment = async (req, res, next) => {
 
     const comment = {
       user: userId,
-      name: req.body.name,
-      email: req.body.email,
+      name: user.name,
+      avatar: user.avatar,
       text: req.body.text
     };
 

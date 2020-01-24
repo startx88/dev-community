@@ -29,24 +29,6 @@ const PostList = props => {
     }
   };
 
-  // LIKE HANDLER
-  const likePostHandler = postId => {
-    if (user.isAuth) {
-      likePost(postId);
-    } else {
-      props.history.push("/login");
-    }
-  };
-
-  // DISLIKE HANDLER
-  const dislikePostHandler = postId => {
-    if (user.isAuth) {
-      dislikePost(postId);
-    } else {
-      props.history.push("/login");
-    }
-  };
-
   return (
     <>
       <div className="row">
@@ -59,8 +41,6 @@ const PostList = props => {
               likes={post.likes}
               deletePost={deletePostHandler}
               editedPost={editPostHandler}
-              likeHandler={likePostHandler}
-              dislikeHandler={dislikePostHandler}
               classname="col-sm-6 d-flex"
             />
           ))

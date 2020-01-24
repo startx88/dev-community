@@ -16,9 +16,6 @@ const mapStateToProps = createStructuredSelector({ postinfo: selectPost });
 
 const mapDispatchToProps = dispatch => ({
   getPost: postId => dispatch(getPost(postId)),
-  getUserPosts: () => dispatch(getUserPosts()),
-  addComment: comment => dispatch(addComment(comment)),
-  likePost: postId => dispatch(likePost(postId)),
-  dislikePost: postId => dispatch(dislikePost(postId))
+  getUserPosts: () => dispatch(getUserPosts())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Container);

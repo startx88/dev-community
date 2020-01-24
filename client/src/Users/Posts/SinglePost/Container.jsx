@@ -18,6 +18,7 @@ const Container = props => {
   const {
     postinfo,
     getPost,
+    getUserPosts,
     match: { params }
   } = props;
 
@@ -27,6 +28,7 @@ const Container = props => {
   const loadPost = useCallback(
     postId => {
       getPost(postId);
+      getUserPosts();
     },
     [getPost]
   );

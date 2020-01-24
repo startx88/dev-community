@@ -1,6 +1,7 @@
 const Post = require("../models/posts");
 const User = require("../models/users");
 const Profile = require("../models/profile");
+const io = require("../socket");
 const { validationResult } = require("express-validator");
 const { resizeImage, deleteFile } = require("../middleware/file");
 
@@ -141,6 +142,7 @@ exports.addPost = async (req, res, next) => {
     });
 
     const post = await newPost.save();
+    io.getIO().emit("posts", { action: "create", post: post });
     if (post) {
       res.status(201).json({
         success: true,

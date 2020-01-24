@@ -13,7 +13,6 @@ import useAccess from "../../_hooks/isAuth";
 const Post = ({ postinfo, classname, match }) => {
   const { user } = useAccess();
 
-  console.log(postinfo, user);
   return (
     <article className={classname}>
       <div className="post panel panel-white">

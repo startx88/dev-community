@@ -8,7 +8,7 @@ import { Link, Switch } from "react-router-dom";
 
 // Container
 const Container = props => {
-  const { match, getUserPosts, posts, addPost, alert } = props;
+  const { match, getUserPosts, posts, alert } = props;
 
   const loadUserPost = useCallback(() => {
     getUserPosts();

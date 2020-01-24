@@ -39,18 +39,24 @@ const checkTimeout = timeout => {
   };
 };
 
-///////////////////////////////
-/////// USER REGISTRATION
-///////////////////////////////////
+/********
+ * USER REGISTRATION
+ ***********************/
 export const userRegistration = inputdata => async dispatch => {
   dispatch(loading());
   try {
     const response = await axios.post("/user/signup", inputdata);
     const responseData = await response.data;
+    const timeout = new Date(
+      new Date().getTime() + responseData.expiresIn * 1000
+    );
+
     localStorage.setItem("token", responseData.token);
+    localStorage.setItem("expireDate", timeout);
     dispatch(signup_success(responseData.token));
-    dispatch(showAlert(responseData.message, "success"));
+    dispatch(checkTimeout(responseData.expiresIn));
     dispatch(checkUserIsAuthenticate());
+    dispatch(showAlert(responseData.message, "success"));
   } catch (err) {
     const { message } = err.response.data.errors;
     dispatch(showAlert(message, "warning"));
@@ -58,9 +64,9 @@ export const userRegistration = inputdata => async dispatch => {
   }
 };
 
-///////////////////////////////
-/////// USER lOGIN
-///////////////////////////////////
+/********
+ * USER AUTHENTICATION
+ ***********************/
 export const userLogin = inputdata => async dispatch => {
   dispatch(loading());
   try {
@@ -72,9 +78,9 @@ export const userLogin = inputdata => async dispatch => {
 
     localStorage.setItem("token", responseData.token);
     localStorage.setItem("expireDate", timeout);
-    dispatch(checkUserIsAuthenticate());
     dispatch(login_success(responseData.token));
     dispatch(checkTimeout(responseData.expiresIn));
+    dispatch(checkUserIsAuthenticate());
   } catch (err) {
     const error = err.response.data.errors;
     if (error) dispatch(showAlert(error.message, "warning"));
@@ -82,9 +88,9 @@ export const userLogin = inputdata => async dispatch => {
   }
 };
 
-///////////////////////////////
-/////// CHECK AUTHENTICATION
-///////////////////////////////////
+/********
+ * CHECK USER IS ATHENTICATED
+ ***********************/
 export const checkUserIsAuthenticate = () => async dispatch => {
   const token = localStorage.getItem("token");
   if (!token) {

@@ -90,7 +90,7 @@ const reducer = (state = initState, action) => {
     case post.POST_LOADING:
       return loading(state, payloads);
     case post.POST_FAILED:
-      failed(state, payloads);
+      return failed(state, payloads);
     case post.FETCH_SINGLE_POST:
       return fetchPost(state, payloads);
     case post.FETCH_ALL_POSTS:

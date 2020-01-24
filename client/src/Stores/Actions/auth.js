@@ -45,7 +45,7 @@ const checkTimeout = timeout => {
 export const userRegistration = inputdata => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.post("/user/signup", inputdata);
+    const response = await axios.post("/api/user/signup", inputdata);
     const responseData = await response.data;
     const timeout = new Date(
       new Date().getTime() + responseData.expiresIn * 1000
@@ -70,7 +70,7 @@ export const userRegistration = inputdata => async dispatch => {
 export const userLogin = inputdata => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.post("/user", inputdata);
+    const response = await axios.post("/api/user", inputdata);
     const responseData = await response.data;
     const timeout = new Date(
       new Date().getTime() + responseData.expiresIn * 1000
@@ -102,7 +102,7 @@ export const checkUserIsAuthenticate = () => async dispatch => {
       dispatch(logout());
     } else {
       try {
-        const user = await axios.get("/user");
+        const user = await axios.get("/api/user");
         const userData = await user.data;
         dispatch(fetch_user(userData.user, token));
         dispatch(

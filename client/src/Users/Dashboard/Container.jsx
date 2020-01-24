@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import Posts from "../../Widgets/Posts/Posts";
-import UserStatus from "../widgets/UserStatus/UserStatus";
 import Spinner from "../../UI/Spinner/Spinner";
 /////////////
 //// Dashboard components
 /////////////////////////
 const Container = props => {
-  const { getAllPosts, allposts, profile } = props;
+  const { getAllPosts, allposts } = props;
 
   // LAOD POST
   const loadUserPost = useCallback(() => {

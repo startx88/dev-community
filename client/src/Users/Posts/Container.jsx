@@ -1,10 +1,9 @@
-import React, { lazy, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Title from "../../Widgets/Title/Title";
-import PrivateRoute from "../../Web/PrivateRoute";
 import AlertMessage from "../../UI/Alert";
 import Spinner from "../../UI/Spinner/Spinner";
 import Post from "./Post";
-import { Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Container
 const Container = props => {

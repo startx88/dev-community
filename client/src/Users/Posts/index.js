@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectPosts, selectAlert } from "../../Stores/Selectors";
 
-import { addPost, getUserPosts } from "../../Stores/Actions";
+import { getUserPosts } from "../../Stores/Actions";
 const mapStateToProps = createStructuredSelector({
   posts: selectPosts,
   alert: selectAlert

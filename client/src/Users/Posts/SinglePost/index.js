@@ -1,13 +1,6 @@
 import Container from "./Container";
 import { connect } from "react-redux";
-import {
-  addComment,
-  deleteComment,
-  getPost,
-  likePost,
-  dislikePost,
-  getUserPosts
-} from "../../../Stores/Actions";
+import { getPost, getUserPosts } from "../../../Stores/Actions";
 import { createStructuredSelector } from "reselect";
 import { selectPost } from "../../../Stores/Selectors";
 

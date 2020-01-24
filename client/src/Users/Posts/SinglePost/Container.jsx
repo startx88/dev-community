@@ -1,9 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import Spinner from "../../../UI/Spinner/Spinner";
 import Image from "../../../UI/Image";
-import Icons from "../../../UI/Icons";
 import Date from "../../../UI/Date";
-import Button from "../../../UI/Button";
 import LikeButton from "../../../Widgets/LikeButton/LikeButton";
 import CommentList from "../../../Widgets/Comment/CommentList";
 import CommentForm from "../../../Widgets/Comment/PostComment";
@@ -30,7 +28,7 @@ const Container = props => {
       getPost(postId);
       getUserPosts();
     },
-    [getPost]
+    [getPost, getUserPosts]
   );
 
   useEffect(() => {

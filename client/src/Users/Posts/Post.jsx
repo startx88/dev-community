@@ -1,8 +1,6 @@
 import React from "react";
 import Image from "../../UI/Image";
-import Icons from "../../UI/Icons";
 import Date from "../../UI/Date";
-import Button from "../../UI/Button";
 import LikeButton from "../../Widgets/LikeButton/LikeButton";
 import Links from "../../Widgets/Links/Links";
 import { withRouter } from "react-router-dom";

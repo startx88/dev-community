@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import InputFile from "../../../UI/InputFile";
 import Input from "../../../UI/Input";
 import Button from "../../../UI/Button";
 import useQuery from "../../../_hooks/useQuery";
@@ -30,7 +29,7 @@ const PostForm = props => {
     if (postId) {
       dispatch(getPost(postId));
     }
-  }, [getPost, postId]);
+  }, [postId, dispatch]);
 
   const formik = useFormik({
     initialValues: {

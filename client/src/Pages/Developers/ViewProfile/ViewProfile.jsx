@@ -26,10 +26,10 @@ const ViewProfile = props => {
   useEffect(() => {
     dispatch(getAllProfiles());
     dispatch(getPostByUserId(userId));
-    if (hash == "#info") {
+    if (hash === "#info") {
       setTabIndex({ tabIndex: 1 });
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, hash]);
 
   const profile = profiles.find(profile => profile.user._id === userId);
 

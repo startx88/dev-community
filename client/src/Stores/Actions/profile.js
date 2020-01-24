@@ -11,15 +11,10 @@ const fetchProfile = data => ({
   payloads: data
 });
 
-const UPDATE_PROFILE = (id, data) => ({
-  type: profile.PROFILE_UPDATE,
-  payloads: { id, data }
-});
-
-const DELETE_PROFILE = error => ({
-  type: profile.PROFILE_DELETE,
-  payloads: error
-});
+// const DELETE_PROFILE = error => ({
+//   type: profile.PROFILE_DELETE,
+//   payloads: error
+// });
 
 const addEducationSuccess = data => ({
   type: profile.PROFILE_EDU_ADD,
@@ -54,7 +49,7 @@ const allProfile = profiles => ({
 export const getAllProfiles = () => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.get("/profile");
+    const response = await axios.get("/api/profile");
     const { profiles } = await response.data;
     dispatch(allProfile(profiles));
   } catch (err) {
@@ -70,7 +65,7 @@ export const getAllProfiles = () => async dispatch => {
 export const getProfile = () => async dispatch => {
   dispatch(loading());
   try {
-    const user = await axios.get("/profile/me");
+    const user = await axios.get("/api/profile/me");
     const userData = await user.data;
     dispatch(fetchProfile(userData.profile));
   } catch (err) {
@@ -102,7 +97,7 @@ export const addProfile = inputData => async dispatch => {
     };
   }
   try {
-    const response = await axios.post("/profile", postData);
+    const response = await axios.post("/api/profile", postData);
     const responseData = await response.data;
     dispatch(ADD_PROFILE(responseData.profile));
     dispatch(showAlert(responseData.message, "success"));
@@ -116,7 +111,7 @@ export const addProfile = inputData => async dispatch => {
 ///////////////////////////////////
 export const addEducation = inputData => async dispatch => {
   try {
-    const response = await axios.put("/profile/education", inputData);
+    const response = await axios.put("/api/profile/education", inputData);
     const responseData = await response.data;
     dispatch(
       addEducationSuccess({
@@ -138,7 +133,7 @@ export const addEducation = inputData => async dispatch => {
 };
 export const deleteEducation = id => async dispatch => {
   try {
-    const response = await axios.delete(`/profile/education/${id}`);
+    const response = await axios.delete(`/api/profile/education/${id}`);
     const responseData = await response.data;
     dispatch(deleteEducationSuccess(responseData.educationId));
     dispatch(showAlert(responseData.message, "success"));
@@ -151,7 +146,7 @@ export const deleteEducation = id => async dispatch => {
 ///////////////////////////////////
 export const addExperience = inputData => async dispatch => {
   try {
-    const response = await axios.put("/profile/experience", inputData);
+    const response = await axios.put("/api/profile/experience", inputData);
     const responseData = await response.data;
     dispatch(
       addExperienceSuccess({
@@ -173,7 +168,7 @@ export const addExperience = inputData => async dispatch => {
 };
 export const deleteExperience = id => async dispatch => {
   try {
-    const response = await axios.delete(`/profile/experience/${id}`);
+    const response = await axios.delete(`/api/profile/experience/${id}`);
     const responseData = await response.data;
     dispatch(deleteExperienceSuccess(responseData.expId));
     dispatch(showAlert(responseData.message, "success"));

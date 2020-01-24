@@ -43,7 +43,7 @@ const user_posts = posts => ({
 // Common function
 const postWithProfile = async posts => {
   try {
-    const responseProfile = await axios.get("/profile");
+    const responseProfile = await axios.get("/api/profile");
     const { profiles } = await responseProfile.data;
     return posts.map(post => {
       for (let index in profiles) {
@@ -67,7 +67,7 @@ export const getAllPosts = () => async dispatch => {
   dispatch(loading());
 
   try {
-    const response = await axios.get("/posts");
+    const response = await axios.get("/api/posts");
     const { posts } = await response.data;
 
     const transformpostdata = await postWithProfile(posts);
@@ -83,8 +83,8 @@ export const getAllPosts = () => async dispatch => {
 export const getUserPosts = () => async dispatch => {
   dispatch(loading());
   try {
-    const response = await axios.get("/posts/user");
-    const { posts, message } = await response.data;
+    const response = await axios.get("/api/posts/user");
+    const { posts } = await response.data;
     const transformpostdata = await postWithProfile(posts);
     dispatch(user_posts(transformpostdata));
   } catch (err) {
@@ -101,7 +101,7 @@ export const getUserPosts = () => async dispatch => {
 export const getPostByUserId = userId => async dispatch => {
   dispatch(loading());
   try {
-    const responose = await axios.get("/posts/user/" + userId);
+    const responose = await axios.get("/api/posts/user/" + userId);
     const { posts } = await responose.data;
     const transformpostdata = await postWithProfile(posts);
     dispatch({
@@ -125,9 +125,9 @@ const get_single_post = postdata => ({
 
 export const getPost = postId => async dispatch => {
   try {
-    const responose = await axios.get("/posts/" + postId);
+    const responose = await axios.get("/api/posts/" + postId);
     const { post } = await responose.data;
-    const responseProfile = await axios.get("/profile");
+    const responseProfile = await axios.get("/api/profile");
     const { profiles } = await responseProfile.data;
     const newpost = profiles.find(profile => profile.user._id === post.user);
     dispatch(get_single_post({ ...post, status: newpost.status }));
@@ -153,12 +153,12 @@ export const addPost = (inputdata, id, status) => async dispatch => {
   dispatch(loading());
   try {
     if (status === "UPDATE") {
-      const response = await axios.put(`/posts/${id}`, inputdata);
+      const response = await axios.put(`/api/posts/${id}`, inputdata);
       const { post, postId, message } = await response.data;
       dispatch(update_post(postId, post));
       dispatch(showAlert(message, "success"));
     } else {
-      const response = await axios.post("/posts", inputdata);
+      const response = await axios.post("/api/posts", inputdata);
       const { post, message } = await response.data;
       dispatch(add_post(post));
       dispatch(showAlert(message, "success"));
@@ -177,7 +177,7 @@ export const deletePost = postId => async dispatch => {
     return false;
   }
   try {
-    const response = await axios.delete(`/posts/${postId}`);
+    const response = await axios.delete(`/api/posts/${postId}`);
     const responseData = await response.data;
     dispatch(delete_post(responseData.postId));
     dispatch(showAlert(responseData.message, "success"));
@@ -192,7 +192,7 @@ export const deletePost = postId => async dispatch => {
 // LIKED POST
 export const likePost = postId => async dispatch => {
   try {
-    const response = await axios.put(`/posts/like/${postId}`);
+    const response = await axios.put(`/api/posts/like/${postId}`);
     const responseData = await response.data;
     dispatch(like_post(postId, responseData.likes));
     dispatch(showAlert(responseData.message, "success"));
@@ -206,7 +206,7 @@ export const likePost = postId => async dispatch => {
 // DISLIKE POST
 export const dislikePost = postId => async dispatch => {
   try {
-    const response = await axios.put(`/posts/dislike/${postId}`);
+    const response = await axios.put(`/api/posts/dislike/${postId}`);
     const responseData = await response.data;
     dispatch(dislike_post(postId, responseData.likes));
     dispatch(showAlert(responseData.message, "success"));
@@ -229,7 +229,10 @@ const add_comment = (postId, comments) => ({
 
 export const addComment = (postId, inputdata) => async dispatch => {
   try {
-    const response = await axios.post(`/posts/comment/${postId}`, inputdata);
+    const response = await axios.post(
+      `/api/posts/comment/${postId}`,
+      inputdata
+    );
     const { data } = await response;
     dispatch(add_comment(postId, data.comments));
     dispatch(showAlert(data.message, "success"));
@@ -243,7 +246,7 @@ export const addComment = (postId, inputdata) => async dispatch => {
 export const deleteComment = (postId, commentId) => async dispatch => {
   try {
     const response = await axios.delete(
-      `/posts/comment/${postId}/${commentId}`
+      `/api/posts/comment/${postId}/${commentId}`
     );
     const { data } = await response;
     dispatch(add_comment(postId, data.comments));

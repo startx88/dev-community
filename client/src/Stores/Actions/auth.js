@@ -1,5 +1,5 @@
 import { auth } from "../Constants";
-import axios from "../../axios_instance";
+import axios from "axios";
 import setAuthToken from "../../_helper/setAuthToken";
 import { showAlert } from "./alert";
 

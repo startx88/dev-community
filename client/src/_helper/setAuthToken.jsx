@@ -1,4 +1,4 @@
-import axios from "../axios_instance";
+import axios from "axios";
 
 // set authorization
 export const setAuthToken = token => {

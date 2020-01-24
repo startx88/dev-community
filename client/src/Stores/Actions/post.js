@@ -1,5 +1,5 @@
 import { post } from "../Constants";
-import axios from "../../axios_instance";
+import axios from "axios";
 import { showAlert } from "./alert";
 
 // LOADING

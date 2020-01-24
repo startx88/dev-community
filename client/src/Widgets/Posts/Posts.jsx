@@ -9,42 +9,51 @@ import { withRouter } from "react-router-dom";
 import useAccess from "../../_hooks/isAuth";
 import PostAction from "./PostAction";
 
-const Posts = ({ info, ...rest }) => {
+const Posts = ({ postinfo, ...rest }) => {
   const { user } = useAccess();
 
-  return info ? (
+  return postinfo ? (
     <div className="panel panel-white post">
-      <PostAction postId={info._id} />
-
+      {postinfo.user._id === user.user._id && (
+        <PostAction postId={postinfo._id} />
+      )}
       <PostAvatar
         href={{
-          pathname: `/developers/${info.user}`,
+          pathname: `/developers/${postinfo.user._id}`,
           hash: "#info"
         }}
-        name={info.user.name}
-        status={info.status}
-        avatar={info.user.avatar}
-        date={info.insertAt}
+        name={postinfo.user.name}
+        status={postinfo.status}
+        avatar={postinfo.user.avatar}
+        date={postinfo.insertAt}
       />
 
       <div className="post-image">
-        <Image src={info.avatar} alt="" />
-        <LikeButton classname="bottom" likes={info.likes} postId={info._id} />
+        <Image src={postinfo.avatar} alt="" />
+        <LikeButton
+          classname="bottom"
+          likes={postinfo.likes}
+          postId={postinfo._id}
+        />
       </div>
 
       <div className="post-title d-flex justify-content-between">
-        <h6>{info.title}</h6>
-        <Date from={info.insertAt} />
+        <h6>{postinfo.title}</h6>
+        <Date from={postinfo.insertAt} />
       </div>
 
-      <p>{info.description}</p>
+      <p>{postinfo.description}</p>
       <div className="leave-comment">
         {user.user && (
-          <CommentList postId={info._id} user={user} comments={info.comments} />
+          <CommentList
+            postId={postinfo._id}
+            user={user}
+            comments={postinfo.comments}
+          />
         )}
       </div>
       {user.user && (
-        <PostComment history={rest.history} user={user} postId={info._id} />
+        <PostComment history={rest.history} user={user} postId={postinfo._id} />
       )}
     </div>
   ) : (

@@ -72,7 +72,7 @@ const ViewProfile = props => {
                   <PostInfo
                     key={post._id}
                     status={profile.status}
-                    info={post}
+                    postinfo={post}
                   />
                 ))}
             </div>

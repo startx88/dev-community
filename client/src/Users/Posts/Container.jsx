@@ -3,7 +3,7 @@ import Title from "../../Widgets/Title/Title";
 import PrivateRoute from "../../Web/PrivateRoute";
 import AlertMessage from "../../UI/Alert";
 import Spinner from "../../UI/Spinner/Spinner";
-import PostList from "../widgets/PostList";
+import Post from "./Post";
 import { Link, Switch } from "react-router-dom";
 
 // Container
@@ -29,13 +29,17 @@ const Container = props => {
           Add Post
         </Link>
       </Title>
-      <hr />
       <AlertMessage type={alert.type} show={alert.show} />
-      {posts.posts && posts.posts.length === 0 ? (
-        <div className="no-post" />
-      ) : (
-        <PostList postdata={posts.posts} />
-      )}
+      <div className="row">
+        {posts.posts && posts.posts.length === 0 ? (
+          <div className="no-post" />
+        ) : (
+          posts.posts &&
+          posts.posts.map(post => (
+            <Post key={post._id} postinfo={post} classname="col-sm-6 d-flex" />
+          ))
+        )}
+      </div>
     </>
   );
 };

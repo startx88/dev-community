@@ -2,16 +2,22 @@ import React from "react";
 import Links from "../Links/Links";
 import Icons from "../../UI/Icons";
 import Button from "../../UI/Button";
+import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deletePost } from "../../Stores/Actions";
 
 /*********
  * Post action compoent
  ***********************/
-const PostAction = ({ postId }) => {
+const PostAction = ({ postId, history, ...rest }) => {
   const dispatch = useDispatch();
 
-  const editHandler = () => {};
+  const editHandler = () => {
+    history.push({
+      pathname: `/users/posts/add-post/${postId}`,
+      search: "?edit=true"
+    });
+  };
 
   const hideHandler = () => {
     alert("We are working on it");
@@ -23,17 +29,16 @@ const PostAction = ({ postId }) => {
         <Icons icon="ellipsis-v" />
       </Links>
       <div className="dropdown-menu dropdown-menu-right">
-        <Button clicked={editHandler} classname="dropdown-item" href="#">
+        <Button clicked={editHandler} classname="dropdown-item">
           <Icons icon="pencil-alt" /> Edit
         </Button>
         <Button
           clicked={() => dispatch(deletePost(postId))}
           classname="dropdown-item"
-          href="#"
         >
           <Icons icon="trash-alt" /> Delete
         </Button>
-        <Button clicked={hideHandler} classname="dropdown-item" href="#">
+        <Button clicked={hideHandler} classname="dropdown-item">
           <Icons icon="eye" /> Hide
         </Button>
       </div>
@@ -41,4 +46,4 @@ const PostAction = ({ postId }) => {
   );
 };
 
-export default PostAction;
+export default withRouter(PostAction);

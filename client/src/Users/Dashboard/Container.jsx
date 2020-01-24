@@ -26,7 +26,7 @@ const Container = props => {
     <div className="row">
       <div className="col-sm-8">
         {allposts.map(post => (
-          <Posts key={post._id} info={post} postId={post._id} />
+          <Posts key={post._id} postinfo={post} postId={post._id} />
         ))}
       </div>
     </div>

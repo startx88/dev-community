@@ -47,6 +47,7 @@ const Container = props => {
             <div className="posts-image">
               <PostAction postId={postinfo._id} />
               <PostAvatar
+                href={"/users/profiles"}
                 name={postinfo.name}
                 status={postinfo.status}
                 avatar={postinfo.user.avatar}

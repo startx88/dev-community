@@ -1,0 +1,9 @@
+{
+  "mongoURL": "mongodb://learnui:learnui88@ds229068.mlab.com:29068/devcommunity",
+  "SECRET_KEY": "learnjsismypassion",
+  "EXPIRATION_TIME": "1h",
+  "GITHUB_CLIENT_ID": "20521a3744a9a8d9ccc3",
+  "GITHUB_SECRET": "379f2f5957fea3824912939b7e8255aa62a93819",
+  "CAPTCHA_KEY": "6LfUDc4UAAAAAJgEe_IB7sFkE2C_wH9kFqwrs4f2",
+  "CAPTCHA_SECRET_KEY": "6LfUDc4UAAAAABB00m2oQLywha6ltfPTVRYjEKiy"
+}

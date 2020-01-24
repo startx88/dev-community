@@ -35,8 +35,8 @@ UserSchema.statics.getCurrentUser = async userId => {
 };
 
 // get user avatar
-UserSchema.statics.genAvatar = async email => {
-  return await avatar.url(email, { s: "200", r: "pg", d: "mm" });
+UserSchema.statics.genAvatar = email => {
+  return avatar.url(email, { s: "200", r: "pg", d: "mm" });
 };
 
 // export models

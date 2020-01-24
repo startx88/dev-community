@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const config = require("config");
 exports.auth = (req, res, next) => {
   const header = req.get("Authorization");
 
@@ -15,7 +15,7 @@ exports.auth = (req, res, next) => {
     throw next(error);
   }
   try {
-    const verify = jwt.verify(token, process.env.SECRET_KEY);
+    const verify = jwt.verify(token, config.get("SECRET_KEY"));
     if (!verify) {
       const error = new Error("Invalid credentials");
       error.statusCode = 401;

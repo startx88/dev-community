@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const config = require("config");
 const Profile = require("../models/profile");
 const { validationResult } = require("express-validator");
 const request = require("request");
@@ -409,7 +410,11 @@ exports.deleteUserEducation = async (req, res, next) => {
 exports.getGithubProfile = async (req, res, next) => {
   try {
     const options = {
-      uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_SECRET}`,
+      uri: `https://api.github.com/users/${
+        req.params.username
+      }/repos?per_page=5&sort=created:asc&client_id=${config.get(
+        "GITHUB_CLIENT_ID"
+      )}&client_secret=${config.get("GITHUB_SECRET")}`,
       method: "GET",
       headers: { "user-agent": "node.js" }
     };

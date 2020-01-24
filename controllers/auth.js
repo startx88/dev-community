@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const config = require("config");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
@@ -27,7 +28,7 @@ exports.userSignup = async (req, res, next) => {
 
     const token = jwt.sign(
       { email: email, userId: result._id },
-      process.env.SECRET_KEY,
+      config.get("SECRET_KEY"),
       { expiresIn: "1h" }
     );
 
@@ -76,7 +77,7 @@ exports.userLogin = async (req, res, next) => {
 
     const token = jwt.sign(
       { email: email, userId: user._id },
-      process.env.SECRET_KEY,
+      config.get("SECRET_KEY"),
       { expiresIn: "1h" }
     );
 

@@ -1,0 +1,12 @@
+.chat {
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+  width: 250px;
+  height: 350px;
+  overflow: scroll;
+  background-color: $white;
+  padding: 10px;
+  box-shadow: 0 0 10px $base-color;
+  display: none;
+}

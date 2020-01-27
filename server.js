@@ -2,7 +2,7 @@ const express = require("express");
 const mongoDB = require("./config/db");
 const morgan = require("morgan");
 const path = require("path");
-
+const socket = require("./socket");
 /** Database URL */
 mongoDB();
 
@@ -20,9 +20,10 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000/");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST,PUT, DELETE, PATCH");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
 
@@ -60,6 +61,29 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("Server is running", PORT);
+});
+
+// socket connected
+const io = socket.init(server);
+
+/***
+ * Established a connection
+ *********/
+io.on("connection", socket => {
+  console.log("user connected!");
+  // user chat
+  socket.on("chat", data => {
+    io.emit("chat", data);
+  });
+
+  // user typeing
+  socket.on("typing", data => {
+    socket.broadcast.emit("typing", data);
+  });
+
+  socket.on("disconnect", data => {
+    console.log("user dis-connected!");
+  });
 });

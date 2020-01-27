@@ -118,3 +118,31 @@ exports.userProfile = async (req, res, next) => {
     next(error);
   }
 };
+
+/*************
+ *  Get all users
+ ********************/
+exports.getAllUsers = async (req, res, next) => {
+  const userId = req.user.userId;
+  try {
+    if (!userId) {
+      const error = new Error("You are not authenticated!");
+      error.statusCode = 401;
+      throw next(error);
+    }
+    const users = await User.find({ active: 1 }).select("-password");
+    if (!users) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw next(error);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "all users",
+      users
+    });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -7,6 +7,11 @@ const { auth } = require("../middleware/auth");
 // @route       POST api/user/
 // @des         register user
 // @access      Private
+router.get("/all", auth, authController.getAllUsers);
+
+// @route       POST api/user/
+// @des         register user
+// @access      Private
 router.get("/", auth, authController.userProfile);
 
 // @route       POST api/user

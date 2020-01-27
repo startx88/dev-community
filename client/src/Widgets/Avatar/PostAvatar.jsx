@@ -10,7 +10,7 @@ import Links from "../Links/Links";
 const PostAvatar = ({ avatar, status, name, href, classname }) => {
   return (
     <div className={["post-avatar", classname].join(" ")}>
-      <Links to={href}>
+      <Links to={href ? href : "#!"}>
         <Image
           classname="avatar circle"
           src={avatar ? avatar : AvatarImage}

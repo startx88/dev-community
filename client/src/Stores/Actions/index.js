@@ -3,7 +3,8 @@ export {
   userLogin,
   userRegistration,
   checkUserIsAuthenticate,
-  logout
+  logout,
+  getAllUsers
 } from "./auth";
 
 export {

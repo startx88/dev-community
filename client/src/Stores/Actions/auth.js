@@ -97,6 +97,7 @@ export const checkUserIsAuthenticate = () => async dispatch => {
     dispatch(logout());
   } else {
     setAuthToken(token);
+    console.log("action check");
     const timeout = new Date(localStorage.expireDate);
     if (timeout <= new Date()) {
       dispatch(logout());
@@ -112,5 +113,23 @@ export const checkUserIsAuthenticate = () => async dispatch => {
         );
       } catch (err) {}
     }
+  }
+};
+
+/************
+ * Get All Users
+ *****************/
+export const getAllUsers = () => async dispatch => {
+  try {
+    const response = await await axios.get("/api/user/all");
+    const { users } = await response.data;
+    dispatch({
+      type: auth.ALL_USERS,
+      payloads: users
+    });
+  } catch (err) {
+    const error = err.response.data.errors;
+    if (error) dispatch(showAlert(error.message, "warning"));
+    dispatch(failed(error.message));
   }
 };

@@ -51,7 +51,7 @@ const postWithProfile = async posts => {
           return {
             ...post,
             status: profiles[index].status,
-            user: profiles[index].user
+            userinfo: profiles[index].user
           };
         }
       }
@@ -69,7 +69,6 @@ export const getAllPosts = () => async dispatch => {
   try {
     const response = await axios.get("/api/posts");
     const { posts } = await response.data;
-
     const transformpostdata = await postWithProfile(posts);
     dispatch(all_posts(transformpostdata));
   } catch (err) {

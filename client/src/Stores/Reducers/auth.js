@@ -2,6 +2,7 @@ import { auth } from "../Constants";
 import updateObject from "../../_helper/updateObject";
 
 const initState = {
+  users: [],
   user: null,
   token: null,
   error: null,
@@ -51,6 +52,11 @@ const reducer = (state = initState, action) => {
       return fetchUser(state, payloads);
     case auth.AUTH_LOGOUT:
       return logout(state, payloads);
+    case auth.ALL_USERS:
+      return {
+        ...state,
+        users: payloads
+      };
     default:
       return state;
   }

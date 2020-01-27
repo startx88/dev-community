@@ -14,7 +14,7 @@ const Posts = ({ postinfo, ...rest }) => {
 
   return postinfo ? (
     <div className="panel panel-white post">
-      {postinfo.user._id === user.user._id && (
+      {postinfo.user === (user.user && user.user._id) && (
         <PostAction postId={postinfo._id} />
       )}
       <PostAvatar
@@ -22,7 +22,7 @@ const Posts = ({ postinfo, ...rest }) => {
           pathname: `/developers/${postinfo.user._id}`,
           hash: "#info"
         }}
-        name={postinfo.user.name}
+        name={postinfo.userinfo.name}
         status={postinfo.status}
         avatar={postinfo.user.avatar}
         date={postinfo.insertAt}

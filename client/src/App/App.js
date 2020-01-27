@@ -2,10 +2,10 @@ import React, { Suspense, useEffect } from "react";
 import "./App.css";
 import Web from "../Web/Web";
 import Spinner from "../UI/Spinner/Spinner";
-import { checkUserIsAuthenticate } from "../Stores/Actions";
-import { useDispatch } from "react-redux";
 import ErrorBoundary from "../Widgets/ErrorBoundary/ErrorBoundary";
 import setAuthToken from "../_helper/setAuthToken";
+import { checkUserIsAuthenticate } from "../Stores/Actions";
+import { useDispatch } from "react-redux";
 
 // App Component
 

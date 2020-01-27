@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoDB = require("./config/db");
-const morgan = require("morgan");
+
 const path = require("path");
 const socket = require("./socket");
 /** Database URL */
@@ -8,11 +8,6 @@ mongoDB();
 
 /** App */
 const app = express();
-
-// development
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
 
 // constants
 app.use(express.urlencoded({ extended: false }));
